@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Allied Cold Store — Ghana's #1 Premium Frozen Chicken. Order online via WhatsApp. 5 branches across the region." />
+  <title>Allied Cold Store | Ghana's Best Frozen Chicken</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║        ANNOUNCEMENT BAR                  ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fas fa-map-marker-alt"></i> 5 Locations Across Ghana</span>
+        <span class="tb-sep">|</span>
+        <span><i class="fas fa-clock"></i> Mon–Sat: 7AM – 8PM</span>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:0542559031" class="topbar-phone">
+          <i class="fas fa-phone-alt"></i> 054 255 9031
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║           HEADER / NAV                   ║
+       ╚══════════════════════════════════════════╝ -->
+  <header class="header" id="header">
+    <nav class="nav container">
+
+      <a href="#home" class="logo">
+        <div class="logo-mark">
+          <i class="fas fa-snowflake"></i>
+        </div>
+        <div class="logo-words">
+          <span class="logo-top">ALLIED</span>
+          <span class="logo-btm">COLD STORE</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home"     class="nm active">Home</a></li>
+        <li><a href="#about"    class="nm">About</a></li>
+        <li><a href="#menu"     class="nm">Order Menu</a></li>
+        <li><a href="#branches" class="nm">Branches</a></li>
+        <li><a href="#contact"  class="nm">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+  <i class="fas fa-moon icon-moon"></i>
+  <i class="fas fa-sun icon-sun"></i>
+</button>
+        <!-- Cart Button -->
+        <button class="cart-btn" id="cart-toggle" aria-label="View cart">
+          <i class="fas fa-shopping-basket"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <!-- CTA -->
+        <a href="tel:0542559031" class="nav-cta">
+          <i class="fas fa-phone-alt"></i>
+          <span>Call Now</span>
+        </a>
+        <!-- Burger -->
+        <button class="burger" id="burger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║         CART SIDEBAR                     ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-head">
+      <div class="cart-head-left">
+        <i class="fas fa-shopping-basket"></i>
+        <h3>Your Order</h3>
+      </div>
+      <button class="cart-close" id="cart-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="cart-body" id="cart-body">
+      <!-- Cart items injected by JS -->
+      <div class="cart-empty" id="cart-empty">
+        <div class="ce-icon"><i class="fas fa-basket-shopping"></i></div>
+        <p>Your cart is empty</p>
+        <span>Browse our menu and add items to order</span>
+      </div>
+    </div>
+
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cart-total-price">GH₵ 0.00</strong>
+      </div>
+      <div class="cart-note">
+        <i class="fas fa-info-circle"></i>
+        <span>Final price confirmed at branch. Prices may vary slightly.</span>
+      </div>
+      <button class="wa-order-btn" id="wa-order-btn">
+        <i class="fab fa-whatsapp"></i>
+        Order via WhatsApp
+      </button>
+      <button class="cart-clear" id="cart-clear">
+        <i class="fas fa-trash-alt"></i> Clear Cart
+      </button>
+    </div>
+  </div>
+
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║              HERO SECTION                ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="hero" id="home">
+
+    <div class="hero-bg-pattern"></div>
+
+    <div class="hero-container container">
+
+      <!-- LEFT -->
+      <div class="hero-text">
+
+        <div class="hero-badge">
+          <div class="hb-dot"></div>
+          <span>Ghana's #1 Frozen Chicken Store</span>
+        </div>
+
+        <h1 class="hero-h1">
+          Premium Frozen<br/>
+          <span class="h1-highlight">Chicken</span> &
+          <span class="h1-highlight">Meats</span><br/>
+          <span class="h1-small">Delivered Fresh to Your Door.</span>
+        </h1>
+
+        <p class="hero-desc">
+          Flash-frozen at peak freshness. Grade-A quality every time.
+          Serving <strong>5 branches</strong> across Nkwanta, Kpassa, Damanko, Kpandai & Tamale.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#menu" class="btn-primary">
+            <i class="fas fa-basket-shopping"></i>
+            Browse & Order
+          </a>
+          <a href="tel:0542559031" class="btn-outline">
+            <i class="fas fa-phone-alt"></i>
+            054 255 9031
+          </a>
+        </div>
+
+        <!-- Trust bar -->
+        <div class="trust-bar">
+          <div class="trust-item">
+            <div class="ti-icon">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+            <span>Grade-A Quality</span>
+          </div>
+          <div class="trust-item">
+            <div class="ti-icon">
+              <i class="fas fa-temperature-low"></i>
+            </div>
+            <span>24/7 Cold Chain</span>
+          </div>
+          <div class="trust-item">
+            <div class="ti-icon">
+              <i class="fas fa-store"></i>
+            </div>
+            <span>5 Branches</span>
+          </div>
+          <div class="trust-item">
+            <div class="ti-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <span>WhatsApp Orders</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Hero Visual -->
+      <div class="hero-visual">
+        <div class="hero-card-wrap">
+
+          <!-- Main visual -->
+          <div class="hero-main-card">
+            <div class="hmc-bg"></div>
+            <div class="hmc-icon">
+              <i class="fas fa-drumstick-bite"></i>
+            </div>
+            <div class="hmc-label">
+              <span class="hmc-tag">⭐ Best Seller</span>
+              <h3>Premium Frozen Chicken</h3>
+              <p>Whole birds · Parts · Bulk orders</p>
+            </div>
+            <a href="#menu" class="hmc-btn">
+              View Menu <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Side mini cards -->
+          <div class="hero-mini-cards">
+            <div class="mini-card mc-fish">
+              <i class="fas fa-fish"></i>
+              <div>
+                <strong>Fresh Fish</strong>
+                <span>Always in stock</span>
+              </div>
+            </div>
+            <div class="mini-card mc-meat">
+              <i class="fas fa-bacon"></i>
+              <div>
+                <strong>Frozen Meats</strong>
+                <span>All cuts available</span>
+              </div>
+            </div>
+            <div class="mini-card mc-ice">
+              <i class="fas fa-ice-cream"></i>
+              <div>
+                <strong>Ice Cream</strong>
+                <span>Premium brands</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Curved bottom -->
+    <div class="hero-curve">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,40 C400,80 1040,0 1440,50 L1440,80 L0,80 Z" fill="#f5f7ff"/>
+      </svg>
+    </div>
+
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║          ABOUT / WHY US                  ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="about" id="about">
+    <div class="container">
+
+      <div class="sec-label">
+        <span class="sl-pill">Why Allied Cold Store</span>
+      </div>
+      <h2 class="sec-title">Built on Freshness. <span>Driven by Quality.</span></h2>
+      <p class="sec-sub">We started in Nkwanta with one goal: to give every Ghanaian family access to the best frozen chicken and meats at fair prices.</p>
+
+      <div class="about-grid">
+
+        <div class="about-story">
+          <div class="story-img-wrap">
+            <div class="story-img">
+              <div class="si-icon"><i class="fas fa-store-alt"></i></div>
+              <div class="si-ring r1"></div>
+              <div class="si-ring r2"></div>
+              <p>Allied Cold Store</p>
+              <span>Est. Nkwanta, Oti Region</span>
+            </div>
+            <div class="story-stat-row">
+              <div class="ssr-item">
+                <strong>5</strong>
+                <span>Branches</span>
+              </div>
+              <div class="ssr-item">
+                <strong>3+</strong>
+                <span>Categories</span>
+              </div>
+              <div class="ssr-item">
+                <strong>A+</strong>
+                <span>Quality Grade</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-features">
+          <div class="af-item">
+            <div class="af-icon afi-blue">
+              <i class="fas fa-temperature-low"></i>
+            </div>
+            <div class="af-text">
+              <h4>Perfect Cold Chain</h4>
+              <p>From source to your hands, our products never leave the cold chain. Every product is stored at the optimal temperature, guaranteed.</p>
+            </div>
+          </div>
+          <div class="af-item">
+            <div class="af-icon afi-orange">
+              <i class="fas fa-award"></i>
+            </div>
+            <div class="af-text">
+              <h4>Ghana's Best Frozen Chicken</h4>
+              <p>We carry only Grade-A whole birds, thighs, wings, gizzards and more — sourced from the most trusted suppliers in the country.</p>
+            </div>
+          </div>
+          <div class="af-item">
+            <div class="af-icon afi-green">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="af-text">
+              <h4>Easy WhatsApp Ordering</h4>
+              <p>Browse our menu, add items to your cart, and send your order directly to us on WhatsApp. Fast, simple, no app needed.</p>
+            </div>
+          </div>
+          <div class="af-item">
+            <div class="af-icon afi-yellow">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <div class="af-text">
+              <h4>Bulk & Wholesale Orders</h4>
+              <p>Restaurants, hotels, caterers and event planners — we have you covered with competitive wholesale pricing and priority service.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║         ORDER MENU SECTION               ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+
+      <div class="sec-label">
+        <span class="sl-pill">Browse & Order</span>
+      </div>
+      <h2 class="sec-title">Our Product Menu</h2>
+      <p class="sec-sub">Click <strong>"Add to Order"</strong> on any product, then send your cart directly to us on WhatsApp. It's that easy!</p>
+
+      <!-- How it works -->
+      <div class="how-it-works">
+        <div class="hiw-step">
+          <div class="hiw-num">1</div>
+          <p>Browse our products below</p>
+        </div>
+        <div class="hiw-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="hiw-step">
+          <div class="hiw-num">2</div>
+          <p>Click <strong>Add to Order</strong></p>
+        </div>
+        <div class="hiw-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="hiw-step">
+          <div class="hiw-num">3</div>
+          <p>Review your cart</p>
+        </div>
+        <div class="hiw-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="hiw-step">
+          <div class="hiw-num">4</div>
+          <p>Send via <strong>WhatsApp</strong> 🎉</p>
+        </div>
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="cat-tabs" id="cat-tabs">
+        <button class="cat-tab active" data-cat="all">
+          <i class="fas fa-border-all"></i> All Products
+        </button>
+        <button class="cat-tab" data-cat="chicken">
+          <i class="fas fa-drumstick-bite"></i> Chicken
+        </button>
+        <button class="cat-tab" data-cat="meats">
+          <i class="fas fa-bacon"></i> Meats
+        </button>
+        <button class="cat-tab" data-cat="fish">
+          <i class="fas fa-fish"></i> Fish
+        </button>
+        <button class="cat-tab" data-cat="icecream">
+          <i class="fas fa-ice-cream"></i> Ice Cream
+        </button>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid">
+        <!-- Injected by JS -->
+      </div>
+
+      <!-- Floating cart CTA (shows when cart has items) -->
+      <div class="floating-cart-cta" id="floating-cta" style="display:none;">
+        <button class="fcc-btn" id="fcc-open">
+          <i class="fas fa-basket-shopping"></i>
+          <span id="fcc-text">View Order (0 items)</span>
+          <strong id="fcc-price">GH₵ 0.00</strong>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║         BRANCHES SECTION                 ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="branches" id="branches">
+    <div class="container">
+
+      <div class="sec-label">
+        <span class="sl-pill">Find Us</span>
+      </div>
+      <h2 class="sec-title">Our 5 Branch <span>Locations</span></h2>
+      <p class="sec-sub">Walk in, call ahead, or order via WhatsApp from any branch near you.</p>
+
+      <!-- HQ -->
+      <div class="hq-branch">
+        <div class="hqb-content">
+          <div class="hqb-badge">
+            <i class="fas fa-crown"></i> Main Headquarters
+          </div>
+          <h3>Nkwanta Branch</h3>
+          <p>Our flagship store — the biggest stock, the biggest team, and the most trusted name in frozen chicken across the Oti Region.</p>
+          <div class="hqb-details">
+            <div class="hqbd-row">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Nkwanta, Oti Region, Ghana</span>
+            </div>
+            <div class="hqbd-row">
+              <i class="fas fa-phone-alt"></i>
+              <a href="tel:0542559031">054 255 9031</a>
+            </div>
+            <div class="hqbd-row">
+              <i class="fas fa-clock"></i>
+              <span>Mon – Sat: 7:00 AM – 8:00 PM</span>
+            </div>
+          </div>
+          <div class="hqb-actions">
+            <a href="tel:0542559031" class="btn-primary">
+              <i class="fas fa-phone-alt"></i> Call Branch
+            </a>
+            <a href="https://wa.me/233542559031" target="_blank" class="btn-wa-outline">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="hqb-visual">
+          <div class="hqbv-icon"><i class="fas fa-building"></i></div>
+          <div class="hqbv-ring"></div>
+          <div class="hqbv-ring r2"></div>
+          <p>Nkwanta HQ</p>
+          <span>Oti Region · Ghana</span>
+        </div>
+      </div>
+
+      <!-- 4 Branch Cards -->
+      <div class="branch-cards">
+
+        <div class="branch-card">
+          <div class="bc-header">
+            <div class="bc-num-badge">02</div>
+            <div class="bc-icon"><i class="fas fa-store"></i></div>
+          </div>
+          <h4>Kpassa</h4>
+          <p>Serving Kpassa and surrounding areas with full stock of frozen chicken and more.</p>
+          <div class="bc-info">
+            <span><i class="fas fa-map-marker-alt"></i> Kpassa, Oti Region</span>
+            <a href="tel:0542559031"><i class="fas fa-phone-alt"></i> 054 255 9031</a>
+          </div>
+          <a href="https://wa.me/233542559031?text=Hi!%20I%27m%20ordering%20from%20the%20Kpassa%20branch." target="_blank" class="bc-wa-btn">
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+          </a>
+        </div>
+
+        <div class="branch-card">
+          <div class="bc-header">
+            <div class="bc-num-badge">03</div>
+            <div class="bc-icon"><i class="fas fa-store"></i></div>
+          </div>
+          <h4>Damanko</h4>
+          <p>Your trusted cold store in the heart of Damanko — freshness guaranteed.</p>
+          <div class="bc-info">
+            <span><i class="fas fa-map-marker-alt"></i> Damanko, Oti Region</span>
+            <a href="tel:0542559031"><i class="fas fa-phone-alt"></i> 054 255 9031</a>
+          </div>
+          <a href="https://wa.me/233542559031?text=Hi!%20I%27m%20ordering%20from%20the%20Damanko%20branch." target="_blank" class="bc-wa-btn">
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+          </a>
+        </div>
+
+        <div class="branch-card">
+          <div class="bc-header">
+            <div class="bc-num-badge">04</div>
+            <div class="bc-icon"><i class="fas fa-store"></i></div>
+          </div>
+          <h4>Kpandai</h4>
+          <p>Fresh frozen chicken right in Kpandai. Walk in or order ahead anytime.</p>
+          <div class="bc-info">
+            <span><i class="fas fa-map-marker-alt"></i> Kpandai, North East Region</span>
+            <a href="tel:0542559031"><i class="fas fa-phone-alt"></i> 054 255 9031</a>
+          </div>
+          <a href="https://wa.me/233542559031?text=Hi!%20I%27m%20ordering%20from%20the%20Kpandai%20branch." target="_blank" class="bc-wa-btn">
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+          </a>
+        </div>
+
+        <div class="branch-card">
+          <div class="bc-header">
+            <div class="bc-num-badge">05</div>
+            <div class="bc-icon"><i class="fas fa-store"></i></div>
+          </div>
+          <h4>Tamale</h4>
+          <p>Our growing northern branch serving Tamale's high demand for quality frozen foods.</p>
+          <div class="bc-info">
+            <span><i class="fas fa-map-marker-alt"></i> Tamale, Northern Region</span>
+            <a href="tel:0542559031"><i class="fas fa-phone-alt"></i> 054 255 9031</a>
+          </div>
+          <a href="https://wa.me/233542559031?text=Hi!%20I%27m%20ordering%20from%20the%20Tamale%20branch." target="_blank" class="bc-wa-btn">
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║          CTA BAND                        ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="cta-band">
+    <div class="container cta-band-inner">
+      <div class="ctab-text">
+        <h2>Ready to Order? <em>It Takes 30 Seconds.</em></h2>
+        <p>Browse our menu, add items to your cart, and send your order straight to us on WhatsApp.</p>
+      </div>
+      <div class="ctab-btns">
+        <a href="#menu" class="btn-primary btn-lg">
+          <i class="fas fa-basket-shopping"></i> Start Your Order
+        </a>
+        <a href="https://wa.me/233542559031" target="_blank" class="btn-wa">
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║         CONTACT SECTION                  ║
+       ╚══════════════════════════════════════════╝ -->
+  <section class="contact" id="contact">
+    <div class="container">
+
+      <div class="sec-label">
+        <span class="sl-pill">Get In Touch</span>
+      </div>
+      <h2 class="sec-title">Contact <span>Allied Cold Store</span></h2>
+      <p class="sec-sub">Call us, WhatsApp us, or fill in the form — we respond fast.</p>
+
+      <div class="contact-grid">
+
+        <!-- Info side -->
+        <div class="contact-info">
+
+          <div class="ci-phone">
+            <div class="cip-icon"><i class="fas fa-phone-volume"></i></div>
+            <div class="cip-text">
+              <span>Call to Order Now</span>
+              <a href="tel:0542559031">054 255 9031</a>
+              <small>Mon – Sat · 7AM – 8PM</small>
+            </div>
+          </div>
+
+          <div class="ci-wa">
+            <a href="https://wa.me/233542559031" target="_blank" class="btn-wa btn-wa-full">
+              <i class="fab fa-whatsapp"></i>
+              Chat on WhatsApp
+            </a>
+          </div>
+
+          <div class="ci-cards">
+            <div class="cic-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <strong>Headquarters</strong>
+                <p>Nkwanta, Oti Region, Ghana</p>
+              </div>
+            </div>
+            <div class="cic-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <strong>Business Hours</strong>
+                <p>Monday – Saturday<br/>7:00 AM – 8:00 PM</p>
+              </div>
+            </div>
+            <div class="cic-item">
+              <i class="fas fa-boxes-stacked"></i>
+              <div>
+                <strong>Bulk & Wholesale</strong>
+                <p>Large orders for restaurants, hotels & events. Call for special rates.</p>
+              </div>
+            </div>
+            <div class="cic-item">
+              <i class="fas fa-snowflake"></i>
+              <div>
+                <strong>Always Fresh</strong>
+                <p>Products restocked daily. Cold chain maintained 24/7.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Form side -->
+        <div class="contact-form-box">
+          <h3>Send Us a Message</h3>
+          <p>Not ready to call? Drop us a message and we'll get back to you.</p>
+
+          <form id="contact-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fn">Full Name <span>*</span></label>
+                <input type="text" id="fn" placeholder="e.g. Ama Asante" />
+                <span class="ferr" id="ferr-fn"></span>
+              </div>
+              <div class="form-group">
+                <label for="fp">Phone Number <span>*</span></label>
+                <input type="tel" id="fp" placeholder="e.g. 054 000 0000" />
+                <span class="ferr" id="ferr-fp"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fb">Nearest Branch</label>
+              <select id="fb">
+                <option value="">-- Select Branch --</option>
+                <option>Nkwanta (HQ)</option>
+                <option>Kpassa</option>
+                <option>Damanko</option>
+                <option>Kpandai</option>
+                <option>Tamale</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fm">Message <span>*</span></label>
+              <textarea id="fm" rows="5" placeholder="Tell us what you need — e.g. 10kg whole chicken, delivery info, wholesale inquiry..."></textarea>
+              <span class="ferr" id="ferr-fm"></span>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+
+          </form>
+
+          <div class="form-success" id="form-success">
+            <div class="fs-icon"><i class="fas fa-check-circle"></i></div>
+            <h4>Message Sent!</h4>
+            <p>We'll be in touch soon. Need us faster?
+              <a href="tel:0542559031">Call 054 255 9031</a>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║              FOOTER                      ║
+       ╚══════════════════════════════════════════╝ -->
+  <footer class="footer">
+    <div class="footer-top container">
+
+      <div class="ft-brand">
+        <a href="#home" class="logo">
+          <div class="logo-mark"><i class="fas fa-snowflake"></i></div>
+          <div class="logo-words">
+            <span class="logo-top">ALLIED</span>
+            <span class="logo-btm">COLD STORE</span>
+          </div>
+        </a>
+        <p>Ghana's most trusted frozen chicken and meats distributor. Serving 5 locations with pride and freshness since day one.</p>
+        <a href="tel:0542559031" class="ft-phone">
+          <i class="fas fa-phone-alt"></i> 054 255 9031
+        </a>
+      </div>
+
+      <div class="ft-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Order Menu</a></li>
+          <li><a href="#branches"><i class="fas fa-chevron-right"></i> Branches</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="ft-col">
+        <h5>Our Products</h5>
+        <ul>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Frozen Chicken</a></li>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Other Frozen Meats</a></li>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Fresh Fish</a></li>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Ice Creams</a></li>
+          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Wholesale Orders</a></li>
+        </ul>
+      </div>
+
+      <div class="ft-col">
+        <h5>Branches</h5>
+        <ul>
+          <li><a href="#branches"><i class="fas fa-map-marker-alt"></i> Nkwanta (HQ)</a></li>
+          <li><a href="#branches"><i class="fas fa-map-marker-alt"></i> Kpassa</a></li>
+          <li><a href="#branches"><i class="fas fa-map-marker-alt"></i> Damanko</a></li>
+          <li><a href="#branches"><i class="fas fa-map-marker-alt"></i> Kpandai</a></li>
+          <li><a href="#branches"><i class="fas fa-map-marker-alt"></i> Tamale</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bar container">
+      <p>&copy; <span id="yr"></span> Allied Cold Store · Nkwanta, Ghana · All Rights Reserved</p>
+      <p>Made with <i class="fas fa-heart"></i> for Ghana</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="stt" id="stt" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
