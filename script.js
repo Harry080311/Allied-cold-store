@@ -981,14 +981,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   // Observe static reveal elements
-  document.querySelectorAll(
-    '.af-item, .branch-card, .cic-item, .trust-item, .mini-card, .hq-branch, .story-img-wrap, .about-features'
+ document.querySelectorAll(
+    '.af-item, .branch-card, .cic-item, .trust-item, .mini-card, .hq-branch, .story-img-wrap, .about-features, .test-card'
   ).forEach((el, i) => {
     el.classList.add('reveal');
     el.style.transitionDelay = `${(i % 4) * 0.08}s`;
     revealObserver.observe(el);
   });
-
   /* ════════════════════════════════════════════════
      11. INIT — Render products on load
   ════════════════════════════════════════════════ */
