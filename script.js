@@ -389,18 +389,244 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
     });
   });
+  /* ════════════════════════════════════════════════
+     SMART FUZZY SEARCH SYSTEM
+     Works by scoring how closely the search term
+     matches product names and descriptions.
+     Even partial words like "zard" match "gizzard"
+  ════════════════════════════════════════════════ */
 
+  const searchInput  = document.getElementById('product-search');
+  const searchClear  = document.getElementById('search-clear');
+  const searchInfo   = document.getElementById('search-info');
+  const searchInfoTx = document.getElementById('search-info-text');
+
+  /* ── Current search term (shared across functions) ── */
+  let currentSearch = '';
+  let currentFilter = 'all';
+
+  /* ────────────────────────────────────────────────
+     FUZZY MATCH FUNCTION
+     Checks if the search term is contained anywhere
+     in the target string — even partially.
+     
+     Example:
+       fuzzyMatch("gizzard", "zard") → true ✅
+       fuzzyMatch("tilapia", "pia")  → true ✅
+       fuzzyMatch("chicken", "ken")  → true ✅
+  ──────────────────────────────────────────────── */
+  function fuzzyMatch(target, search) {
+    if (!search) return true;
+
+    // Convert both to lowercase for case-insensitive matching
+    target = target.toLowerCase();
+    search = search.toLowerCase().trim();
+
+    // Direct substring match (fastest — "zard" in "gizzard")
+    if (target.includes(search)) return true;
+
+    // Check if all characters of search appear in order in target
+    // Example: "gzrd" would still match "gizzard"
+    let searchIndex = 0;
+    for (let i = 0; i < target.length; i++) {
+      if (target[i] === search[searchIndex]) {
+        searchIndex++;
+      }
+      if (searchIndex === search.length) return true;
+    }
+
+    return false;
+  }
+
+  /* ────────────────────────────────────────────────
+     SCORE FUNCTION
+     Gives higher score to better matches so the
+     most relevant results appear first.
+
+     Score system:
+     100 = exact name match ("chicken" → "chicken")
+     80  = name starts with search ("chic" → "chicken")
+     60  = name contains search ("zard" → "gizzard")
+     40  = description contains search
+     20  = fuzzy character match
+  ──────────────────────────────────────────────── */
+  function getMatchScore(product, search) {
+    if (!search) return 100;
+
+    const name = product.name.toLowerCase();
+    const desc = product.desc.toLowerCase();
+    const term = search.toLowerCase().trim();
+
+    // Exact name match
+    if (name === term) return 100;
+
+    // Name starts with search term
+    if (name.startsWith(term)) return 80;
+
+    // Name contains search term (e.g. "zard" in "gizzard")
+    if (name.includes(term)) return 60;
+
+    // Description contains search term
+    if (desc.includes(term)) return 40;
+
+    // Fuzzy character match (e.g. "gzd" in "gizzard")
+    if (fuzzyMatch(name, term) || fuzzyMatch(desc, term)) return 20;
+
+    return 0;
+  }
+
+  /* ────────────────────────────────────────────────
+     HIGHLIGHT FUNCTION
+     Wraps matching text in a highlight span
+     so the matched part appears in orange
+  ──────────────────────────────────────────────── */
+  function highlightMatch(text, search) {
+    if (!search || search.trim() === '') return text;
+
+    const term = search.trim();
+    const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<span class="search-highlight">$1</span>');
+  }
+
+  /* ────────────────────────────────────────────────
+     FILTER & SORT PRODUCTS BY SEARCH TERM
+  ──────────────────────────────────────────────── */
+  function getSearchResults(search, categoryFilter) {
+    let results = PRODUCTS;
+
+    // Apply category filter first
+    if (categoryFilter !== 'all') {
+      results = results.filter(p => p.cat === categoryFilter);
+    }
+
+    // If no search term, return all (or filtered by category)
+    if (!search || search.trim() === '') return results;
+
+    // Score each product
+    const scored = results.map(product => ({
+      product,
+      score: getMatchScore(product, search)
+    }));
+
+    // Filter out non-matches (score of 0)
+    const matches = scored.filter(item => item.score > 0);
+
+    // Sort by score (highest first = best match first)
+    matches.sort((a, b) => b.score - a.score);
+
+    // Return just the products in order
+    return matches.map(item => item.product);
+  }
+
+  /* ────────────────────────────────────────────────
+     UPDATE SEARCH UI
+     Shows/hides the info bar and clear button
+  ──────────────────────────────────────────────── */
+  function updateSearchUI(search, resultCount, totalCount) {
+    if (search && search.trim() !== '') {
+      // Show clear button
+      searchClear.style.display = 'flex';
+
+      // Show info bar
+      searchInfo.style.display = 'flex';
+
+      if (resultCount === 0) {
+        searchInfoTx.textContent =
+          `No products found for "${search}"`;
+      } else if (resultCount === totalCount) {
+        searchInfoTx.textContent =
+          `Showing all ${resultCount} products`;
+      } else {
+        searchInfoTx.textContent =
+          `Found ${resultCount} product${resultCount !== 1 ? 's' : ''} for "${search}"`;
+      }
+    } else {
+      // Hide clear button and info bar when search is empty
+      searchClear.style.display = 'none';
+      searchInfo.style.display = 'none';
+    }
+  }
+
+  /* ────────────────────────────────────────────────
+     SEARCH EVENT LISTENERS
+  ──────────────────────────────────────────────── */
+  if (searchInput) {
+
+    // Live search as user types
+    searchInput.addEventListener('input', function () {
+      currentSearch = this.value;
+      renderProducts(currentFilter, currentSearch);
+    });
+
+    // Clear search when X button clicked
+    searchClear?.addEventListener('click', function () {
+      searchInput.value = '';
+      currentSearch = '';
+      searchInput.focus();
+      renderProducts(currentFilter, '');
+    });
+
+    // Clear search on Escape key
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        this.value = '';
+        currentSearch = '';
+        renderProducts(currentFilter, '');
+        this.blur();
+      }
+    });
+  }
   /* ════════════════════════════════════════════════
      5. RENDER PRODUCTS
   ════════════════════════════════════════════════ */
-  function renderProducts(filter = 'all') {
+    function renderProducts(filter = 'all', search = '') {
     if (!productGrid) return;
 
-    const filtered = filter === 'all'
-      ? PRODUCTS
-      : PRODUCTS.filter(p => p.cat === filter);
+    // Update current state
+    currentFilter = filter;
+    currentSearch = search;
 
+    // Get search results using fuzzy matching
+    const filtered = getSearchResults(search, filter);
+
+    // Clear grid
     productGrid.innerHTML = '';
+
+    // Update search UI info bar
+    const totalInCategory = filter === 'all'
+      ? PRODUCTS.length
+      : PRODUCTS.filter(p => p.cat === filter).length;
+
+    updateSearchUI(search, filtered.length, totalInCategory);
+
+    // Show no results message
+    if (filtered.length === 0) {
+      const noResults = document.createElement('div');
+      noResults.className = 'no-results';
+      noResults.innerHTML = `
+        <div class="no-results-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h4>No products found</h4>
+        <p>We couldn't find any products matching
+        "<strong>${search}</strong>". Try a different word.</p>
+        <button class="no-results-clear" id="no-results-clear">
+          <i class="fas fa-times"></i> Clear Search
+        </button>
+      `;
+      productGrid.appendChild(noResults);
+
+      // Bind clear button inside no results
+      document.getElementById('no-results-clear')
+        ?.addEventListener('click', () => {
+          if (searchInput) {
+            searchInput.value = '';
+            currentSearch = '';
+          }
+          renderProducts(currentFilter, '');
+        });
+      return;
+    }
 
     filtered.forEach((prod, i) => {
       const card = document.createElement('div');
@@ -454,15 +680,16 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ════════════════════════════════════════════════
      6. CATEGORY FILTER TABS
   ════════════════════════════════════════════════ */
-  catTabs.forEach(tab => {
+   catTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       catTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const cat = tab.dataset.cat;
-      renderProducts(cat);
+      currentFilter = cat;
+      // Keep current search when switching categories
+      renderProducts(cat, currentSearch);
     });
   });
-
   /* ════════════════════════════════════════════════
      7. CART SYSTEM
   ════════════════════════════════════════════════ */
@@ -765,7 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ════════════════════════════════════════════════
      11. INIT — Render products on load
   ════════════════════════════════════════════════ */
-  renderProducts('all');
+   renderProducts('all', '');
   updateCart();
 
   // Initial count badge visibility

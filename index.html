@@ -372,7 +372,31 @@
           <p>Send via <strong>WhatsApp</strong> 🎉</p>
         </div>
       </div>
-
+<!-- Smart Search Bar -->
+<div class="search-wrap">
+  <div class="search-box">
+    <div class="search-icon">
+      <i class="fas fa-search"></i>
+    </div>
+    <input
+      type="text"
+      id="product-search"
+      class="search-input"
+      placeholder="Search products... try 'zard' for gizzard"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+    <button class="search-clear" id="search-clear" style="display:none;">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <!-- Search results info -->
+  <div class="search-info" id="search-info" style="display:none;">
+    <span id="search-info-text"></span>
+  </div>
+</div>
       <!-- Category Tabs -->
       <div class="cat-tabs" id="cat-tabs">
         <button class="cat-tab active" data-cat="all">
