@@ -3060,7 +3060,24 @@ body.dark-mode .form-group select option {
    12. FOOTER
 ───────────────────────────────────────────────────── */
 .footer { background: #0f172a; transition: background 0.4s ease; }
+.footer .container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
 
+@media (min-width: 768px) {
+  .footer .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer .container {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
 body.dark-mode .footer {
   background: #06060f;
   border-top: 1px solid rgba(255,255,255,0.05);
@@ -3070,21 +3087,32 @@ body.dark-mode .footer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
-  padding: 44px 0 36px;
+  padding: 44px 16px 36px;
 }
 
 @media (min-width: 480px) {
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 44px 20px 36px;
+  }
 }
 
 @media (min-width: 768px) {
-  .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 36px; padding: 55px 0 44px; }
+  .footer-top {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 36px;
+    padding: 55px 24px 44px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .footer-top { grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 50px; padding: 65px 0 50px; }
+  .footer-top {
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: 50px;
+    padding: 65px 28px 50px;
+  }
 }
-
 .ft-brand .logo-top { color: #ffffff; }
 
 .ft-brand p {
@@ -3146,7 +3174,7 @@ body.dark-mode .footer {
   gap: 8px;
   text-align: center;
   border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 18px 0;
+  padding: 18px 16px;
 }
 
 @media (min-width: 768px) {
@@ -3154,9 +3182,9 @@ body.dark-mode .footer {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
+    padding: 18px 0;
   }
 }
-
 .footer-bar p { font-size: 0.74rem; color: #475569; }
 .footer-bar i  { color: #f87171; margin: 0 2px; }
 
