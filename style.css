@@ -3097,22 +3097,28 @@ body.dark-mode .faq-item:hover .faq-icon {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(-10px);
   transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.4s ease 0.1s,
-              transform 0.4s ease 0.1s,
+              opacity 0.3s ease,
               padding 0.4s ease;
+  padding: 0 22px;
+}
+
+@media (min-width: 768px) {
+  .faq-answer { padding: 0 28px; }
 }
 
 .faq-item.open .faq-answer {
   max-height: 800px;
   opacity: 1;
-  transform: translateY(0);
-  padding: 0 22px 24px;
-  border-top: 1px solid var(--border);
-  margin-top: 0;
+  padding: 20px 22px 24px;
+  border-top: 2px solid var(--blue-mid);
 }
 
+@media (min-width: 768px) {
+  .faq-item.open .faq-answer {
+    padding: 22px 28px 28px;
+  }
+}
 @media (min-width: 768px) {
   .faq-item.open .faq-answer { padding: 0 28px 28px; }
 }
