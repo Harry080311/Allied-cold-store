@@ -743,7 +743,7 @@
 
         <!-- FAQ Item 1 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>Do you deliver to my area?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -756,7 +756,7 @@
 
         <!-- FAQ Item 2 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>What is the minimum order quantity?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -769,7 +769,7 @@
 
         <!-- FAQ Item 3 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>How do I place an order?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -787,7 +787,7 @@
 
         <!-- FAQ Item 4 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>How do I pay for my order?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -806,7 +806,7 @@
 
         <!-- FAQ Item 5 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>Are your products halal certified?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -819,7 +819,7 @@
 
         <!-- FAQ Item 6 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>How long does your frozen chicken stay fresh?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -838,7 +838,7 @@
 
         <!-- FAQ Item 7 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>Do you offer bulk or wholesale pricing?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -851,7 +851,7 @@
 
         <!-- FAQ Item 8 -->
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
             <span>What are your opening hours?</span>
             <div class="faq-icon">
               <i class="fas fa-plus"></i>
@@ -1089,6 +1089,28 @@
   </a>
 
   <script src="./script.js"></script>
+</body>
+</html>
+  <script src="./script.js"></script>
+
+  <!-- FAQ Fix -->
+  <script>
+    function toggleFaq(button) {
+      var faqItem = button.closest('.faq-item');
+      var isOpen = faqItem.classList.contains('open');
+
+      // Close all items
+      var allItems = document.querySelectorAll('.faq-item');
+      for (var i = 0; i < allItems.length; i++) {
+        allItems[i].classList.remove('open');
+      }
+
+      // Open this one if it was closed
+      if (!isOpen) {
+        faqItem.classList.add('open');
+      }
+    }
+  </script>
 </body>
 </html>
   <!-- Scroll to top -->

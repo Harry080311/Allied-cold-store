@@ -910,39 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.open(waURL, '_blank');
   });
     /* ════════════════════════════════════════════════
+    /* ════════════════════════════════════════════════
      FAQ ACCORDION
   ════════════════════════════════════════════════ */
-  const faqItems = document.querySelectorAll('.faq-item');
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', function() {
+      const faqItem = this.closest('.faq-item');
+      const isOpen = faqItem.classList.contains('open');
 
-  if (faqItems.length > 0) {
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
+      // Close all items
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('open');
+      });
 
-      if (question && answer) {
-        question.addEventListener('click', () => {
-          const isOpen = item.classList.contains('open');
-
-          // Close ALL items first
-          faqItems.forEach(i => {
-            i.classList.remove('open');
-            const q = i.querySelector('.faq-question');
-            if (q) q.setAttribute('aria-expanded', 'false');
-          });
-
-          // If it was closed, open it now
-          if (!isOpen) {
-            item.classList.add('open');
-            question.setAttribute('aria-expanded', 'true');
-          }
-        });
+      // Open clicked one if it was closed
+      if (!isOpen) {
+        faqItem.classList.add('open');
       }
     });
-
-    console.log('✅ FAQ loaded:', faqItems.length, 'questions found');
-  } else {
-    console.warn('⚠️ No FAQ items found!');
-  }
+  });
   /* ════════════════════════════════════════════════
      9. CONTACT FORM VALIDATION
   ════════════════════════════════════════════════ */

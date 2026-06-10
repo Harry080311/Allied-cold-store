@@ -3094,33 +3094,29 @@ body.dark-mode .faq-item:hover .faq-icon {
 
 /* FAQ Answer - Smooth Slide Animation */
 .faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              padding 0.4s ease;
-  padding: 0 22px;
+  display: none;
+  padding: 0 22px 24px;
+  border-top: 2px solid var(--blue-mid);
+  animation: faqSlideDown 0.3s ease;
 }
 
 @media (min-width: 768px) {
-  .faq-answer { padding: 0 28px; }
+  .faq-answer { padding: 0 28px 28px; }
 }
 
 .faq-item.open .faq-answer {
-  max-height: 800px;
-  opacity: 1;
-  padding: 20px 22px 24px;
-  border-top: 2px solid var(--blue-mid);
+  display: block;
 }
 
-@media (min-width: 768px) {
-  .faq-item.open .faq-answer {
-    padding: 22px 28px 28px;
+@keyframes faqSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-}
-@media (min-width: 768px) {
-  .faq-item.open .faq-answer { padding: 0 28px 28px; }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .faq-answer p {
@@ -3128,6 +3124,7 @@ body.dark-mode .faq-item:hover .faq-icon {
   color: var(--text-body);
   line-height: 1.8;
   margin-bottom: 12px;
+  margin-top: 16px;
   transition: var(--t-theme);
   font-weight: 400;
 }
@@ -3161,31 +3158,12 @@ body.dark-mode .faq-item:hover .faq-icon {
   border-left: 4px solid var(--blue);
   transition: var(--t-theme);
   font-weight: 400;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  animation: slideInList 0.4s ease backwards;
 }
 
 @media (min-width: 768px) {
   .faq-answer ul li {
     font-size: 0.9rem;
     padding: 14px 18px;
-  }
-}
-
-.faq-answer ul li:nth-child(1) { animation-delay: 0.15s; }
-.faq-answer ul li:nth-child(2) { animation-delay: 0.2s; }
-.faq-answer ul li:nth-child(3) { animation-delay: 0.25s; }
-
-@keyframes slideInList {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 
@@ -3197,107 +3175,6 @@ body.dark-mode .faq-item:hover .faq-icon {
 body.dark-mode .faq-answer ul li {
   border-left-color: var(--blue-l);
   background: rgba(255,255,255,0.03);
-}
-
-/* FAQ Bottom CTA */
-.faq-cta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  text-align: center;
-  background: linear-gradient(135deg, var(--blue-light), var(--bg-card));
-  border: 2px solid var(--blue-mid);
-  border-radius: var(--r-xl);
-  padding: 32px 24px;
-  box-shadow: var(--shadow-md);
-  transition: var(--t-theme);
-  max-width: 850px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .faq-cta {
-    flex-direction: row;
-    text-align: left;
-    padding: 32px 36px;
-    gap: 24px;
-  }
-}
-
-.faq-cta-icon {
-  width: 60px;
-  height: 60px;
-  background: var(--blue);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  color: #ffffff;
-  flex-shrink: 0;
-  transition: var(--t);
-  box-shadow: 0 4px 16px rgba(26,86,219,0.3);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.faq-cta-text { flex: 1; }
-
-.faq-cta-text h4 {
-  font-family: var(--ff-head);
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-head);
-  margin-bottom: 6px;
-  transition: var(--t-theme);
-}
-
-@media (min-width: 768px) {
-  .faq-cta-text h4 { font-size: 1.15rem; }
-}
-
-.faq-cta-text p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-@media (min-width: 768px) {
-  .faq-cta-text p { font-size: 0.9rem; }
-}
-
-.faq-cta-btns {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-@media (min-width: 480px) {
-  .faq-cta-btns {
-    flex-direction: row;
-    width: auto;
-  }
-}
-
-.faq-cta-btns .btn-primary,
-.faq-cta-btns .btn-wa {
-  padding: 12px 22px;
-  font-size: 0.85rem;
-  justify-content: center;
-}
-
-@media (min-width: 480px) {
-  .faq-cta-btns .btn-primary,
-  .faq-cta-btns .btn-wa {
-    width: auto;
-  }
 }
 /* ─────────────────────────────────────────────────────
    11. CONTACT SECTION
