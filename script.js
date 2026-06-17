@@ -307,7 +307,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const formSuccess  = document.getElementById('form-success');
   const stt          = document.getElementById('stt');
   const yrSpan       = document.getElementById('yr');
+  /* ════════════════════════════════════════════════
+     PROMO BANNER
+  ════════════════════════════════════════════════ */
+  const promoBanner = document.getElementById('promo-banner');
+  const promoClose  = document.getElementById('promo-close');
 
+  // Check if user already closed it
+  const promoClosed = sessionStorage.getItem('promo-closed');
+  if (promoClosed) {
+    if (promoBanner) {
+      promoBanner.style.display = 'none';
+      // Reset offsets
+      document.documentElement.style.setProperty('--promo-h', '0px');
+    }
+  }
+
+  // Close banner when X is clicked
+  promoClose?.addEventListener('click', () => {
+    promoBanner?.classList.add('hidden');
+    sessionStorage.setItem('promo-closed', 'true');
+
+    // Smoothly adjust layout
+    setTimeout(() => {
+      if (promoBanner) promoBanner.style.display = 'none';
+      document.documentElement.style.setProperty('--promo-h', '0px');
+    }, 400);
+  });
   /* ════════════════════════════════════════════════
      1. FOOTER YEAR
   ════════════════════════════════════════════════ */
