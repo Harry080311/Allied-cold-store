@@ -935,27 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.open(waURL, '_blank');
   });
-    /* ════════════════════════════════════════════════
-    /* ════════════════════════════════════════════════
-     FAQ ACCORDION
-  ════════════════════════════════════════════════ */
-  document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', function() {
-      const faqItem = this.closest('.faq-item');
-      const isOpen = faqItem.classList.contains('open');
-
-      // Close all items
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('open');
-      });
-
-      // Open clicked one if it was closed
-      if (!isOpen) {
-        faqItem.classList.add('open');
-      }
-    });
-  });
-  /* ════════════════════════════════════════════════
+     /* ════════════════════════════════════════════════
      9. CONTACT FORM VALIDATION
   ════════════════════════════════════════════════ */
   if (contactForm) {
