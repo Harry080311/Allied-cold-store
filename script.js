@@ -338,6 +338,231 @@ document.addEventListener('DOMContentLoaded', () => {
      1. FOOTER YEAR
   ════════════════════════════════════════════════ */
   if (yrSpan) yrSpan.textContent = new Date().getFullYear();
+  /* ════════════════════════════════════════════════
+     NAV SEARCH SYSTEM
+  ════════════════════════════════════════════════ */
+  const navSearchBtn      = document.getElementById('nav-search-btn');
+  const navSearchBox      = document.getElementById('nav-search-box');
+  const navSearchInput    = document.getElementById('nav-search-input');
+  const navSearchClear    = document.getElementById('nav-search-clear');
+  const navSearchDropdown = document.getElementById('nav-search-dropdown');
+  const nsdInner          = document.getElementById('nsd-inner');
+
+  let navSearchOpen = false;
+
+  /* ── Open / Close Search ── */
+  function openNavSearch() {
+    navSearchOpen = true;
+    navSearchBox.classList.add('open');
+    navSearchBtn.classList.add('active');
+    setTimeout(() => navSearchInput.focus(), 400);
+  }
+
+  function closeNavSearch() {
+    navSearchOpen = false;
+    navSearchBox.classList.remove('open');
+    navSearchBtn.classList.remove('active');
+    navSearchDropdown.classList.remove('show');
+    navSearchInput.value = '';
+    navSearchClear.classList.remove('show');
+    nsdInner.innerHTML = '';
+  }
+
+  /* ── Toggle on button click ── */
+  navSearchBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (navSearchOpen) {
+      closeNavSearch();
+    } else {
+      openNavSearch();
+    }
+  });
+
+  /* ── Close on outside click ── */
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('nav-search-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      closeNavSearch();
+    }
+  });
+
+  /* ── Close on Escape ── */
+  navSearchInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNavSearch();
+  });
+
+  /* ── Clear button ── */
+  navSearchClear?.addEventListener('click', () => {
+    navSearchInput.value = '';
+    navSearchClear.classList.remove('show');
+    navSearchDropdown.classList.remove('show');
+    nsdInner.innerHTML = '';
+    navSearchInput.focus();
+  });
+
+  /* ── Search Logic ── */
+  navSearchInput?.addEventListener('input', function () {
+    const term = this.value.trim();
+
+    /* Show / hide clear button */
+    if (term.length > 0) {
+      navSearchClear.classList.add('show');
+    } else {
+      navSearchClear.classList.remove('show');
+      navSearchDropdown.classList.remove('show');
+      nsdInner.innerHTML = '';
+      return;
+    }
+
+    /* Filter products */
+    const results = PRODUCTS.filter(p => {
+      const name = p.name.toLowerCase();
+      const desc = p.desc.toLowerCase();
+      const q    = term.toLowerCase();
+      return name.includes(q) || desc.includes(q);
+    }).slice(0, 6); /* Max 6 results */
+
+    /* Render results */
+    renderNavResults(results, term);
+  });
+
+  /* ── Render Dropdown Results ── */
+  function renderNavResults(results, term) {
+    nsdInner.innerHTML = '';
+    navSearchDropdown.classList.add('show');
+
+    /* Header */
+    const header = document.createElement('div');
+    header.className = 'nsd-header';
+    header.innerHTML = `
+      <span>Search Results</span>
+      <span class="nsd-count">${results.length} found</span>
+    `;
+    nsdInner.appendChild(header);
+
+    /* No results */
+    if (results.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'nsd-empty';
+      empty.innerHTML = `
+        <i class="fas fa-search"></i>
+        <p>No products found</p>
+        <span>Try a different search term</span>
+      `;
+      nsdInner.appendChild(empty);
+      return;
+    }
+
+    /* Result Items */
+    results.forEach(product => {
+      const inCart = cart.find(c => c.product.id === product.id);
+
+      /* Highlight matching text */
+      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      const highlightedName = product.name.replace(
+        regex, '<span class="nsd-highlight">$1</span>'
+      );
+
+      const item = document.createElement('div');
+      item.className = 'nsd-item';
+      item.innerHTML = `
+        <div class="nsd-item-icon nsd-icon-${product.cat}">
+          <i class="${product.icon}"></i>
+        </div>
+        <div class="nsd-item-info">
+          <p class="nsd-item-name">${highlightedName}</p>
+          <span class="nsd-item-cat">${product.cat}</span>
+        </div>
+        <span class="nsd-item-price">GH₵ ${product.price.toFixed(2)}</span>
+        <button class="nsd-add-btn ${inCart ? 'added' : ''}" 
+                data-id="${product.id}"
+                aria-label="Add to cart">
+          <i class="fas fa-${inCart ? 'check' : 'plus'}"></i>
+        </button>
+      `;
+
+      /* Click item → scroll to products & filter */
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.nsd-add-btn')) return;
+
+        /* Switch to correct category tab */
+        catTabs.forEach(t => t.classList.remove('active'));
+        const matchTab = document.querySelector(
+          `.cat-tab[data-cat="${product.cat}"]`
+        );
+        if (matchTab) matchTab.classList.add('active');
+
+        /* Render filtered products */
+        renderProducts(product.cat, product.name);
+
+        /* Scroll to menu section */
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+          const offset = header?.offsetHeight + 80 || 150;
+          window.scrollTo({
+            top: menuSection.offsetTop - offset,
+            behavior: 'smooth'
+          });
+        }
+
+        closeNavSearch();
+      });
+
+      /* Add to cart button */
+      const addBtn = item.querySelector('.nsd-add-btn');
+      addBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        addToCart(product.id);
+        addBtn.classList.add('added');
+        addBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          addBtn.innerHTML = '<i class="fas fa-plus"></i>';
+          addBtn.classList.remove('added');
+        }, 1500);
+      });
+
+      nsdInner.appendChild(item);
+    });
+
+    /* Footer — View All Results */
+    if (results.length > 0) {
+      const footer = document.createElement('div');
+      footer.className = 'nsd-footer';
+      footer.innerHTML = `
+        <button class="nsd-footer-btn" id="nsd-view-all">
+          <i class="fas fa-th"></i>
+          View all results in menu
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      `;
+      nsdInner.appendChild(footer);
+
+      /* View all → scroll to menu with search applied */
+      footer.querySelector('#nsd-view-all')?.addEventListener('click', () => {
+        const term = navSearchInput.value.trim();
+
+        /* Reset category tabs */
+        catTabs.forEach(t => t.classList.remove('active'));
+        document.querySelector('.cat-tab[data-cat="all"]')
+          ?.classList.add('active');
+
+        /* Apply search to product grid */
+        renderProducts('all', term);
+
+        /* Scroll to menu */
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+          const offset = header?.offsetHeight + 80 || 150;
+          window.scrollTo({
+            top: menuSection.offsetTop - offset,
+            behavior: 'smooth'
+          });
+        }
+
+        closeNavSearch();
+      });
+    }
+  }
   /* ── THEME TOGGLE ── */
   const themeBtn = document.getElementById('theme-toggle');
   const savedTheme = localStorage.getItem('acs-theme');
