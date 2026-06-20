@@ -13,23 +13,6 @@
 </head>
 <body>
 
-<!-- ╔══════════════════════════════════════════╗
-     ║        ANNOUNCEMENT BAR                  ║
-     ╚══════════════════════════════════════════╝ -->
-<div class="topbar" id="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-left">
-      <span><i class="fas fa-map-marker-alt"></i> 5 Locations Across Ghana</span>
-      <span class="tb-sep">|</span>
-      <span><i class="fas fa-clock"></i> Mon–Sat: 7AM – 8PM</span>
-    </div>
-    <div class="topbar-right">
-      <a href="tel:0542559031" class="topbar-phone">
-        <i class="fas fa-phone-alt"></i> 054 255 9031
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- ╔══════════════════════════════════════════╗
      ║           HEADER / NAV                   ║
@@ -162,105 +145,163 @@
      ╚══════════════════════════════════════════╝ -->
 <section class="hero" id="home">
 
+  <!-- Animated background elements -->
   <div class="hero-bg-pattern"></div>
+  <div class="hero-blob blob-1"></div>
+  <div class="hero-blob blob-2"></div>
+  <div class="hero-blob blob-3"></div>
 
   <div class="hero-container container">
 
-    <!-- LEFT -->
-    <div class="hero-text">
+    <!-- LEFT SIDE -->
+    <div class="hero-left">
+
+      <!-- Top badge -->
       <div class="hero-badge">
         <div class="hb-dot"></div>
-        <span>Ghana's #1 Frozen Chicken Store</span>
+        <span>🇬🇭 Ghana's #1 Frozen Chicken Store</span>
       </div>
 
-      <!-- Trust bar -->
-      <div class="trust-bar">
-        <div class="trust-item">
-          <div class="ti-icon">
-            <i class="fas fa-shield-halved"></i>
-          </div>
+      <!-- Main headline -->
+      <div class="hero-headline">
+        <h1 class="hero-h1">
+          <span class="h1-line-1">Fresh &</span>
+          <span class="h1-line-2">Frozen 🧊</span>
+          <span class="h1-line-3">Done Right!</span>
+        </h1>
+        <p class="hero-tagline">
+          From our freezer to your kitchen — 
+          <strong>Grade-A chicken, meats & more.</strong>
+          Order in 30 seconds via WhatsApp! 🔥
+        </p>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="hero-ctas">
+        <a href="#menu" class="hero-cta-primary">
+          <i class="fas fa-basket-shopping"></i>
+          <span>Order Now</span>
+          <div class="cta-shine"></div>
+        </a>
+        <a href="https://wa.me/233542559031" target="_blank" class="hero-cta-wa">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp Us</span>
+        </a>
+      </div>
+
+      <!-- Trust pills -->
+      <div class="hero-trust">
+        <div class="ht-pill">
+          <i class="fas fa-shield-halved"></i>
           <span>Grade-A Quality</span>
         </div>
-        <div class="trust-item">
-          <div class="ti-icon">
-            <i class="fas fa-temperature-low"></i>
-          </div>
+        <div class="ht-pill">
+          <i class="fas fa-temperature-low"></i>
           <span>24/7 Cold Chain</span>
         </div>
-        <div class="trust-item">
-          <div class="ti-icon">
-            <i class="fas fa-store"></i>
-          </div>
+        <div class="ht-pill">
+          <i class="fas fa-store"></i>
           <span>5 Branches</span>
         </div>
-        <div class="trust-item">
-          <div class="ti-icon">
-            <i class="fab fa-whatsapp"></i>
-          </div>
+        <div class="ht-pill">
+          <i class="fab fa-whatsapp"></i>
           <span>WhatsApp Orders</span>
         </div>
       </div>
+
     </div>
 
-    <!-- RIGHT: Hero Visual -->
-    <div class="hero-visual">
-      <div class="hero-card-wrap">
+    <!-- RIGHT SIDE -->
+    <div class="hero-right">
 
-        <!-- Main visual -->
-        <div class="hero-main-card">
-          <div class="hmc-bg"></div>
+      <!-- Floating stats -->
+      <div class="hero-stat-float stat-top">
+        <div class="hsf-icon">🏆</div>
+        <div class="hsf-text">
+          <strong>11 Years</strong>
+          <span>In Business</span>
+        </div>
+      </div>
+
+      <div class="hero-stat-float stat-bottom">
+        <div class="hsf-icon">😊</div>
+        <div class="hsf-text">
+          <strong>1000+</strong>
+          <span>Happy Customers</span>
+        </div>
+      </div>
+
+      <!-- Main product card -->
+      <div class="hero-main-card">
+        <div class="hmc-glow"></div>
+
+        <!-- Best seller tag -->
+        <div class="hmc-top-row">
+          <span class="hmc-tag">⭐ Best Seller</span>
+          <span class="hmc-live">
+            <span class="live-dot"></span> In Stock
+          </span>
+        </div>
+
+        <!-- Icon -->
+        <div class="hmc-icon-wrap">
           <div class="hmc-icon">
             <i class="fas fa-drumstick-bite"></i>
           </div>
-          <div class="hmc-label">
-            <span class="hmc-tag">⭐ Best Seller</span>
-            <h3>Premium Frozen Chicken</h3>
-            <p>Whole birds · Parts · Bulk orders</p>
-          </div>
-          <a href="#menu" class="hmc-btn">
-            View Menu <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="hmc-icon-ring r1"></div>
+          <div class="hmc-icon-ring r2"></div>
         </div>
 
-        <!-- Side mini cards -->
-        <div class="hero-mini-cards">
-          <div class="mini-card mc-fish">
+        <!-- Info -->
+        <div class="hmc-info">
+          <h3>Premium Frozen Chicken</h3>
+          <p>Whole birds · Parts · Bulk orders</p>
+        </div>
+
+        <!-- View menu button -->
+        <a href="#menu" class="hmc-btn">
+          View Full Menu
+          <i class="fas fa-arrow-right"></i>
+        </a>
+
+        <!-- Mini product pills -->
+        <div class="hmc-mini-products">
+          <div class="hmp-pill">
             <i class="fas fa-fish"></i>
-            <div>
-              <strong>Fresh Fish</strong>
-              <span>Always in stock</span>
-            </div>
+            <span>Fresh Fish</span>
           </div>
-          <div class="mini-card mc-meat">
+          <div class="hmp-pill">
             <i class="fas fa-bacon"></i>
-            <div>
-              <strong>Frozen Meats</strong>
-              <span>All cuts available</span>
-            </div>
+            <span>Frozen Meats</span>
           </div>
-          <div class="mini-card mc-ice">
+          <div class="hmp-pill">
             <i class="fas fa-ice-cream"></i>
-            <div>
-              <strong>Ice Cream</strong>
-              <span>Premium brands</span>
-            </div>
+            <span>Ice Cream</span>
           </div>
         </div>
 
       </div>
+
     </div>
 
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-hint">
+    <div class="scroll-mouse">
+      <div class="scroll-wheel"></div>
+    </div>
+    <span>Scroll to explore</span>
   </div>
 
   <!-- Curved bottom -->
   <div class="hero-curve">
     <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path d="M0,40 C400,80 1040,0 1440,50 L1440,80 L0,80 Z" fill="#f5f7ff"/>
+      <path d="M0,40 C400,80 1040,0 1440,50 L1440,80 L0,80 Z" fill="#f8fafc"/>
     </svg>
   </div>
 
 </section>
-
     
   <!-- ╔══════════════════════════════════════════╗
        ║         ORDER MENU SECTION               ║

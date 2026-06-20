@@ -608,9 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      const topbarH = document.querySelector('.topbar')?.offsetHeight || 40;
-      const navH    = header?.offsetHeight || 70;
-      const offset  = topbarH + navH + 10;
+     const navH   = header?.offsetHeight || 64;
+const offset = navH + 10;
       window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
     });
   });
