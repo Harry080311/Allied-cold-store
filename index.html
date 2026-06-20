@@ -8,343 +8,258 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+ <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║        ANNOUNCEMENT BAR                  ║
-       ╚══════════════════════════════════════════╝ -->
-  <div class="topbar" id="topbar">
-    <div class="topbar-inner">
-      <div class="topbar-left">
-        <span><i class="fas fa-map-marker-alt"></i> 5 Locations Across Ghana</span>
-        <span class="tb-sep">|</span>
-        <span><i class="fas fa-clock"></i> Mon–Sat: 7AM – 8PM</span>
-      </div>
-      <div class="topbar-right">
-        <a href="tel:0542559031" class="topbar-phone">
-          <i class="fas fa-phone-alt"></i> 054 255 9031
-        </a>
-      </div>
+<!-- ╔══════════════════════════════════════════╗
+     ║        ANNOUNCEMENT BAR                  ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span><i class="fas fa-map-marker-alt"></i> 5 Locations Across Ghana</span>
+      <span class="tb-sep">|</span>
+      <span><i class="fas fa-clock"></i> Mon–Sat: 7AM – 8PM</span>
+    </div>
+    <div class="topbar-right">
+      <a href="tel:0542559031" class="topbar-phone">
+        <i class="fas fa-phone-alt"></i> 054 255 9031
+      </a>
     </div>
   </div>
-  <!-- ╔══════════════════════════════════════════╗
-       ║        PROMO BANNER                      ║
-       ╚══════════════════════════════════════════╝ -->
-  <div class="promo-banner" id="promo-banner">
-    <div class="promo-inner">
-      <div class="promo-content">
-        <span class="promo-fire">🔥</span>
-        <p>
-          <strong>Limited Offer:</strong>
-          Order 5kg or more and get
-          <span class="promo-highlight">10% OFF</span>
-          your total! Call or WhatsApp us now!
-        </p>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║           HEADER / NAV                   ║
+     ╚══════════════════════════════════════════╝ -->
+<header class="header" id="header">
+  <nav class="nav container">
+
+    <a href="#home" class="logo">
+      <div class="logo-mark">
+        <i class="fas fa-snowflake"></i>
       </div>
-      <div class="promo-actions">
-        <a href="https://wa.me/233542559031?text=Hi!%20I%27d%20like%20to%20claim%20the%2010%25%20off%20offer!" 
-           target="_blank" 
-           class="promo-btn">
-          <i class="fab fa-whatsapp"></i>
-          Claim Offer
-        </a>
-        <button class="promo-close" id="promo-close" aria-label="Close banner">
-          <i class="fas fa-times"></i>
+      <div class="logo-words">
+        <span class="logo-top">ALLIED</span>
+        <span class="logo-btm">COLD STORE</span>
+      </div>
+    </a>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="#home"     class="nm active">Home</a></li>
+      <li><a href="#menu"     class="nm">Order Menu</a></li>
+      <li><a href="#about"    class="nm">About</a></li>
+      <li><a href="#branches" class="nm">Branches</a></li>
+      <li><a href="#contact"  class="nm">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+
+      <!-- Search Toggle -->
+      <div class="nav-search-wrap" id="nav-search-wrap">
+        <button class="nav-search-btn" id="nav-search-btn" aria-label="Search products">
+          <i class="fas fa-search" id="nav-search-icon"></i>
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ╔══════════════════════════════════════════╗
-       ║        ANNOUNCEMENT BAR                  ║
-       ╚══════════════════════════════════════════╝ -->
-  <div class="topbar" id="topbar">
-    <div class="topbar-inner">
-      <div class="topbar-left">
-        <span><i class="fas fa-map-marker-alt"></i> 5 Locations Across Ghana</span>
-        <span class="tb-sep">|</span>
-        <span><i class="fas fa-clock"></i> Mon–Sat: 7AM – 8PM</span>
-      </div>
-      <div class="topbar-right">
-        <a href="tel:0542559031" class="topbar-phone">
-          <i class="fas fa-phone-alt"></i> 054 255 9031
-        </a>
-      </div>
-    </div>
-  </div>
-  <!-- ╔══════════════════════════════════════════╗
-       ║           HEADER / NAV                   ║
-       ╚══════════════════════════════════════════╝ -->
-  <header class="header" id="header">
-    <nav class="nav container">
-
-      <a href="#home" class="logo">
-        <div class="logo-mark">
-          <i class="fas fa-snowflake"></i>
+        <div class="nav-search-box" id="nav-search-box">
+          <input 
+            type="text" 
+            id="nav-search-input" 
+            class="nav-search-input"
+            placeholder="Search products..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <button class="nav-search-clear" id="nav-search-clear">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-        <div class="logo-words">
-          <span class="logo-top">ALLIED</span>
-          <span class="logo-btm">COLD STORE</span>
+        <!-- Dropdown Results -->
+        <div class="nav-search-dropdown" id="nav-search-dropdown">
+          <div class="nsd-inner" id="nsd-inner">
+            <!-- Results injected by JS -->
+          </div>
         </div>
+      </div>
+
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon icon-moon"></i>
+        <i class="fas fa-sun icon-sun"></i>
+      </button>
+
+      <!-- Cart Button -->
+      <button class="cart-btn" id="cart-toggle" aria-label="View cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+
+      <!-- CTA -->
+      <a href="tel:0542559031" class="nav-cta">
+        <i class="fas fa-phone-alt"></i>
+        <span>Call Now</span>
       </a>
 
-     <ul class="nav-menu" id="nav-menu">
-  <li><a href="#home"     class="nm active">Home</a></li>
-  <li><a href="#menu"     class="nm">Order Menu</a></li>
-  <li><a href="#about"    class="nm">About</a></li>
-  <li><a href="#branches" class="nm">Branches</a></li>
-  <li><a href="#contact"  class="nm">Contact</a></li>
-</ul>
-<div class="nav-right">
+      <!-- Burger -->
+      <button class="burger" id="burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
 
-  <!-- Search Toggle -->
-  <div class="nav-search-wrap" id="nav-search-wrap">
-    <button class="nav-search-btn" id="nav-search-btn" aria-label="Search products">
-      <i class="fas fa-search" id="nav-search-icon"></i>
+    </div>
+
+  </nav>
+</header>
+
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║         CART SIDEBAR                     ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-head">
+    <div class="cart-head-left">
+      <i class="fas fa-shopping-basket"></i>
+      <h3>Your Order</h3>
+    </div>
+    <button class="cart-close" id="cart-close">
+      <i class="fas fa-times"></i>
     </button>
-    <div class="nav-search-box" id="nav-search-box">
-      <input 
-        type="text" 
-        id="nav-search-input" 
-        class="nav-search-input"
-        placeholder="Search products..."
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-      />
-      <button class="nav-search-clear" id="nav-search-clear">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <!-- Dropdown Results -->
-    <div class="nav-search-dropdown" id="nav-search-dropdown">
-      <div class="nsd-inner" id="nsd-inner">
-        <!-- Results injected by JS -->
-      </div>
+  </div>
+
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty" id="cart-empty">
+      <div class="ce-icon"><i class="fas fa-basket-shopping"></i></div>
+      <p>Your cart is empty</p>
+      <span>Browse our menu and add items to order</span>
     </div>
   </div>
 
-  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-    <i class="fas fa-moon icon-moon"></i>
-    <i class="fas fa-sun icon-sun"></i>
-  </button>
-  <!-- Cart Button -->
-  <button class="cart-btn" id="cart-toggle" aria-label="View cart">
-    <i class="fas fa-shopping-basket"></i>
-    <span class="cart-count" id="cart-count">0</span>
-  </button>
-  <!-- CTA -->
-  <a href="tel:0542559031" class="nav-cta">
-    <i class="fas fa-phone-alt"></i>
-    <span>Call Now</span>
-  </a>
-  <!-- Burger -->
-  <button class="burger" id="burger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cart-total-price">GH₵ 0.00</strong>
+    </div>
+    <div class="cart-note">
+      <i class="fas fa-info-circle"></i>
+      <span>Final price confirmed at branch. Prices may vary slightly.</span>
+    </div>
+    <button class="wa-order-btn" id="wa-order-btn">
+      <i class="fab fa-whatsapp"></i>
+      Order via WhatsApp
+    </button>
+    <button class="cart-clear" id="cart-clear">
+      <i class="fas fa-trash-alt"></i> Clear Cart
+    </button>
+  </div>
 </div>
-  <i class="fas fa-moon icon-moon"></i>
-  <i class="fas fa-sun icon-sun"></i>
-</button>
-        <!-- Cart Button -->
-        <button class="cart-btn" id="cart-toggle" aria-label="View cart">
-          <i class="fas fa-shopping-basket"></i>
-          <span class="cart-count" id="cart-count">0</span>
-        </button>
-        <!-- CTA -->
-        <a href="tel:0542559031" class="nav-cta">
-          <i class="fas fa-phone-alt"></i>
-          <span>Call Now</span>
-        </a>
-        <!-- Burger -->
-        <button class="burger" id="burger" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
+
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║              HERO SECTION                ║
+     ╚══════════════════════════════════════════╝ -->
+<section class="hero" id="home">
+
+  <div class="hero-bg-pattern"></div>
+
+  <div class="hero-container container">
+
+    <!-- LEFT -->
+    <div class="hero-text">
+      <div class="hero-badge">
+        <div class="hb-dot"></div>
+        <span>Ghana's #1 Frozen Chicken Store</span>
       </div>
 
-    </nav>
-  </header>
-
-  <div class="nav-overlay" id="nav-overlay"></div>
-
-  <!-- ╔══════════════════════════════════════════╗
-       ║         CART SIDEBAR                     ║
-       ╚══════════════════════════════════════════╝ -->
-  <div class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-head">
-      <div class="cart-head-left">
-        <i class="fas fa-shopping-basket"></i>
-        <h3>Your Order</h3>
+      <!-- Trust bar -->
+      <div class="trust-bar">
+        <div class="trust-item">
+          <div class="ti-icon">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <span>Grade-A Quality</span>
+        </div>
+        <div class="trust-item">
+          <div class="ti-icon">
+            <i class="fas fa-temperature-low"></i>
+          </div>
+          <span>24/7 Cold Chain</span>
+        </div>
+        <div class="trust-item">
+          <div class="ti-icon">
+            <i class="fas fa-store"></i>
+          </div>
+          <span>5 Branches</span>
+        </div>
+        <div class="trust-item">
+          <div class="ti-icon">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <span>WhatsApp Orders</span>
+        </div>
       </div>
-      <button class="cart-close" id="cart-close">
-        <i class="fas fa-times"></i>
-      </button>
     </div>
 
-    <div class="cart-body" id="cart-body">
-      <!-- Cart items injected by JS -->
-      <div class="cart-empty" id="cart-empty">
-        <div class="ce-icon"><i class="fas fa-basket-shopping"></i></div>
-        <p>Your cart is empty</p>
-        <span>Browse our menu and add items to order</span>
+    <!-- RIGHT: Hero Visual -->
+    <div class="hero-visual">
+      <div class="hero-card-wrap">
+
+        <!-- Main visual -->
+        <div class="hero-main-card">
+          <div class="hmc-bg"></div>
+          <div class="hmc-icon">
+            <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="hmc-label">
+            <span class="hmc-tag">⭐ Best Seller</span>
+            <h3>Premium Frozen Chicken</h3>
+            <p>Whole birds · Parts · Bulk orders</p>
+          </div>
+          <a href="#menu" class="hmc-btn">
+            View Menu <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Side mini cards -->
+        <div class="hero-mini-cards">
+          <div class="mini-card mc-fish">
+            <i class="fas fa-fish"></i>
+            <div>
+              <strong>Fresh Fish</strong>
+              <span>Always in stock</span>
+            </div>
+          </div>
+          <div class="mini-card mc-meat">
+            <i class="fas fa-bacon"></i>
+            <div>
+              <strong>Frozen Meats</strong>
+              <span>All cuts available</span>
+            </div>
+          </div>
+          <div class="mini-card mc-ice">
+            <i class="fas fa-ice-cream"></i>
+            <div>
+              <strong>Ice Cream</strong>
+              <span>Premium brands</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="cart-footer" id="cart-footer" style="display:none;">
-      <div class="cart-total">
-        <span>Total</span>
-        <strong id="cart-total-price">GH₵ 0.00</strong>
-      </div>
-      <div class="cart-note">
-        <i class="fas fa-info-circle"></i>
-        <span>Final price confirmed at branch. Prices may vary slightly.</span>
-      </div>
-      <button class="wa-order-btn" id="wa-order-btn">
-        <i class="fab fa-whatsapp"></i>
-        Order via WhatsApp
-      </button>
-      <button class="cart-clear" id="cart-clear">
-        <i class="fas fa-trash-alt"></i> Clear Cart
-      </button>
-    </div>
   </div>
 
-  <div class="cart-overlay" id="cart-overlay"></div>
+  <!-- Curved bottom -->
+  <div class="hero-curve">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,40 C400,80 1040,0 1440,50 L1440,80 L0,80 Z" fill="#f5f7ff"/>
+    </svg>
+  </div>
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║              HERO SECTION                ║
-       ╚══════════════════════════════════════════╝ -->
-  <section class="hero" id="home">
-
-    <div class="hero-bg-pattern"></div>
-
-    <div class="hero-container container">
-
-      <!-- LEFT -->
-      <div class="hero-text">
-
-        <div class="hero-badge">
-          <div class="hb-dot"></div>
-          <span>Ghana's #1 Frozen Chicken Store</span>
-        </div>
-
-        <h1 class="hero-h1">
-          Premium Frozen<br/>
-          <span class="h1-highlight">Chicken</span> &
-          <span class="h1-highlight">Meats</span><br/>
-          <span class="h1-small">Delivered Fresh to Your Door.</span>
-        </h1>
-
-        <p class="hero-desc">
-          Flash-frozen at peak freshness. Grade-A quality every time.
-          Serving <strong>5 branches</strong> across Nkwanta, Kpassa, Damanko, Kpandai & Tamale.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#menu" class="btn-primary">
-            <i class="fas fa-basket-shopping"></i>
-            Browse & Order
-          </a>
-          <a href="tel:0542559031" class="btn-outline">
-            <i class="fas fa-phone-alt"></i>
-            054 255 9031
-          </a>
-        </div>
-
-        <!-- Trust bar -->
-        <div class="trust-bar">
-          <div class="trust-item">
-            <div class="ti-icon">
-              <i class="fas fa-shield-halved"></i>
-            </div>
-            <span>Grade-A Quality</span>
-          </div>
-          <div class="trust-item">
-            <div class="ti-icon">
-              <i class="fas fa-temperature-low"></i>
-            </div>
-            <span>24/7 Cold Chain</span>
-          </div>
-          <div class="trust-item">
-            <div class="ti-icon">
-              <i class="fas fa-store"></i>
-            </div>
-            <span>5 Branches</span>
-          </div>
-          <div class="trust-item">
-            <div class="ti-icon">
-              <i class="fab fa-whatsapp"></i>
-            </div>
-            <span>WhatsApp Orders</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT: Hero Visual -->
-      <div class="hero-visual">
-        <div class="hero-card-wrap">
-
-          <!-- Main visual -->
-          <div class="hero-main-card">
-            <div class="hmc-bg"></div>
-            <div class="hmc-icon">
-              <i class="fas fa-drumstick-bite"></i>
-            </div>
-            <div class="hmc-label">
-              <span class="hmc-tag">⭐ Best Seller</span>
-              <h3>Premium Frozen Chicken</h3>
-              <p>Whole birds · Parts · Bulk orders</p>
-            </div>
-            <a href="#menu" class="hmc-btn">
-              View Menu <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <!-- Side mini cards -->
-          <div class="hero-mini-cards">
-            <div class="mini-card mc-fish">
-              <i class="fas fa-fish"></i>
-              <div>
-                <strong>Fresh Fish</strong>
-                <span>Always in stock</span>
-              </div>
-            </div>
-            <div class="mini-card mc-meat">
-              <i class="fas fa-bacon"></i>
-              <div>
-                <strong>Frozen Meats</strong>
-                <span>All cuts available</span>
-              </div>
-            </div>
-            <div class="mini-card mc-ice">
-              <i class="fas fa-ice-cream"></i>
-              <div>
-                <strong>Ice Cream</strong>
-                <span>Premium brands</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Curved bottom -->
-    <div class="hero-curve">
-      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-        <path d="M0,40 C400,80 1040,0 1440,50 L1440,80 L0,80 Z" fill="#f5f7ff"/>
-      </svg>
-    </div>
-
-  </section>
+</section>
 
     
   <!-- ╔══════════════════════════════════════════╗
