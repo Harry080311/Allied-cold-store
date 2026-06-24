@@ -18,7 +18,28 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* ════════════════════════════════════════════════
+     PAGE LOADER
+  ════════════════════════════════════════════════ */
+  const pageLoader = document.getElementById('page-loader');
 
+  function hideLoader() {
+    if (!pageLoader) return;
+    pageLoader.classList.add('hide');
+    // Remove from DOM completely after animation
+    setTimeout(() => {
+      pageLoader.remove();
+    }, 700);
+  }
+
+  // Hide loader when page is fully loaded
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 1500);
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(hideLoader, 1500);
+    });
+  }
   /* ────────────────────────────────────────────────
      WHATSAPP PHONE NUMBER
      Change this to the actual WhatsApp number.
