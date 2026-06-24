@@ -1221,60 +1221,310 @@ const offset = navH + 10;
   if (cartCount) cartCount.style.display = 'none';
 
   console.log('🐔 Allied Cold Store — Light Mode Ready!');
-});
 /* ════════════════════════════════════════════════
    WHATSAPP REORDER SYSTEM
    ════════════════════════════════════════════════ */
 
-  /* ── Element Refs ── */
-  const welcomeOverlay   = document.getElementById('welcome-overlay');
-  const welcomePopup     = document.getElementById('welcome-popup');
-  const wpSaveBtn        = document.getElementById('wp-save-btn');
-  const wpSkipBtn        = document.getElementById('wp-skip-btn');
-  const wpNameInput      = document.getElementById('wp-name');
-  const wpPhoneInput     = document.getElementById('wp-phone');
-  const wpErr            = document.getElementById('wp-err');
-  const welcomeBackBanner= document.getElementById('welcome-back-banner');
-  const wbbGreeting      = document.getElementById('wbb-greeting');
-  const wbbLastOrder     = document.getElementById('wbb-last-order');
-  const wbbReorderBtn    = document.getElementById('wbb-reorder-btn');
-  const wbbCloseBtn      = document.getElementById('wbb-close-btn');
-  const wbbOrderDetails  = document.getElementById('wbb-order-details');
-  const wbbOdInner       = document.getElementById('wbb-od-inner');
-
   /* ── Storage Keys ── */
-  const KEY_CUSTOMER  = 'acs-customer';
-  const KEY_LAST_ORDER= 'acs-last-order';
-  const KEY_SKIPPED   = 'acs-skipped';
-  const KEY_BANNER    = 'acs-banner-dismissed';
+  const ACS_CUSTOMER  = 'acs-customer';
+  const ACS_ORDER     = 'acs-last-order';
+  const ACS_SKIPPED   = 'acs-skipped';
+  const ACS_DISMISSED = 'acs-dismissed';
 
-  /* ── Get Stored Data ── */
-  function getCustomer() {
-    try { return JSON.parse(localStorage.getItem(KEY_CUSTOMER)); }
-    catch { return null; }
+  /* ── Elements ── */
+  const acsOverlay    = document.getElementById('acs-overlay');
+  const acsPopup      = document.getElementById('acs-popup');
+  const acsSave       = document.getElementById('acs-save');
+  const acsSkip       = document.getElementById('acs-skip');
+  const acsNameEl     = document.getElementById('acs-name');
+  const acsPhoneEl    = document.getElementById('acs-phone');
+  const acsErrEl      = document.getElementById('acs-err');
+  const acsBanner     = document.getElementById('acs-banner');
+  const acsGreeting   = document.getElementById('acs-greeting');
+  const acsOrderSum   = document.getElementById('acs-order-summary');
+  const acsReorderBtn = document.getElementById('acs-reorder-btn');
+  const acsCloseBtn   = document.getElementById('acs-close-btn');
+  const acsOdDetails  = document.getElementById('acs-order-details');
+  const acsOdInner    = document.getElementById('acs-od-inner');
+
+  /* ── Show Popup ── */
+  function acsShowPopup() {
+    if (!acsPopup || !acsOverlay) return;
+    acsOverlay.style.display = 'block';
+    acsPopup.style.display   = 'block';
+    document.body.style.overflow = 'hidden';
   }
 
-  function getLastOrder() {
-    try { return JSON.parse(localStorage.getItem(KEY_LAST_ORDER)); }
-    catch { return null; }
+  /* ── Hide Popup ── */
+  function acsHidePopup() {
+    if (!acsPopup || !acsOverlay) return;
+    acsOverlay.style.display = 'none';
+    acsPopup.style.display   = 'none';
+    document.body.style.overflow = '';
   }
 
-  /* ── Save Customer ── */
-  function saveCustomer(name, phone) {
-    localStorage.setItem(KEY_CUSTOMER, JSON.stringify({ name, phone }));
+  /* ── Show Welcome Back Banner ── */
+  function acsShowBanner(customer, lastOrder) {
+    if (!acsBanner) return;
+
+    /* Greeting */
+    if (acsGreeting) {
+      acsGreeting.textContent = `Welcome back ${customer.name}! 👋`;
+    }
+
+    /* Order Summary */
+    if (acsOrderSum && lastOrder) {
+      const count = lastOrder.items.reduce((s, i) => s + i.qty, 0);
+      acsOrderSum.textContent =
+        `Last order: ${count} item${count !== 1 ? 's' : ''} · GH₵ ${lastOrder.total.toFixed(2)} · ${lastOrder.date}`;
+    }
+
+    /* Show banner */
+    acsBanner.style.display = 'block';
+
+    /* Render order details */
+    if (lastOrder) acsRenderDetails(lastOrder);
   }
 
-  /* ── Save Last Order ── */
-  function saveLastOrder() {
+  /* ── Render Order Details ── */
+  function acsRenderDetails(lastOrder) {
+    if (!acsOdInner) return;
+    acsOdInner.innerHTML = '';
+
+    /* Items */
+    lastOrder.items.forEach(item => {
+      const sub = (item.price * item.qty).toFixed(2);
+      const el  = document.createElement('div');
+      el.style.cssText = `
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        padding:10px 12px;
+        background:#ffffff;
+        border:1px solid #e2e8f0;
+        border-radius:12px;
+      `;
+      el.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="
+            width:36px;
+            height:36px;
+            border-radius:8px;
+            background:#fff7ed;
+            color:#f97316;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:0.9rem;
+            flex-shrink:0;
+          ">
+            <i class="${item.icon}"></i>
+          </div>
+          <div>
+            <p style="
+              font-family:'Fredoka',sans-serif;
+              font-size:0.82rem;
+              font-weight:700;
+              color:#0f172a;
+              margin-bottom:2px;
+            ">${item.name}</p>
+            <p style="
+              font-size:0.72rem;
+              color:#64748b;
+            ">Qty: ${item.qty} · ${item.unit}</p>
+          </div>
+        </div>
+        <span style="
+          font-family:'Fredoka',sans-serif;
+          font-size:0.82rem;
+          font-weight:800;
+          color:#f97316;
+          white-space:nowrap;
+        ">GH₵ ${sub}</span>
+      `;
+      acsOdInner.appendChild(el);
+    });
+
+    /* Total */
+    const totalEl = document.createElement('div');
+    totalEl.style.cssText = `
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      background:#eff4ff;
+      border:1px solid #dbeafe;
+      border-radius:12px;
+    `;
+    totalEl.innerHTML = `
+      <span style="
+        font-family:'Fredoka',sans-serif;
+        font-size:0.82rem;
+        font-weight:700;
+        color:#64748b;
+      ">Order Total</span>
+      <strong style="
+        font-family:'Fredoka',sans-serif;
+        font-size:1rem;
+        font-weight:900;
+        color:#1a56db;
+      ">GH₵ ${lastOrder.total.toFixed(2)}</strong>
+    `;
+    acsOdInner.appendChild(totalEl);
+
+    /* Action Buttons */
+    const actionsEl = document.createElement('div');
+    actionsEl.style.cssText = 'display:flex; gap:10px; margin-top:4px;';
+    actionsEl.innerHTML = `
+      <button id="acs-do-reorder" style="
+        flex:1;
+        padding:12px;
+        background:linear-gradient(135deg,#25d366,#128c4e);
+        color:#ffffff;
+        border:none;
+        border-radius:999px;
+        font-family:'Fredoka',sans-serif;
+        font-size:0.82rem;
+        font-weight:700;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        box-shadow:0 3px 12px rgba(37,211,102,0.3);
+      ">
+        <i class="fas fa-redo"></i> Reorder This
+      </button>
+      <button id="acs-do-browse" style="
+        flex:1;
+        padding:12px;
+        background:#ffffff;
+        color:#1a56db;
+        border:2px solid #dbeafe;
+        border-radius:999px;
+        font-family:'Fredoka',sans-serif;
+        font-size:0.82rem;
+        font-weight:700;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+      ">
+        <i class="fas fa-th"></i> Browse Menu
+      </button>
+    `;
+    acsOdInner.appendChild(actionsEl);
+
+    /* Reorder Button Click */
+    document.getElementById('acs-do-reorder')
+      ?.addEventListener('click', () => {
+        /* Clear cart */
+        cart = [];
+
+        /* Load last order into cart */
+        lastOrder.items.forEach(item => {
+          const product = PRODUCTS.find(p => p.id === item.id);
+          if (product) cart.push({ product, qty: item.qty });
+        });
+
+        /* Update cart UI */
+        updateCart();
+        bumpCount();
+
+        /* Hide banner */
+        acsDismissBanner();
+
+        /* Open cart after short delay */
+        setTimeout(openCart, 400);
+
+        /* Scroll to menu */
+        const menuSec = document.getElementById('menu');
+        if (menuSec) {
+          window.scrollTo({
+            top: menuSec.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+
+    /* Browse Button Click */
+    document.getElementById('acs-do-browse')
+      ?.addEventListener('click', () => {
+        acsDismissBanner();
+        const menuSec = document.getElementById('menu');
+        if (menuSec) {
+          window.scrollTo({
+            top: menuSec.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+  }
+
+  /* ── Dismiss Banner ── */
+  function acsDismissBanner() {
+    if (acsBanner) acsBanner.style.display = 'none';
+    localStorage.setItem(ACS_DISMISSED, 'true');
+  }
+
+  /* ── Save Button ── */
+  acsSave?.addEventListener('click', () => {
+    const name  = acsNameEl?.value.trim();
+    const phone = acsPhoneEl?.value.trim().replace(/\s/g, '');
+
+    /* Validate Name */
+    if (!name) {
+      if (acsErrEl) acsErrEl.textContent = 'Please enter your name.';
+      acsNameEl?.focus();
+      return;
+    }
+
+    /* Validate Phone */
+    if (!phone || phone.length < 10) {
+      if (acsErrEl) acsErrEl.textContent = 'Please enter a valid phone number.';
+      acsPhoneEl?.focus();
+      return;
+    }
+
+    /* Save customer */
+    localStorage.setItem(
+      ACS_CUSTOMER,
+      JSON.stringify({ name, phone })
+    );
+
+    /* Hide popup */
+    acsHidePopup();
+  });
+
+  /* ── Skip Button ── */
+  acsSkip?.addEventListener('click', () => {
+    localStorage.setItem(ACS_SKIPPED, 'true');
+    acsHidePopup();
+  });
+
+  /* ── Reorder Button on Banner ── */
+  acsReorderBtn?.addEventListener('click', () => {
+    if (!acsOdDetails) return;
+    acsOdDetails.style.display =
+      acsOdDetails.style.display === 'none' ? 'block' : 'none';
+  });
+
+  /* ── Close Banner Button ── */
+  acsCloseBtn?.addEventListener('click', acsDismissBanner);
+
+  /* ── Save Order When WhatsApp Button Clicked ── */
+  waBtn?.addEventListener('click', () => {
     if (cart.length === 0) return;
     const order = {
       items: cart.map(({ product, qty }) => ({
-        id:       product.id,
-        name:     product.name,
-        price:    product.price,
-        unit:     product.unit,
-        icon:     product.icon,
-        cat:      product.cat,
+        id:    product.id,
+        name:  product.name,
+        price: product.price,
+        unit:  product.unit,
+        icon:  product.icon,
+        cat:   product.cat,
         qty
       })),
       total: getTotal(),
@@ -1284,247 +1534,29 @@ const offset = navH + 10;
         year:  'numeric'
       })
     };
-    localStorage.setItem(KEY_LAST_ORDER, JSON.stringify(order));
-  }
-
-  /* ── Show Welcome Popup ── */
-  function showWelcomePopup() {
-    welcomeOverlay.classList.add('show');
-    welcomePopup.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  /* ── Hide Welcome Popup ── */
-  function hideWelcomePopup() {
-    welcomeOverlay.classList.remove('show');
-    welcomePopup.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  /* ── Show Welcome Back Banner ── */
-  function showWelcomeBackBanner(customer, lastOrder) {
-    if (!welcomeBackBanner) return;
-
-    /* Set greeting */
-    wbbGreeting.textContent = `Welcome back ${customer.name}! 👋`;
-
-    /* Set last order summary */
-    if (lastOrder) {
-      const itemCount = lastOrder.items.reduce((s, i) => s + i.qty, 0);
-      wbbLastOrder.textContent =
-        `Last order: ${itemCount} item${itemCount !== 1 ? 's' : ''} — GH₵ ${lastOrder.total.toFixed(2)} · ${lastOrder.date}`;
-    }
-
-    welcomeBackBanner.style.display = 'block';
-
-    /* Render order details */
-    if (lastOrder) renderLastOrderDetails(lastOrder);
-  }
-
-  /* ── Render Last Order Details ── */
-  function renderLastOrderDetails(lastOrder) {
-    if (!wbbOdInner) return;
-    wbbOdInner.innerHTML = '';
-
-    /* Items */
-    lastOrder.items.forEach(item => {
-      const subtotal = (item.price * item.qty).toFixed(2);
-      const el = document.createElement('div');
-      el.className = 'wbb-od-item';
-      el.innerHTML = `
-        <div class="wbb-od-left">
-          <div class="wbb-od-icon cat-${item.cat}">
-            <i class="${item.icon}"></i>
-          </div>
-          <div>
-            <p class="wbb-od-name">${item.name}</p>
-            <p class="wbb-od-qty">Qty: ${item.qty} · ${item.unit}</p>
-          </div>
-        </div>
-        <span class="wbb-od-price">GH₵ ${subtotal}</span>
-      `;
-      wbbOdInner.appendChild(el);
-    });
-
-    /* Total */
-    const totalEl = document.createElement('div');
-    totalEl.className = 'wbb-od-total';
-    totalEl.innerHTML = `
-      <span>Order Total</span>
-      <strong>GH₵ ${lastOrder.total.toFixed(2)}</strong>
-    `;
-    wbbOdInner.appendChild(totalEl);
-
-    /* Action Buttons */
-    const actionsEl = document.createElement('div');
-    actionsEl.className = 'wbb-od-actions';
-    actionsEl.innerHTML = `
-      <button class="wbb-od-reorder" id="wbb-od-reorder-btn">
-        <i class="fas fa-redo"></i>
-        Reorder This
-      </button>
-      <button class="wbb-od-browse" id="wbb-od-browse-btn">
-        <i class="fas fa-th"></i>
-        Browse Menu
-      </button>
-    `;
-    wbbOdInner.appendChild(actionsEl);
-
-    /* Bind reorder button */
-    document.getElementById('wbb-od-reorder-btn')
-      ?.addEventListener('click', () => {
-        reorderLastOrder(lastOrder);
-      });
-
-    /* Bind browse button */
-    document.getElementById('wbb-od-browse-btn')
-      ?.addEventListener('click', () => {
-        dismissBanner();
-        /* Scroll to menu */
-        const menuSection = document.getElementById('menu');
-        if (menuSection) {
-          window.scrollTo({
-            top: menuSection.offsetTop - 80,
-            behavior: 'smooth'
-          });
-        }
-      });
-  }
-
-  /* ── Reorder Last Order ── */
-  function reorderLastOrder(lastOrder) {
-    if (!lastOrder || !lastOrder.items) return;
-
-    /* Clear current cart */
-    cart = [];
-
-    /* Add last order items back to cart */
-    lastOrder.items.forEach(item => {
-      const product = PRODUCTS.find(p => p.id === item.id);
-      if (product) {
-        cart.push({ product, qty: item.qty });
-      }
-    });
-
-    /* Update cart UI */
-    updateCart();
-    bumpCount();
-
-    /* Dismiss banner */
-    dismissBanner();
-
-    /* Open cart */
-    setTimeout(() => {
-      openCart();
-    }, 400);
-
-    /* Scroll to menu */
-    const menuSection = document.getElementById('menu');
-    if (menuSection) {
-      window.scrollTo({
-        top: menuSection.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  }
-
-  /* ── Dismiss Banner ── */
-  function dismissBanner() {
-    if (welcomeBackBanner) {
-      welcomeBackBanner.style.animation = 'bannerSlideDown 0.3s ease forwards';
-      setTimeout(() => {
-        welcomeBackBanner.style.display = 'none';
-      }, 300);
-    }
-    localStorage.setItem(KEY_BANNER, 'true');
-  }
-
-  /* ── Banner Slide Down Animation ── */
-  const bannerStyle = document.createElement('style');
-  bannerStyle.textContent = `
-    @keyframes bannerSlideDown {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(100%); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(bannerStyle);
-
-  /* ── Save Btn Click ── */
-  wpSaveBtn?.addEventListener('click', () => {
-    const name  = wpNameInput?.value.trim();
-    const phone = wpPhoneInput?.value.trim().replace(/\s/g, '');
-
-    /* Validate */
-    if (!name) {
-      wpErr.textContent = 'Please enter your name.';
-      wpNameInput?.focus();
-      return;
-    }
-
-    if (!phone || phone.length < 10) {
-      wpErr.textContent = 'Please enter a valid phone number.';
-      wpPhoneInput?.focus();
-      return;
-    }
-
-    /* Save customer */
-    saveCustomer(name, phone);
-    hideWelcomePopup();
+    localStorage.setItem(ACS_ORDER, JSON.stringify(order));
   });
 
-  /* ── Skip Btn Click ── */
-  wpSkipBtn?.addEventListener('click', () => {
-    localStorage.setItem(KEY_SKIPPED, 'true');
-    hideWelcomePopup();
-  });
+  /* ── INIT — Run on page load ── */
+  (function acsInit() {
+    const customer  = JSON.parse(
+      localStorage.getItem(ACS_CUSTOMER) || 'null'
+    );
+    const lastOrder = JSON.parse(
+      localStorage.getItem(ACS_ORDER) || 'null'
+    );
+    const skipped   = localStorage.getItem(ACS_SKIPPED);
+    const dismissed = localStorage.getItem(ACS_DISMISSED);
 
-  /* ── Banner Reorder Btn ── */
-  wbbReorderBtn?.addEventListener('click', () => {
-    const lastOrder = getLastOrder();
-    if (!lastOrder) return;
-
-    /* Toggle order details */
-    if (wbbOrderDetails.classList.contains('show')) {
-      wbbOrderDetails.classList.remove('show');
-    } else {
-      wbbOrderDetails.classList.add('show');
-    }
-  });
-
-  /* ── Banner Close Btn ── */
-  wbbCloseBtn?.addEventListener('click', dismissBanner);
-
-  /* ── Hook into WhatsApp Order Button ── */
-  /* Save order when customer clicks Order via WhatsApp */
-  const originalWaBtn = waBtn;
-  originalWaBtn?.addEventListener('click', () => {
-    saveLastOrder();
-  });
-
-  /* ── INIT — Check what to show on load ── */
-  function initReorderSystem() {
-    const customer  = getCustomer();
-    const lastOrder = getLastOrder();
-    const skipped   = localStorage.getItem(KEY_SKIPPED);
-    const dismissed = localStorage.getItem(KEY_BANNER);
-
-    /* If returning customer with last order */
+    /* Returning customer with saved order */
     if (customer && lastOrder && !dismissed) {
-      /* Show welcome back banner after short delay */
-      setTimeout(() => {
-        showWelcomeBackBanner(customer, lastOrder);
-      }, 1500);
+      setTimeout(() => acsShowBanner(customer, lastOrder), 1500);
       return;
     }
 
-    /* If new visitor and hasn't skipped */
+    /* New visitor who hasnt skipped */
     if (!customer && !skipped) {
-      /* Show welcome popup after delay */
-      setTimeout(() => {
-        showWelcomePopup();
-      }, 3000);
+      setTimeout(acsShowPopup, 3000);
     }
-  }
-
-  /* ── Run on Load ── */
-  initReorderSystem();
+  })();
+});
