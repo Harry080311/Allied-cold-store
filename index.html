@@ -90,7 +90,81 @@
 </header>
 
 <div class="nav-overlay" id="nav-overlay"></div>
+<!-- ╔══════════════════════════════════════════╗
+     ║       WELCOME POPUP (First Visit)        ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="welcome-overlay" id="welcome-overlay"></div>
+<div class="welcome-popup" id="welcome-popup">
+  <div class="wp-icon">
+    <img src="./ag-logo.png" alt="Allied Cold Store" class="wp-logo">
+  </div>
+  <div class="wp-content">
+    <h3>👋 Quick Setup!</h3>
+    <p>Save your details for faster ordering next time. We'll remember your last order!</p>
+    <div class="wp-form">
+      <div class="wp-input-group">
+        <label>Your Name</label>
+        <input 
+          type="text" 
+          id="wp-name" 
+          placeholder="e.g. Ama Asante"
+          autocomplete="off"
+        />
+      </div>
+      <div class="wp-input-group">
+        <label>Phone Number</label>
+        <input 
+          type="tel" 
+          id="wp-phone" 
+          placeholder="e.g. 054 255 9031"
+          autocomplete="off"
+        />
+      </div>
+      <span class="wp-err" id="wp-err"></span>
+      <button class="wp-save-btn" id="wp-save-btn">
+        <i class="fas fa-check-circle"></i>
+        Save & Continue
+      </button>
+      <button class="wp-skip-btn" id="wp-skip-btn">
+        Skip for now
+      </button>
+    </div>
+  </div>
+</div>
 
+<!-- ╔══════════════════════════════════════════╗
+     ║       WELCOME BACK BANNER                ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="welcome-back-banner" id="welcome-back-banner" style="display:none;">
+  <div class="wbb-inner container">
+    <div class="wbb-left">
+      <div class="wbb-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="wbb-text">
+        <h4 id="wbb-greeting">Welcome back!</h4>
+        <p id="wbb-last-order">You have a previous order</p>
+      </div>
+    </div>
+    <div class="wbb-right">
+      <button class="wbb-reorder-btn" id="wbb-reorder-btn">
+        <i class="fas fa-redo"></i>
+        Reorder
+      </button>
+      <button class="wbb-close-btn" id="wbb-close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Last order details -->
+  <div class="wbb-order-details" id="wbb-order-details">
+    <div class="container">
+      <div class="wbb-od-inner" id="wbb-od-inner">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ╔══════════════════════════════════════════╗
      ║         CART SIDEBAR                     ║
      ╚══════════════════════════════════════════╝ -->
