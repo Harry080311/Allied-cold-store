@@ -1225,13 +1225,11 @@ const offset = navH + 10;
    WHATSAPP REORDER SYSTEM
    ════════════════════════════════════════════════ */
 
-  /* ── Storage Keys ── */
   const ACS_CUSTOMER  = 'acs-customer';
   const ACS_ORDER     = 'acs-last-order';
   const ACS_SKIPPED   = 'acs-skipped';
   const ACS_DISMISSED = 'acs-dismissed';
 
-  /* ── Elements ── */
   const acsOverlay    = document.getElementById('acs-overlay');
   const acsPopup      = document.getElementById('acs-popup');
   const acsSave       = document.getElementById('acs-save');
@@ -1247,7 +1245,6 @@ const offset = navH + 10;
   const acsOdDetails  = document.getElementById('acs-order-details');
   const acsOdInner    = document.getElementById('acs-od-inner');
 
-  /* ── Show Popup ── */
   function acsShowPopup() {
     if (!acsPopup || !acsOverlay) return;
     acsOverlay.style.display = 'block';
@@ -1255,7 +1252,6 @@ const offset = navH + 10;
     document.body.style.overflow = 'hidden';
   }
 
-  /* ── Hide Popup ── */
   function acsHidePopup() {
     if (!acsPopup || !acsOverlay) return;
     acsOverlay.style.display = 'none';
@@ -1263,35 +1259,24 @@ const offset = navH + 10;
     document.body.style.overflow = '';
   }
 
-  /* ── Show Welcome Back Banner ── */
   function acsShowBanner(customer, lastOrder) {
     if (!acsBanner) return;
-
-    /* Greeting */
     if (acsGreeting) {
       acsGreeting.textContent = `Welcome back ${customer.name}! 👋`;
     }
-
-    /* Order Summary */
     if (acsOrderSum && lastOrder) {
       const count = lastOrder.items.reduce((s, i) => s + i.qty, 0);
       acsOrderSum.textContent =
         `Last order: ${count} item${count !== 1 ? 's' : ''} · GH₵ ${lastOrder.total.toFixed(2)} · ${lastOrder.date}`;
     }
-
-    /* Show banner */
     acsBanner.style.display = 'block';
-
-    /* Render order details */
     if (lastOrder) acsRenderDetails(lastOrder);
   }
 
-  /* ── Render Order Details ── */
   function acsRenderDetails(lastOrder) {
     if (!acsOdInner) return;
     acsOdInner.innerHTML = '';
 
-    /* Items */
     lastOrder.items.forEach(item => {
       const sub = (item.price * item.qty).toFixed(2);
       const el  = document.createElement('div');
@@ -1346,7 +1331,6 @@ const offset = navH + 10;
       acsOdInner.appendChild(el);
     });
 
-    /* Total */
     const totalEl = document.createElement('div');
     totalEl.style.cssText = `
       display:flex;
@@ -1373,7 +1357,6 @@ const offset = navH + 10;
     `;
     acsOdInner.appendChild(totalEl);
 
-    /* Action Buttons */
     const actionsEl = document.createElement('div');
     actionsEl.style.cssText = 'display:flex; gap:10px; margin-top:4px;';
     actionsEl.innerHTML = `
@@ -1417,29 +1400,17 @@ const offset = navH + 10;
     `;
     acsOdInner.appendChild(actionsEl);
 
-    /* Reorder Button Click */
     document.getElementById('acs-do-reorder')
       ?.addEventListener('click', () => {
-        /* Clear cart */
         cart = [];
-
-        /* Load last order into cart */
         lastOrder.items.forEach(item => {
           const product = PRODUCTS.find(p => p.id === item.id);
           if (product) cart.push({ product, qty: item.qty });
         });
-
-        /* Update cart UI */
         updateCart();
         bumpCount();
-
-        /* Hide banner */
         acsDismissBanner();
-
-        /* Open cart after short delay */
         setTimeout(openCart, 400);
-
-        /* Scroll to menu */
         const menuSec = document.getElementById('menu');
         if (menuSec) {
           window.scrollTo({
@@ -1449,7 +1420,6 @@ const offset = navH + 10;
         }
       });
 
-    /* Browse Button Click */
     document.getElementById('acs-do-browse')
       ?.addEventListener('click', () => {
         acsDismissBanner();
@@ -1463,25 +1433,21 @@ const offset = navH + 10;
       });
   }
 
-  /* ── Dismiss Banner ── */
   function acsDismissBanner() {
     if (acsBanner) acsBanner.style.display = 'none';
     localStorage.setItem(ACS_DISMISSED, 'true');
   }
 
-  /* ── Save Button ── */
   acsSave?.addEventListener('click', () => {
     const name  = acsNameEl?.value.trim();
     const phone = acsPhoneEl?.value.trim().replace(/\s/g, '');
 
-    /* Validate Name */
     if (!name) {
       if (acsErrEl) acsErrEl.textContent = 'Please enter your name.';
       acsNameEl?.focus();
       return;
     }
 
-    /* Validate Phone */
     if (!phone || phone.length < 10) {
       if (acsErrEl) acsErrEl.textContent = 'Please enter a valid phone number.';
       acsPhoneEl?.focus();
@@ -1494,27 +1460,122 @@ const offset = navH + 10;
       JSON.stringify({ name, phone })
     );
 
-    /* Hide popup */
-    acsHidePopup();
+    /* Show success message */
+    const popupBottom = acsPopup.querySelector('div:last-child');
+    if (popupBottom) {
+      popupBottom.innerHTML = `
+        <div style="
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:center;
+          gap:16px;
+          padding:30px 20px;
+          text-align:center;
+        ">
+          <div style="
+            width:70px;
+            height:70px;
+            background:linear-gradient(135deg,#25d366,#128c4e);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:2rem;
+            box-shadow:0 8px 24px rgba(37,211,102,0.35);
+          ">✅</div>
+
+          <div>
+            <h3 style="
+              font-family:'Fredoka',sans-serif;
+              font-size:1.2rem;
+              font-weight:900;
+              color:#0f172a;
+              margin-bottom:8px;
+            ">You're all set ${name}! 🎉</h3>
+            <p style="
+              font-size:0.82rem;
+              color:#64748b;
+              line-height:1.65;
+            ">Your details have been saved. We'll remember your orders next time!</p>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+            <span style="
+              display:inline-flex;
+              align-items:center;
+              gap:5px;
+              background:#eff4ff;
+              border:1px solid #dbeafe;
+              color:#1a56db;
+              padding:6px 12px;
+              border-radius:999px;
+              font-family:'Fredoka',sans-serif;
+              font-size:0.72rem;
+              font-weight:700;
+            ">👤 ${name}</span>
+            <span style="
+              display:inline-flex;
+              align-items:center;
+              gap:5px;
+              background:#eff4ff;
+              border:1px solid #dbeafe;
+              color:#1a56db;
+              padding:6px 12px;
+              border-radius:999px;
+              font-family:'Fredoka',sans-serif;
+              font-size:0.72rem;
+              font-weight:700;
+            ">📱 ${phone}</span>
+          </div>
+
+          <button id="acs-start-btn" style="
+            width:100%;
+            padding:13px;
+            background:linear-gradient(135deg,#f97316,#ea6c0a);
+            color:#ffffff;
+            border:none;
+            border-radius:999px;
+            font-family:'Fredoka',sans-serif;
+            font-size:0.92rem;
+            font-weight:700;
+            cursor:pointer;
+            box-shadow:0 4px 20px rgba(249,115,22,0.35);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+          ">🛒 Start Shopping</button>
+        </div>
+      `;
+
+      document.getElementById('acs-start-btn')
+        ?.addEventListener('click', () => {
+          acsHidePopup();
+          const menuSec = document.getElementById('menu');
+          if (menuSec) {
+            window.scrollTo({
+              top: menuSec.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+    }
   });
 
-  /* ── Skip Button ── */
   acsSkip?.addEventListener('click', () => {
     localStorage.setItem(ACS_SKIPPED, 'true');
     acsHidePopup();
   });
 
-  /* ── Reorder Button on Banner ── */
   acsReorderBtn?.addEventListener('click', () => {
     if (!acsOdDetails) return;
     acsOdDetails.style.display =
       acsOdDetails.style.display === 'none' ? 'block' : 'none';
   });
 
-  /* ── Close Banner Button ── */
   acsCloseBtn?.addEventListener('click', acsDismissBanner);
 
-  /* ── Save Order When WhatsApp Button Clicked ── */
   waBtn?.addEventListener('click', () => {
     if (cart.length === 0) return;
     const order = {
@@ -1537,7 +1598,6 @@ const offset = navH + 10;
     localStorage.setItem(ACS_ORDER, JSON.stringify(order));
   });
 
-  /* ── INIT — Run on page load ── */
   (function acsInit() {
     const customer  = JSON.parse(
       localStorage.getItem(ACS_CUSTOMER) || 'null'
@@ -1548,13 +1608,11 @@ const offset = navH + 10;
     const skipped   = localStorage.getItem(ACS_SKIPPED);
     const dismissed = localStorage.getItem(ACS_DISMISSED);
 
-    /* Returning customer with saved order */
     if (customer && lastOrder && !dismissed) {
       setTimeout(() => acsShowBanner(customer, lastOrder), 1500);
       return;
     }
 
-    /* New visitor who hasnt skipped */
     if (!customer && !skipped) {
       setTimeout(acsShowPopup, 3000);
     }
