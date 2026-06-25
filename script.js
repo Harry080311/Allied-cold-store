@@ -53,245 +53,167 @@ document.addEventListener('DOMContentLoaded', () => {
      Categories: 'chicken' | 'meats' | 'fish' | 'icecream'
   ──────────────────────────────────────────────── */
   const PRODUCTS = [
-    // ── CHICKEN (primary category) ──
     {
-  id: 1,
-  cat: 'chicken',
-  name: 'Whole Frozen Chicken',
-  desc: 'Grade-A whole bird, perfectly cleaned and flash-frozen. The family favourite.',
-  price: 200.00,
-  unit: 'per bird (~1.5kg)',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/tpGk2ZgY/frozen-whole-chicken.jpg',
-  badge: '⭐ Best Seller',
-  badgeClass: ''
-},
+      id: 1, cat: 'chicken',
+      name: 'Whole Frozen Chicken',
+      desc: 'Grade-A whole bird, perfectly cleaned and flash-frozen. The family favourite.',
+      price: 200.00, unit: 'per bird (~1.5kg)', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/tpGk2ZgY/frozen-whole-chicken.jpg',
+      badge: '⭐ Best Seller', badgeClass: '', inStock: true
+    },
     {
-  id: 2,
-  cat: 'chicken',
-  name: 'Chicken Thighs (1kg)',
-  desc: 'Juicy, tender chicken thighs — perfect for stews, grilling, and frying.',
-  price: 99.99,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/gL68Hdp9/Chicken-Thighs-1kg.jpg',
-  badge: 'Popular',
-  badgeClass: 'badge-blue'
-},
+      id: 2, cat: 'chicken',
+      name: 'Chicken Thighs (1kg)',
+      desc: 'Juicy, tender chicken thighs — perfect for stews, grilling, and frying.',
+      price: 99.99, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/gL68Hdp9/Chicken-Thighs-1kg.jpg',
+      badge: 'Popular', badgeClass: 'badge-blue', inStock: true
+    },
     {
-  id: 3,
-  cat: 'chicken',
-  name: 'Chicken Wings (1kg)',
-  desc: 'Crispy wings, great for parties and everyday cooking. Always in stock.',
-  price: 299.99,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/mrCzXVs4/Chicken-Wings-1kg.jpg',
-  badge: null,
-  badgeClass: ''
-},
-{
-  id: 4,
-  cat: 'chicken',
-  name: 'Chicken Legs (1kg)',
-  desc: 'Full chicken legs — a household staple and the most versatile cut we carry.',
-  price: 195.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/23bpDngB/Chicken-Legs-1kg.png',
-  badge: null,
-  badgeClass: ''
-},{
-  id: 5,
-  cat: 'chicken',
-  name: 'Chicken Gizzards (1kg)',
-  desc: 'Premium gizzards, cleaned and ready to cook. A Ghanaian favourite.',
-  price: 175.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/ZpJWQrvM/Chicken-gizzard-1kg.jpg',
-  badge: 'Fan Favourite',
-  badgeClass: 'badge-green'
-},     {
-  id: 6,
-  cat: 'chicken',
-  name: 'Chicken Breast (1kg)',
-  desc: 'Lean, healthy chicken breast. Ideal for grilling and clean eating.',
-  price: 285.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/wrgxhSVJ/images.jpg',
-  badge: null,
-  badgeClass: ''
-},   {
-  id: 7,
-  cat: 'chicken',
-  name: 'Chicken Feet (1kg)',
-  desc: 'Perfectly cleaned chicken feet. Great for soups and traditional dishes.',
-  price: 89.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/B2JbDJw7/download.jpg',
-  badge: null,
-  badgeClass: ''
-},   {
-  id: 8,
-  cat: 'chicken',
-  name: 'Mixed Chicken Parts (2kg)',
-  desc: 'A great mix of assorted chicken parts — perfect for large family meals.',
-  price: 249.99,
-  unit: 'per 2kg pack',
-  icon: 'fas fa-drumstick-bite',
-  image: 'https://i.ibb.co/G3GGr2PJ/download.jpg',
-  badge: 'Value Pack',
-  badgeClass: 'badge-blue'
-},
-    // ── MEATS ──
+      id: 3, cat: 'chicken',
+      name: 'Chicken Wings (1kg)',
+      desc: 'Crispy wings, great for parties and everyday cooking. Always in stock.',
+      price: 299.99, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/mrCzXVs4/Chicken-Wings-1kg.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
     {
-  id: 9,
-  cat: 'meats',
-  name: 'Beef Stew Cuts (1kg)',
-  desc: 'Tender beef cuts, ready for your pot. Perfectly frozen to lock in flavour.',
-  price: 65.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-bacon',
-  image: 'https://i.ibb.co/tTK80D3Q/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-
-   {
-  id: 10,
-  cat: 'meats',
-  name: 'Beef Offal (1kg)',
-  desc: 'Mixed beef offal — tripe, liver, kidney. A traditional delicacy.',
-  price: 42.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-bacon',
-  image: 'https://i.ibb.co/xS4C5sFm/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-   {
-  id: 11,
-  cat: 'meats',
-  name: 'Pork Cuts (1kg)',
-  desc: 'Premium frozen pork, great for grilling, stewing, and frying.',
-  price: 58.00,
-  unit: 'per 1kg pack',
-  icon: 'fas fa-bacon',
-  image: 'https://i.ibb.co/35dnqvwB/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-   {
-  id: 12,
-  cat: 'meats',
-  name: 'Mixed Meat Pack (2kg)',
-  desc: 'A variety pack with chicken, beef and pork. Great for households and events.',
-  price: 110.00,
-  unit: 'per 2kg pack',
-  icon: 'fas fa-bacon',
-  image: 'https://i.ibb.co/1Y2WPb84/download.jpg',
-  badge: 'Value Pack',
-  badgeClass: 'badge-blue'
-},
-
-    // ── FISH ──
-   {
-  id: 13,
-  cat: 'fish',
-  name: 'Whole Tilapia (1kg)',
-  desc: 'Fresh tilapia, cleaned and frozen. Ghana\'s most loved fish.',
-  price: 40.00,
-  unit: 'per 1kg',
-  icon: 'fas fa-fish',
-  image: 'https://i.ibb.co/q3vBKgdQ/download.jpg',
-  badge: 'Popular',
-  badgeClass: 'badge-blue'
-},    {
-  id: 14,
-  cat: 'fish',
-  name: 'Mackerel / Titus (1kg)',
-  desc: 'Classic Titus mackerel — perfect for stews, frying, and grilling.',
-  price: 35.00,
-  unit: 'per 1kg',
-  icon: 'fas fa-fish',
-  image: 'https://i.ibb.co/mVvHfN9G/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-   {
-  id: 15,
-  cat: 'fish',
-  name: 'Catfish (1kg)',
-  desc: 'Premium frozen catfish. A staple for soups, pepper soups, and stews.',
-  price: 45.00,
-  unit: 'per 1kg',
-  icon: 'fas fa-fish',
-  image: 'https://i.ibb.co/Vn0MZ2H/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-   {
-  id: 16,
-  cat: 'fish',
-  name: 'Herrings / Keta School Boys',
-  desc: 'Delicious herrings — smoked and frozen for that authentic flavour.',
-  price: 28.00,
-  unit: 'per pack',
-  icon: 'fas fa-fish',
-  image: 'https://i.ibb.co/p6v6jpXF/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-    // ── ICE CREAM ──
+      id: 4, cat: 'chicken',
+      name: 'Chicken Legs (1kg)',
+      desc: 'Full chicken legs — a household staple and the most versatile cut we carry.',
+      price: 195.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/23bpDngB/Chicken-Legs-1kg.png',
+      badge: null, badgeClass: '', inStock: true
+    },
     {
-  id: 17,
-  cat: 'icecream',
-  name: 'Vanilla Ice Cream (2L)',
-  desc: 'Creamy, classic vanilla. A crowd-pleaser for any occasion.',
-  price: 45.00,
-  unit: 'per 2L tub',
-  icon: 'fas fa-ice-cream',
-  image: 'https://i.ibb.co/p6gBHT6G/download.jpg',
-  badge: null,
-  badgeClass: ''
-},    {
-  id: 18,
-  cat: 'icecream',
-  name: 'Chocolate Ice Cream (2L)',
-  desc: 'Rich chocolate ice cream — everyone\'s second favourite.',
-  price: 45.00,
-  unit: 'per 2L tub',
-  icon: 'fas fa-ice-cream',
-  image: 'https://i.ibb.co/xS390Zf1/download.jpg',
-  badge: 'Popular',
-  badgeClass: 'badge-purple'
-},    {
-  id: 19,
-  cat: 'icecream',
-  name: 'Strawberry Ice Cream (2L)',
-  desc: 'Light, fruity strawberry ice cream. Great for kids and families.',
-  price: 45.00,
-  unit: 'per 2L tub',
-  icon: 'fas fa-ice-cream',
-  image: 'https://i.ibb.co/9mtTdXX5/download.jpg',
-  badge: null,
-  badgeClass: ''
-},
-   {
-  id: 20,
-  cat: 'icecream',
-  name: 'Bulk Ice Cream (5L)',
-  desc: 'Perfect for parties, events, and celebrations. Multiple flavours available.',
-  price: 100.00,
-  unit: 'per 5L tub',
-  icon: 'fas fa-ice-cream',
-  image: 'https://i.ibb.co/Y75qnPG7/download.jpg',
-  badge: 'Event Size',
-  badgeClass: 'badge-purple'
-},  ];
+      id: 5, cat: 'chicken',
+      name: 'Chicken Gizzards (1kg)',
+      desc: 'Premium gizzards, cleaned and ready to cook. A Ghanaian favourite.',
+      price: 175.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/ZpJWQrvM/Chicken-gizzard-1kg.jpg',
+      badge: 'Fan Favourite', badgeClass: 'badge-green', inStock: true
+    },
+    {
+      id: 6, cat: 'chicken',
+      name: 'Chicken Breast (1kg)',
+      desc: 'Lean, healthy chicken breast. Ideal for grilling and clean eating.',
+      price: 285.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/wrgxhSVJ/images.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 7, cat: 'chicken',
+      name: 'Chicken Feet (1kg)',
+      desc: 'Perfectly cleaned chicken feet. Great for soups and traditional dishes.',
+      price: 89.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/B2JbDJw7/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 8, cat: 'chicken',
+      name: 'Mixed Chicken Parts (2kg)',
+      desc: 'A great mix of assorted chicken parts — perfect for large family meals.',
+      price: 249.99, unit: 'per 2kg pack', icon: 'fas fa-drumstick-bite',
+      image: 'https://i.ibb.co/G3GGr2PJ/download.jpg',
+      badge: 'Value Pack', badgeClass: 'badge-blue', inStock: true
+    },
+    {
+      id: 9, cat: 'meats',
+      name: 'Beef Stew Cuts (1kg)',
+      desc: 'Tender beef cuts, ready for your pot. Perfectly frozen to lock in flavour.',
+      price: 65.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
+      image: 'https://i.ibb.co/tTK80D3Q/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 10, cat: 'meats',
+      name: 'Beef Offal (1kg)',
+      desc: 'Mixed beef offal — tripe, liver, kidney. A traditional delicacy.',
+      price: 42.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
+      image: 'https://i.ibb.co/xS4C5sFm/download.jpg',
+      badge: null, badgeClass: '', inStock: false
+    },
+    {
+      id: 11, cat: 'meats',
+      name: 'Pork Cuts (1kg)',
+      desc: 'Premium frozen pork, great for grilling, stewing, and frying.',
+      price: 58.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
+      image: 'https://i.ibb.co/35dnqvwB/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 12, cat: 'meats',
+      name: 'Mixed Meat Pack (2kg)',
+      desc: 'A variety pack with chicken, beef and pork. Great for households and events.',
+      price: 110.00, unit: 'per 2kg pack', icon: 'fas fa-bacon',
+      image: 'https://i.ibb.co/1Y2WPb84/download.jpg',
+      badge: 'Value Pack', badgeClass: 'badge-blue', inStock: true
+    },
+    {
+      id: 13, cat: 'fish',
+      name: 'Whole Tilapia (1kg)',
+      desc: 'Fresh tilapia, cleaned and frozen. Ghana\'s most loved fish.',
+      price: 40.00, unit: 'per 1kg', icon: 'fas fa-fish',
+      image: 'https://i.ibb.co/q3vBKgdQ/download.jpg',
+      badge: 'Popular', badgeClass: 'badge-blue', inStock: true
+    },
+    {
+      id: 14, cat: 'fish',
+      name: 'Mackerel / Titus (1kg)',
+      desc: 'Classic Titus mackerel — perfect for stews, frying, and grilling.',
+      price: 35.00, unit: 'per 1kg', icon: 'fas fa-fish',
+      image: 'https://i.ibb.co/mVvHfN9G/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 15, cat: 'fish',
+      name: 'Catfish (1kg)',
+      desc: 'Premium frozen catfish. A staple for soups, pepper soups, and stews.',
+      price: 45.00, unit: 'per 1kg', icon: 'fas fa-fish',
+      image: 'https://i.ibb.co/Vn0MZ2H/download.jpg',
+      badge: null, badgeClass: '', inStock: false
+    },
+    {
+      id: 16, cat: 'fish',
+      name: 'Herrings / Keta School Boys',
+      desc: 'Delicious herrings — smoked and frozen for that authentic flavour.',
+      price: 28.00, unit: 'per pack', icon: 'fas fa-fish',
+      image: 'https://i.ibb.co/p6v6jpXF/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 17, cat: 'icecream',
+      name: 'Vanilla Ice Cream (2L)',
+      desc: 'Creamy, classic vanilla. A crowd-pleaser for any occasion.',
+      price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
+      image: 'https://i.ibb.co/p6gBHT6G/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 18, cat: 'icecream',
+      name: 'Chocolate Ice Cream (2L)',
+      desc: 'Rich chocolate ice cream — everyone\'s second favourite.',
+      price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
+      image: 'https://i.ibb.co/xS390Zf1/download.jpg',
+      badge: 'Popular', badgeClass: 'badge-purple', inStock: true
+    },
+    {
+      id: 19, cat: 'icecream',
+      name: 'Strawberry Ice Cream (2L)',
+      desc: 'Light, fruity strawberry ice cream. Great for kids and families.',
+      price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
+      image: 'https://i.ibb.co/9mtTdXX5/download.jpg',
+      badge: null, badgeClass: '', inStock: true
+    },
+    {
+      id: 20, cat: 'icecream',
+      name: 'Bulk Ice Cream (5L)',
+      desc: 'Perfect for parties, events, and celebrations. Multiple flavours available.',
+      price: 100.00, unit: 'per 5L tub', icon: 'fas fa-ice-cream',
+      image: 'https://i.ibb.co/Y75qnPG7/download.jpg',
+      badge: 'Event Size', badgeClass: 'badge-purple', inStock: true
+    },
+  ];
 
   /* ────────────────────────────────────────────────
      CART STATE
@@ -884,13 +806,21 @@ const offset = navH + 10;
       const btnText = inCart ? '✓ Added' : '+ Add to Order';
       const btnClass = inCart ? 'pc-add-btn added' : 'pc-add-btn';
 
-     card.innerHTML = `
-  <div class="pc-img pc-img-${prod.cat}">
+  card.innerHTML = `
+  <div class="pc-img pc-img-${prod.cat} ${!prod.inStock ? 'pc-img-oos' : ''}">
     ${prod.image
-      ? `<img src="${prod.image}" alt="${prod.name}" style="width:100%;height:100%;object-fit:cover;display:block;" />`
+      ? `<img src="${prod.image}" alt="${prod.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />`
       : `<i class="${prod.icon}"></i>`
     }
-    ${prod.badge ? `<span class="pc-badge ${prod.badgeClass}">${prod.badge}</span>` : ''}
+    ${prod.badge && prod.inStock ? `<span class="pc-badge ${prod.badgeClass}">${prod.badge}</span>` : ''}
+    ${!prod.inStock ? `
+      <div class="pc-oos-overlay">
+        <div class="pc-oos-inner">
+          <i class="fas fa-times-circle"></i>
+          <span>Out of Stock</span>
+        </div>
+      </div>` : ''
+    }
   </div>
   <div class="pc-body">
     <p class="pc-name">${prod.name}</p>
@@ -898,16 +828,21 @@ const offset = navH + 10;
     <div class="pc-price-row">
       <div class="pc-price">
         GH₵ ${prod.price.toFixed(2)}
-        <small>${prod.unit}</small>
+        <small class="pc-unit-label">📦 ${prod.unit}</small>
       </div>
-      <button class="${btnClass}" data-id="${prod.id}">
-        <i class="fas fa-plus"></i>
-        ${inCart ? 'Added' : 'Add to Order'}
-      </button>
+      ${prod.inStock
+        ? `<button class="${btnClass}" data-id="${prod.id}">
+             <i class="fas fa-plus"></i>
+             ${inCart ? 'Added' : 'Add to Order'}
+           </button>`
+        : `<button class="pc-add-btn pc-oos-btn" disabled>
+             <i class="fas fa-times"></i>
+             Out of Stock
+           </button>`
+      }
     </div>
   </div>
-`;
-      productGrid.appendChild(card);
+`;      productGrid.appendChild(card);
     });
 
     // Observe new cards for reveal animation
@@ -1128,32 +1063,108 @@ const offset = navH + 10;
   /* ════════════════════════════════════════════════
      8. WHATSAPP ORDER MESSAGE
   ════════════════════════════════════════════════ */
-  waBtn?.addEventListener('click', () => {
-    if (cart.length === 0) return;
+/* ════════════════════════════════════════════════
+   BRANCH SELECTOR MODAL LOGIC
+════════════════════════════════════════════════ */
+const branchModalOverlay = document.getElementById('branch-modal-overlay');
+const branchModal        = document.getElementById('branch-modal');
+const branchConfirm      = document.getElementById('branch-confirm');
+const branchCancel       = document.getElementById('branch-cancel');
+const branchErr          = document.getElementById('branch-err');
+const branchOptBtns      = document.querySelectorAll('.branch-opt-btn');
 
-    const total = getTotal();
-    const lines = cart.map(({ product, qty }) =>
-      `• ${product.name} x${qty} = GH₵ ${(product.price * qty).toFixed(2)}`
-    );
+let selectedBranch = '';
 
-    const message = [
-      '🛒 *New Order — Allied Cold Store*',
-      '',
-      '*Order Details:*',
-      ...lines,
-      '',
-      `*Total: GH₵ ${total.toFixed(2)}*`,
-      '',
-      '📍 Please confirm my nearest branch and arrange pickup/delivery.',
-      '',
-      '_Sent from alliedcoldstore.com_'
-    ].join('\n');
-
-    const encodedMsg = encodeURIComponent(message);
-    const waURL = `https://wa.me/${WA_NUMBER}?text=${encodedMsg}`;
-
-    window.open(waURL, '_blank');
+function openBranchModal() {
+  branchModalOverlay.style.display = 'block';
+  branchModal.style.display        = 'block';
+  document.body.style.overflow     = 'hidden';
+  selectedBranch = '';
+  if (branchErr) branchErr.textContent = '';
+  branchOptBtns.forEach(b => {
+    b.style.borderColor  = 'var(--border)';
+    b.style.background   = 'var(--bg-section)';
   });
+}
+
+function closeBranchModal() {
+  branchModalOverlay.style.display = 'none';
+  branchModal.style.display        = 'none';
+  document.body.style.overflow     = '';
+}
+
+/* Branch option selection */
+branchOptBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    branchOptBtns.forEach(b => {
+      b.style.borderColor = 'var(--border)';
+      b.style.background  = 'var(--bg-section)';
+    });
+    btn.style.borderColor = '#25d366';
+    btn.style.background  = 'rgba(37,211,102,0.08)';
+    selectedBranch = btn.dataset.branch;
+    if (branchErr) branchErr.textContent = '';
+  });
+});
+
+/* Cancel */
+branchCancel?.addEventListener('click', closeBranchModal);
+branchModalOverlay?.addEventListener('click', closeBranchModal);
+
+/* Confirm — build WhatsApp message */
+branchConfirm?.addEventListener('click', () => {
+  if (!selectedBranch) {
+    if (branchErr) branchErr.textContent = 'Please select a branch to continue.';
+    return;
+  }
+
+  const total = getTotal();
+  const lines = cart.map(({ product, qty }) =>
+    `• ${product.name} x${qty} — GH₵ ${(product.price * qty).toFixed(2)} (${product.unit})`
+  );
+
+  const message = [
+    '🛒 *New Order — Allied Cold Store*',
+    '',
+    `🏪 *Branch: ${selectedBranch}*`,
+    '',
+    '*Order Details:*',
+    ...lines,
+    '',
+    `*Total: GH₵ ${total.toFixed(2)}*`,
+    '',
+    '📍 Please confirm my order and arrange pickup/delivery.',
+    '',
+    '_Sent from alliedcoldstore.com_'
+  ].join('\n');
+
+  const encodedMsg = encodeURIComponent(message);
+  const waURL = `https://wa.me/${WA_NUMBER}?text=${encodedMsg}`;
+
+  /* Save last order to localStorage */
+  const order = {
+    items: cart.map(({ product, qty }) => ({
+      id: product.id, name: product.name,
+      price: product.price, unit: product.unit,
+      icon: product.icon, cat: product.cat, qty
+    })),
+    total: getTotal(),
+    branch: selectedBranch,
+    date: new Date().toLocaleDateString('en-GH', {
+      day: 'numeric', month: 'short', year: 'numeric'
+    })
+  };
+  localStorage.setItem(ACS_ORDER, JSON.stringify(order));
+
+  closeBranchModal();
+  window.open(waURL, '_blank');
+});
+
+/* Open branch modal when cart WhatsApp button is clicked */
+waBtn?.addEventListener('click', () => {
+  if (cart.length === 0) return;
+  openBranchModal();
+});
      /* ════════════════════════════════════════════════
      9. CONTACT FORM VALIDATION
   ════════════════════════════════════════════════ */
