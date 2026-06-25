@@ -1618,7 +1618,7 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
 .hero {
   padding-top: var(--offset);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2224,13 +2224,9 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 14px 0;
-  margin-bottom: 45px;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
-
-@media (min-width: 768px) {
-  .hero-trust-bar { margin-bottom: 55px; }
-}
-
 .htb-inner {
   display: flex;
   align-items: center;
@@ -2269,32 +2265,32 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
 
 /* ── Hero Curve ── */
 .hero-curve {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  z-index: 5;
+  width: 100%;
   line-height: 0;
-  z-index: 4;
+  display: block;
+  margin-top: -2px;
+  background: transparent;
 }
 
 .hero-curve svg {
   width: 100%;
-  height: 45px;
+  height: 55px;
+  display: block;
 }
 
 @media (min-width: 768px) {
-  .hero-curve svg { height: 55px; }
+  .hero-curve svg { height: 70px; }
 }
 
 .hero-curve path {
   fill: #f8fafc;
-  transition: fill 0.4s ease;
 }
 
 body.dark-mode .hero-curve path {
-  fill: var(--bg-section);
+  fill: #0a0a1a;
 }
-
 /* Remove old elements */
 .hero-scroll-hint { display: none; }
 .hero-trust { display: none; }
@@ -3033,11 +3029,17 @@ body.dark-mode .test-card:hover {
    8. MENU / ORDER SECTION
 ───────────────────────────────────────────────────── */
 .menu-section {
-  background: var(--bg-body);
+  background: #f8fafc;
   padding: 60px 0 100px;
+  position: relative;
+  z-index: 1;
+  margin-top: -2px;
   transition: var(--t-theme);
 }
 
+body.dark-mode .menu-section {
+  background: #0a0a1a;
+}
 @media (min-width: 768px) { .menu-section { padding: 80px 0 120px; } }
 @media (min-width: 1024px){ .menu-section { padding: 100px 0 140px; } }
 
@@ -5878,4 +5880,37 @@ body.dark-mode .nav-search-dropdown {
   60%  { width: 70%; }
   85%  { width: 90%; }
   100% { width: 100%; }
+}
+/* ═══════════════════════════════════
+   HERO BOTTOM FIX
+═══════════════════════════════════ */
+
+/* Remove ANY old curve/wave remnants */
+.hero-curve,
+.hero::after,
+.hero::before {
+  display: none !important;
+}
+
+/* Fix the gap between hero and menu */
+.hero {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.hero-trust-bar {
+  margin-bottom: 0 !important;
+  padding-bottom: 16px !important;
+}
+
+/* Fix menu section gap */
+.menu-section {
+  margin-top: 0 !important;
+  padding-top: 60px !important;
+}
+
+/* Remove any section that might have a curve */
+.hero + section::before,
+.hero + div::before {
+  display: none !important;
 }
