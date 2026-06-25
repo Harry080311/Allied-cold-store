@@ -472,22 +472,49 @@ body.dark-mode .header {
   position: fixed;
   top: 0;
   right: -100%;
-  width: min(280px, 85vw);
+  width: min(300px, 88vw);
   height: 100vh;
   background: var(--bg-body);
   flex-direction: column;
   align-items: flex-start;
-  padding: calc(var(--nav-h) + 16px) 20px 40px;
-  gap: 4px;
+  padding: calc(var(--nav-h) + 24px) 20px 40px;
+  gap: 6px;
   z-index: 999;
   border-left: 1px solid var(--border);
-  box-shadow: -4px 0 30px rgba(0,0,0,0.15);
-  transition: right 0.35s cubic-bezier(0.4,0,0.2,1),
+  box-shadow: -8px 0 40px rgba(0,0,0,0.18);
+  transition: right 0.4s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.4s ease,
               background 0.4s ease;
   overflow-y: auto;
   display: flex;
+  opacity: 0;
+  visibility: hidden;
 }
 
+.nav-menu.open {
+  right: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (min-width: 768px) {
+  .nav-menu {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 2px;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+    right: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+}
 .nav-menu.open { right: 0; }
 
 @media (min-width: 768px) {
@@ -521,13 +548,39 @@ body.dark-mode .header {
 @media (max-width: 767px) {
   .nm {
     width: 100%;
-    padding: 13px 16px;
+    padding: 15px 18px;
     font-size: 0.95rem;
-    border-radius: var(--r-md);
+    border-radius: var(--r-lg);
     border-bottom: 1px solid var(--border);
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    transition: background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                padding-left 0.2s ease;
   }
+
   .nm:last-child { border-bottom: none; }
+
+  .nm:active {
+    transform: translateX(4px);
+    padding-left: 22px;
+  }
+
+  .nm.active {
+    background: var(--blue-light);
+    color: var(--blue);
+    border-left: 3px solid var(--blue);
+    padding-left: 20px;
+  }
+
+  body.dark-mode .nm.active {
+    background: rgba(26,86,219,0.12);
+    color: var(--blue-xl);
+    border-left-color: var(--blue-l);
+  }
 }
 @media (min-width: 1024px) { .nm { font-size: 0.85rem; padding: 8px 14px; } }
 
@@ -1203,16 +1256,24 @@ body.dark-mode .burger span { background: #ffffff; }
 
 /* Nav overlay */
 .nav-overlay {
-  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.55);
   z-index: 998;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease,
+              visibility 0.4s ease;
+  pointer-events: none;
 }
 
-.nav-overlay.show { display: block; }
-
+.nav-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 /* Mobile slide-in menu */
 
 
@@ -6366,4 +6427,162 @@ body.dark-mode .pc-oos-btn {
     flex: 1;
     justify-content: center;
   }
+}
+/* ═══════════════════════════════════════════════════
+   MOBILE NAV IMPROVEMENTS
+   ═══════════════════════════════════════════════════ */
+
+/* Nav Menu Header */
+.nm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 16px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  width: 100%;
+  transition: var(--t-theme);
+}
+
+.nm-header span {
+  font-family: var(--ff-head);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text-head);
+  transition: var(--t-theme);
+}
+
+/* Close Button Inside Nav */
+.nm-close-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--t);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nm-close-btn:active {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fecaca;
+  transform: scale(0.95);
+}
+
+/* Hide header on desktop */
+@media (min-width: 768px) {
+  .nm-header { display: none; }
+}
+
+/* Nav Icons */
+.nm-icon {
+  font-size: 0.85rem;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--orange);
+  transition: var(--t-theme);
+}
+
+/* Hide icons on desktop */
+@media (min-width: 768px) {
+  .nm-icon { display: none; }
+}
+
+/* WhatsApp CTA in mobile nav */
+.nm-wa-cta {
+  width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.nm-wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--green-wa), var(--green-wa-d));
+  color: #ffffff;
+  font-family: var(--ff-head);
+  font-size: 0.92rem;
+  font-weight: 800;
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-wa);
+  transition: var(--t);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nm-wa-btn i { font-size: 1.1rem; }
+
+.nm-wa-btn:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* Hide WhatsApp CTA on desktop */
+@media (min-width: 768px) {
+  .nm-wa-cta { display: none; }
+}
+/* ═══════════════════════════════════════════════════
+   BACK TO MENU FLOATING BUTTON
+   ═══════════════════════════════════════════════════ */
+.back-to-menu {
+  position: fixed;
+  bottom: 80px;
+  left: 16px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-d));
+  color: #ffffff;
+  border: none;
+  border-radius: var(--r-full);
+  font-family: var(--ff-head);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-ora);
+  transition: opacity 0.35s ease,
+              visibility 0.35s ease,
+              transform 0.35s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-14px);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (min-width: 768px) {
+  .back-to-menu {
+    bottom: 90px;
+    left: 24px;
+    padding: 11px 22px;
+    font-size: 0.85rem;
+  }
+}
+
+.back-to-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.back-to-menu:active {
+  transform: scale(0.96);
+}
+
+.back-to-menu i {
+  font-size: 0.88rem;
 }

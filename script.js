@@ -248,9 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const fccPrice     = document.getElementById('fcc-price');
   const contactForm  = document.getElementById('contact-form');
   const formSuccess  = document.getElementById('form-success');
-  const stt          = document.getElementById('stt');
-  const yrSpan       = document.getElementById('yr');
- 
+const stt          = document.getElementById('stt');
+const yrSpan       = document.getElementById('yr');
+const backToMenu   = document.getElementById('back-to-menu'); 
   /* ════════════════════════════════════════════════
      1. FOOTER YEAR
   ════════════════════════════════════════════════ */
@@ -508,27 +508,56 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   };
 
-  burger?.addEventListener('click', () =>
-    navMenu.classList.contains('open') ? closeNav() : openNav()
-  );
+burger?.addEventListener('click', () =>
+  navMenu.classList.contains('open') ? closeNav() : openNav()
+);
 
-  navOverlay?.addEventListener('click', closeNav);
-  allNm.forEach(l => l.addEventListener('click', closeNav));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+/* Close button inside the nav menu */
+document.getElementById('nm-close')
+  ?.addEventListener('click', closeNav);
+
+navOverlay?.addEventListener('click', closeNav);
+allNm.forEach(l => l.addEventListener('click', closeNav));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNav();
+});
 
   /* ════════════════════════════════════════════════
      3. HEADER SCROLL + SCROLL TOP + ACTIVE NAV
   ════════════════════════════════════════════════ */
-  const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-    stt.classList.toggle('show', window.scrollY > 500);
-    updateActiveNav();
-  };
+ const onScroll = () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+  stt.classList.toggle('show', window.scrollY > 500);
+
+  /* Show back-to-menu only when user scrolls
+     past the menu section */
+  const menuSec = document.getElementById('menu');
+  if (menuSec) {
+    const menuBottom = menuSec.offsetTop + menuSec.offsetHeight;
+    backToMenu?.classList.toggle('show', window.scrollY > menuBottom);
+  }
+
+  updateActiveNav();
+};
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  stt?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+ stt?.addEventListener('click', () =>
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+);
+
+/* Back to menu floating button */
+backToMenu?.addEventListener('click', () => {
+  const menuSec = document.getElementById('menu');
+  if (menuSec) {
+    const navH = header?.offsetHeight || 64;
+    window.scrollTo({
+      top: menuSec.offsetTop - navH - 10,
+      behavior: 'smooth'
+    });
+  }
+});
 
   function updateActiveNav() {
     const mid = window.scrollY + window.innerHeight / 2.5;

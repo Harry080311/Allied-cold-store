@@ -51,16 +51,45 @@
   <nav class="nav container">
 
    <a href="#home" class="logo">
-  <img src="./ag-logo.png" alt="Allied Cold Store Logo" class="nav-logo-img">
+<img src="./ag-logo.png" alt="Allied Cold Store Logo" class="nav-logo-img" loading="eager">
 </a>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="#home"     class="nm active">Home</a></li>
-      <li><a href="#menu"     class="nm">Order Menu</a></li>
-      <li><a href="#about"    class="nm">About</a></li>
-      <li><a href="#branches" class="nm">Branches</a></li>
-      <li><a href="#contact"  class="nm">Contact</a></li>
-    </ul>
+  <ul class="nav-menu" id="nav-menu">
 
+  <!-- Mobile Menu Header -->
+  <li class="nm-header">
+    <span>Menu</span>
+    <button class="nm-close-btn" id="nm-close">
+      <i class="fas fa-times"></i>
+    </button>
+  </li>
+
+  <li><a href="#home" class="nm active">
+    <i class="fas fa-home nm-icon"></i> Home
+  </a></li>
+  <li><a href="#menu" class="nm">
+    <i class="fas fa-basket-shopping nm-icon"></i> Order Menu
+  </a></li>
+  <li><a href="#about" class="nm">
+    <i class="fas fa-store nm-icon"></i> About
+  </a></li>
+  <li><a href="#branches" class="nm">
+    <i class="fas fa-map-marker-alt nm-icon"></i> Branches
+  </a></li>
+  <li><a href="#contact" class="nm">
+    <i class="fas fa-envelope nm-icon"></i> Contact
+  </a></li>
+
+  <!-- Mobile WhatsApp CTA -->
+  <li class="nm-wa-cta">
+    <a href="https://wa.me/233542559031" 
+       target="_blank" 
+       class="nm-wa-btn">
+      <i class="fab fa-whatsapp"></i>
+      Chat on WhatsApp
+    </a>
+  </li>
+
+</ul>
     <div class="nav-right">
 
       <!-- Search Toggle -->
@@ -1594,7 +1623,7 @@
 
     <div class="ft-brand">
   <a href="#home" class="logo">
-    <img src="./ag-logo.png" alt="Allied Cold Store Logo" class="footer-logo-img">
+    <img src="./ag-logo.png" alt="Allied Cold Store Logo" class="footer-logo-img" loading="lazy">
   </a>
         <p>Ghana's most trusted frozen chicken and meats distributor. Serving 5 locations with pride and freshness since day one.</p>
         <a href="tel:0542559031" class="ft-phone">
@@ -2006,11 +2035,16 @@
     }
   }
 </style>
-  <!-- Scroll to top -->
-  <button class="stt" id="stt" aria-label="Back to top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
+ <!-- Scroll to top -->
+<button class="stt" id="stt" aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
 
+<!-- Back to Menu Button -->
+<button class="back-to-menu" id="back-to-menu" aria-label="Back to menu">
+  <i class="fas fa-basket-shopping"></i>
+  <span>Menu</span>
+</button>
   <!-- Sticky WhatsApp Button -->
   <a href="https://wa.me/233542559031?text=Hi!%20I%27d%20like%20to%20place%20an%20order%20from%20Allied%20Cold%20Store." 
      class="sticky-whatsapp" 
