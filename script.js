@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: 'Mixed beef offal — tripe, liver, kidney. A traditional delicacy.',
       price: 42.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
       image: './images/Products/beef-offal.webp',
-      badge: null, badgeClass: '', inStock: false
+      badge: null, badgeClass: '', inStock: true
     },
     {
       id: 11, cat: 'meats',
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: 'Premium frozen pork, great for grilling, stewing, and frying.',
       price: 58.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
       image: './images/Products/pork-cuts.webp',
-      badge: null, badgeClass: '', inStock: true
+      badge: null, badgeClass: '', inStock: false
     },
     {
       id: 12, cat: 'meats',

@@ -44,8 +44,8 @@
   /* Light Mode Text */
   --text-head:   #0f172a;
   --text-body:   #1e293b;
-  --text-muted:  #64748b;
-  --text-faint:  #94a3b8;
+  --text-muted:  #475569;
+  --text-faint:  #64748b;
 
   /* Borders & Shadows */
   --border:      #e2e8f0;
@@ -1597,7 +1597,7 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
       rgba(10, 20, 60, 0.48) 40%,
       rgba(15, 5, 30, 0.52) 100%
     ),
-    url('./hero-bg.jpg')
+    url('./hero-bg.webp')                    
     center center / cover no-repeat;
   background-attachment: scroll;
 }
@@ -1611,7 +1611,7 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
         rgba(10, 20, 60, 0.52) 45%,
         rgba(15, 5, 30, 0.62) 100%
       ),
-      url('./hero-bg.jpg') center 35% / cover no-repeat;
+      url('./hero-bg.webp') center 35% / cover no-repeat;    
     min-height: auto;
     background-attachment: scroll;
   }
