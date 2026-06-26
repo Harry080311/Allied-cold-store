@@ -6388,8 +6388,10 @@ body.dark-mode .pc-oos-btn {
   animation: cmPopIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.confirm-modal.show { display: flex; }
-
+.confirm-modal.show {
+  display: flex;
+  flex-direction: column;
+}
 @keyframes cmPopIn {
   from {
     opacity: 0;
@@ -6462,12 +6464,13 @@ body.dark-mode .pc-oos-btn {
 
 /* Body */
 .cm-body {
-  flex: 1;
+  flex: 1 1 auto;
   overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
   padding: 20px 22px;
   -webkit-overflow-scrolling: touch;
 }
-
 .cm-body::-webkit-scrollbar { width: 4px; }
 .cm-body::-webkit-scrollbar-thumb {
   background: var(--border);
@@ -6726,16 +6729,22 @@ body.dark-mode .cm-branch-select option {
 
 .cm-btn-confirm i { font-size: 1rem; }
 
-/* Mobile Responsive */
+/* Mobile Responsive — FIXED for proper scrolling */
 @media (max-width: 480px) {
   .confirm-modal {
     width: 100%;
-    height: 100vh;
-    max-height: 100vh;
+    height: 100%;
+    max-height: 100%;
     top: 0;
     left: 0;
     transform: none;
     border-radius: 0;
+    display: none;
+  }
+
+  .confirm-modal.show {
+    display: flex;
+    flex-direction: column;
   }
 
   @keyframes cmPopIn {
@@ -6749,7 +6758,60 @@ body.dark-mode .cm-branch-select option {
     }
   }
 
-  .cm-footer {
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  /* Header stays at top */
+  .cm-header {
+    flex-shrink: 0;
+    padding: 18px 18px 16px;
   }
+
+  .cm-header-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+
+  .cm-header h2 {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .cm-header p {
+    font-size: 0.72rem;
+  }
+
+  /* Body takes remaining space and scrolls */
+  .cm-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    padding: 16px 18px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Footer stays at bottom — ALWAYS visible */
+  .cm-footer {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    background: var(--bg-card);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .cm-btn {
+    padding: 14px 14px;
+    font-size: 0.82rem;
+  }
+}
+
+/* Extra fix for very small phones */
+@media (max-width: 360px) {
+  .cm-btn {
+    padding: 12px 10px;
+    font-size: 0.76rem;
+    gap: 5px;
+  }
+
+  .cm-footer { padding: 12px 14px; }
 }
