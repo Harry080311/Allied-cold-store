@@ -744,7 +744,70 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProducts(currentFilter, currentSearch);
     });
   });
+  /* ════════════════════════════════════════════════
+     TOAST NOTIFICATION SYSTEM
+  ════════════════════════════════════════════════ */
+  const toastContainer = document.getElementById('toast-container');
 
+  function showToast(product, qty = 1) {
+    if (!toastContainer) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+
+    const subtotal = (product.price * qty).toFixed(2);
+
+    toast.innerHTML = `
+      <div class="toast-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <div class="toast-content">
+        <p class="toast-title">
+          <i class="fas fa-shopping-basket"></i>
+          Added to cart!
+        </p>
+        <p class="toast-name">${product.name}</p>
+        <p class="toast-meta">Qty: ${qty} · <strong>GH₵ ${subtotal}</strong></p>
+      </div>
+      <button class="toast-action" data-action="view-cart">
+        View Cart
+      </button>
+      <div class="toast-progress"></div>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    // Auto-dismiss after 3 seconds
+    const dismissTimer = setTimeout(() => dismissToast(toast), 3000);
+
+    // Click "View Cart" button
+    toast.querySelector('.toast-action')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearTimeout(dismissTimer);
+      dismissToast(toast);
+      setTimeout(openCart, 200);
+    });
+
+    // Click toast body to dismiss
+    toast.addEventListener('click', () => {
+      clearTimeout(dismissTimer);
+      dismissToast(toast);
+    });
+
+    // Limit max 3 toasts on screen
+    const allToasts = toastContainer.querySelectorAll('.toast');
+    if (allToasts.length > 3) {
+      dismissToast(allToasts[0]);
+    }
+  }
+
+  function dismissToast(toast) {
+    if (!toast || toast.classList.contains('toast-hide')) return;
+    toast.classList.add('toast-hide');
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 350);
+  }
   /* ════════════════════════════════════════════════
      CART SYSTEM
   ════════════════════════════════════════════════ */
@@ -764,7 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cartClose?.addEventListener('click', closeCart);
   cartOverlay?.addEventListener('click', closeCart);
 
-  function addToCart(productId) {
+function addToCart(productId) {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product || !product.inStock) return;
 
@@ -777,6 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCart();
     bumpCount();
+    showToast(product, 1);   // ← NEW LINE ADDED
 
     const btn = productGrid?.querySelector(
       `.pc-add-btn[data-id="${productId}"]`
@@ -790,10 +854,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.style.pointerEvents = 'auto';
       }, 1200);
     }
-
-    if (cart.length === 1) setTimeout(openCart, 500);
   }
-
   function removeFromCart(productId) {
     cart = cart.filter(c => c.product.id !== productId);
     updateCart();
