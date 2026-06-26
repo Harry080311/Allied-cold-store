@@ -910,7 +910,146 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   fccOpen?.addEventListener('click', openCart);
+  /* ════════════════════════════════════════════════
+     ORDER CONFIRMATION MODAL
+  ════════════════════════════════════════════════ */
+  const confirmModalOverlay = document.getElementById('confirm-modal-overlay');
+  const confirmModal        = document.getElementById('confirm-modal');
+  const cmCloseBtn          = document.getElementById('cm-close');
+  const cmEditBtn           = document.getElementById('cm-edit-btn');
+  const cmConfirmBtn        = document.getElementById('cm-confirm-btn');
+  const cmItemsList         = document.getElementById('cm-items-list');
+  const cmTotalItems        = document.getElementById('cm-total-items');
+  const cmTotalPrice        = document.getElementById('cm-total-price');
+  const cmBranchSelect      = document.getElementById('cm-branch-select');
+  const cmBranchErr         = document.getElementById('cm-branch-err');
 
+  function openConfirmModal() {
+    if (!confirmModal || !confirmModalOverlay) return;
+
+    // Render order items
+    cmItemsList.innerHTML = '';
+    cart.forEach(({ product, qty }) => {
+      const subtotal = (product.price * qty).toFixed(2);
+      const item = document.createElement('div');
+      item.className = 'cm-item';
+      item.innerHTML = `
+        <div class="cm-item-icon">
+          <i class="${product.icon}"></i>
+        </div>
+        <div class="cm-item-info">
+          <p class="cm-item-name">${product.name}</p>
+          <p class="cm-item-meta">Qty: ${qty} · ${product.unit}</p>
+        </div>
+        <span class="cm-item-price">GH₵ ${subtotal}</span>
+      `;
+      cmItemsList.appendChild(item);
+    });
+
+    // Update totals
+    cmTotalItems.textContent = getTotalItems();
+    cmTotalPrice.textContent = `GH₵ ${getTotal().toFixed(2)}`;
+
+    // Reset branch selector
+    cmBranchSelect.value = '';
+    cmBranchSelect.classList.remove('err');
+    cmBranchErr.textContent = '';
+
+    // Show modal
+    confirmModalOverlay.classList.add('show');
+    confirmModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeConfirmModal() {
+    if (!confirmModal || !confirmModalOverlay) return;
+    confirmModalOverlay.classList.remove('show');
+    confirmModal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // Close handlers
+  cmCloseBtn?.addEventListener('click', closeConfirmModal);
+  confirmModalOverlay?.addEventListener('click', closeConfirmModal);
+
+  // Edit cart button — close modal & open cart
+  cmEditBtn?.addEventListener('click', () => {
+    closeConfirmModal();
+    setTimeout(openCart, 300);
+  });
+
+  // Clear error on branch change
+  cmBranchSelect?.addEventListener('change', () => {
+    cmBranchSelect.classList.remove('err');
+    cmBranchErr.textContent = '';
+  });
+
+  // Confirm & Send button
+  cmConfirmBtn?.addEventListener('click', () => {
+    const selectedBranch = cmBranchSelect.value;
+
+    if (!selectedBranch) {
+      cmBranchSelect.classList.add('err');
+      cmBranchErr.textContent = '⚠️ Please select a branch to continue.';
+      cmBranchSelect.focus();
+      return;
+    }
+
+    const total = getTotal();
+    const lines = cart.map(({ product, qty }) =>
+      `• ${product.name} x${qty} — GH₵ ${(product.price * qty).toFixed(2)} (${product.unit})`
+    );
+
+    const message = [
+      '🛒 *New Order — Allied Cold Store*',
+      '',
+      `🏪 *Branch: ${selectedBranch}*`,
+      '',
+      '*Order Details:*',
+      ...lines,
+      '',
+      `*Total: GH₵ ${total.toFixed(2)}*`,
+      '',
+      '📍 Please confirm my order and arrange pickup/delivery.',
+      '',
+      '_Sent from alliedcoldstore.com_'
+    ].join('\n');
+
+    // Save last order
+    const order = {
+      items: cart.map(({ product, qty }) => ({
+        id:    product.id,
+        name:  product.name,
+        price: product.price,
+        unit:  product.unit,
+        icon:  product.icon,
+        cat:   product.cat,
+        qty
+      })),
+      total:  getTotal(),
+      branch: selectedBranch,
+      date:   new Date().toLocaleDateString('en-GH', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      })
+    };
+    localStorage.setItem(ACS_ORDER, JSON.stringify(order));
+
+    closeConfirmModal();
+    closeCart();
+
+    // Open WhatsApp
+    window.open(
+      `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`,
+      '_blank'
+    );
+  });
+
+  // ESC key closes modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && confirmModal?.classList.contains('show')) {
+      closeConfirmModal();
+    }
+  });
   /* ════════════════════════════════════════════════
      BRANCH SELECTOR MODAL
      — waBtn listener lives HERE ONLY (not duplicated)
@@ -1012,12 +1151,11 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-  /* ── Single waBtn listener — opens branch modal ── */
+  /* ── waBtn listener — opens NEW confirmation modal ── */
   waBtn?.addEventListener('click', () => {
     if (cart.length === 0) return;
-    openBranchModal();
+    openConfirmModal();
   });
-
   /* ════════════════════════════════════════════════
      CONTACT FORM VALIDATION
   ════════════════════════════════════════════════ */

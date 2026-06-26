@@ -2020,6 +2020,85 @@
     <span class="wa-pulse"></span>
   </a>
 <!-- ╔══════════════════════════════════════════╗
+     ║    ORDER CONFIRMATION MODAL              ║
+     ╚══════════════════════════════════════════╝ -->
+<div id="confirm-modal-overlay" class="confirm-modal-overlay"></div>
+
+<div id="confirm-modal" class="confirm-modal">
+
+  <!-- Header -->
+  <div class="cm-header">
+    <div class="cm-header-icon">📋</div>
+    <h2>Review Your Order</h2>
+    <p>Please confirm your items before sending to WhatsApp</p>
+    <button id="cm-close" class="cm-close-btn" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="cm-body">
+
+    <!-- Order Items List -->
+    <div class="cm-items-wrap">
+      <p class="cm-section-label">
+        <i class="fas fa-shopping-basket"></i> Your Items
+      </p>
+      <div id="cm-items-list" class="cm-items-list">
+        <!-- Items injected by JS -->
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="cm-summary">
+      <div class="cm-summary-row">
+        <span>Total Items:</span>
+        <strong id="cm-total-items">0</strong>
+      </div>
+      <div class="cm-summary-row cm-summary-total">
+        <span>Order Total:</span>
+        <strong id="cm-total-price">GH₵ 0.00</strong>
+      </div>
+    </div>
+
+    <!-- Branch Selector -->
+    <div class="cm-branch-wrap">
+      <p class="cm-section-label">
+        <i class="fas fa-map-marker-alt"></i> Select Your Branch
+      </p>
+      <select id="cm-branch-select" class="cm-branch-select">
+        <option value="">-- Choose a branch --</option>
+        <option value="Nkwanta (HQ)">🏢 Nkwanta (HQ) - Main Headquarters</option>
+        <option value="Kpassa">🏪 Kpassa - Oti Region</option>
+        <option value="Damanko">🏪 Damanko - Oti Region</option>
+        <option value="Kpandai">🏪 Kpandai - North East Region</option>
+        <option value="Tamale">🏪 Tamale - Northern Region</option>
+      </select>
+      <p id="cm-branch-err" class="cm-error"></p>
+    </div>
+
+    <!-- Info Note -->
+    <div class="cm-note">
+      <i class="fas fa-info-circle"></i>
+      <p>You'll be redirected to WhatsApp to confirm and arrange pickup or delivery with our team.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer Buttons -->
+  <div class="cm-footer">
+    <button id="cm-edit-btn" class="cm-btn cm-btn-edit">
+      <i class="fas fa-pen"></i>
+      Edit Cart
+    </button>
+    <button id="cm-confirm-btn" class="cm-btn cm-btn-confirm">
+      <i class="fab fa-whatsapp"></i>
+      Confirm & Send
+    </button>
+  </div>
+
+</div>
+<!-- ╔══════════════════════════════════════════╗
      ║       BRANCH SELECTOR MODAL              ║
      ╚══════════════════════════════════════════╝ -->
 <div id="branch-modal-overlay" style="
