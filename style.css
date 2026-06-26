@@ -1726,7 +1726,7 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
     grid-template-columns: 1fr 1fr;
     gap: 50px;
     padding-top: 60px;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
     align-items: center;
   }
 }
@@ -2455,26 +2455,6 @@ body.dark-mode .ci-icon.cat-icecream { background: rgba(168,85,247,0.1); }
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
-/* ── Hero Curve ── */
-.hero-curve {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  line-height: 0;
-  z-index: 2;
-}
-
-.hero-curve svg { width: 100%; height: 50px; }
-@media (min-width: 768px) { .hero-curve svg { height: 70px; } }
-
-.hero-curve path {
-  fill: #f8fafc;
-  transition: fill 0.4s ease;
-}
-
-body.dark-mode .hero-curve path { fill: var(--bg-section); }
 
 /* ─────────────────────────────────────────────────────
    7. ABOUT SECTION
@@ -3210,10 +3190,10 @@ body.dark-mode .test-card:hover {
 ───────────────────────────────────────────────────── */
 .menu-section {
   background: var(--bg-body);
-  padding: 60px 0 100px;
+  padding: 30px 0 100px;
   transition: var(--t-theme);
+  border-top: 1px solid var(--border);   /* ← NEW LINE ADDED HERE */
 }
-
 @media (min-width: 768px) { .menu-section { padding: 80px 0 120px; } }
 @media (min-width: 1024px){ .menu-section { padding: 100px 0 140px; } }
 
