@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Whole Frozen Chicken',
       desc: 'Grade-A whole bird, perfectly cleaned and flash-frozen. The family favourite.',
       price: 200.00, unit: 'per bird (~1.5kg)', icon: 'fas fa-drumstick-bite',
-      image: './images/products/frozen-whole-chicken.webp',
+      image: './images/Products/frozen-whole-chicken.webp',
       badge: '⭐ Best Seller', badgeClass: '', inStock: true
     },
     {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Thighs (1kg)',
       desc: 'Juicy, tender chicken thighs — perfect for stews, grilling, and frying.',
       price: 99.99, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-thighs.webp',
+      image: './images/Products/chicken-thighs.webp',
       badge: 'Popular', badgeClass: 'badge-blue', inStock: true
     },
     {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Wings (1kg)',
       desc: 'Crispy wings, great for parties and everyday cooking. Always in stock.',
       price: 299.99, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-wings.webp',
+      image: './images/Products/chicken-wings.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Legs (1kg)',
       desc: 'Full chicken legs — a household staple and the most versatile cut we carry.',
       price: 195.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-legs.webp',
+      image: './images/Products/chicken-legs.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Gizzards (1kg)',
       desc: 'Premium gizzards, cleaned and ready to cook. A Ghanaian favourite.',
       price: 175.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-gizzards.webp',
+      image: './images/Products/chicken-gizzards.webp',
       badge: 'Fan Favourite', badgeClass: 'badge-green', inStock: true
     },
     {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Breast (1kg)',
       desc: 'Lean, healthy chicken breast. Ideal for grilling and clean eating.',
       price: 285.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-breast.webp',
+      image: './images/Products/chicken-breast.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chicken Feet (1kg)',
       desc: 'Perfectly cleaned chicken feet. Great for soups and traditional dishes.',
       price: 89.00, unit: 'per 1kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/chicken-feet.webp',
+      image: './images/Products/chicken-feet.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Mixed Chicken Parts (2kg)',
       desc: 'A great mix of assorted chicken parts — perfect for large family meals.',
       price: 249.99, unit: 'per 2kg pack', icon: 'fas fa-drumstick-bite',
-      image: './images/products/mixed-chicken.webp',
+      image: './images/Products/mixed-chicken.webp',
       badge: 'Value Pack', badgeClass: 'badge-blue', inStock: true
     },
     {
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Beef Stew Cuts (1kg)',
       desc: 'Tender beef cuts, ready for your pot. Perfectly frozen to lock in flavour.',
       price: 65.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
-      image: './images/products/beef-stew.webp',
+      image: './images/Products/beef-stew.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Beef Offal (1kg)',
       desc: 'Mixed beef offal — tripe, liver, kidney. A traditional delicacy.',
       price: 42.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
-      image: './images/products/beef-offal.webp',
+      image: './images/Products/beef-offal.webp',
       badge: null, badgeClass: '', inStock: false
     },
     {
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Pork Cuts (1kg)',
       desc: 'Premium frozen pork, great for grilling, stewing, and frying.',
       price: 58.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
-      image: './images/products/pork-cuts.webp',
+      image: './images/Products/pork-cuts.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Mixed Meat Pack (2kg)',
       desc: 'A variety pack with chicken, beef and pork. Great for households and events.',
       price: 110.00, unit: 'per 2kg pack', icon: 'fas fa-bacon',
-      image: './images/products/mixed-meat.webp',
+      image: './images/Products/mixed-meat.webp',
       badge: 'Value Pack', badgeClass: 'badge-blue', inStock: true
     },
     {
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Whole Tilapia (1kg)',
       desc: 'Fresh tilapia, cleaned and frozen. Ghana\'s most loved fish.',
       price: 40.00, unit: 'per 1kg', icon: 'fas fa-fish',
-      image: './images/products/tilapia.webp',
+      image: './images/Products/tilapia.webp',
       badge: 'Popular', badgeClass: 'badge-blue', inStock: true
     },
     {
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Mackerel / Titus (1kg)',
       desc: 'Classic Titus mackerel — perfect for stews, frying, and grilling.',
       price: 35.00, unit: 'per 1kg', icon: 'fas fa-fish',
-      image: './images/products/mackerel.webp',
+      image: './images/Products/mackerel.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -179,15 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Catfish (1kg)',
       desc: 'Premium frozen catfish. A staple for soups, pepper soups, and stews.',
       price: 45.00, unit: 'per 1kg', icon: 'fas fa-fish',
-      image: './images/products/catfish.webp',
+      image: './images/Products/catfish.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
       id: 16, cat: 'fish',
-      name: 'Herrings 1 KG ',
+      name: 'Herrings 1 KG',
       desc: 'Delicious herrings — smoked and frozen for that authentic flavour.',
       price: 28.00, unit: 'per pack', icon: 'fas fa-fish',
-      image: './images/products/herrings.webp',
+      image: './images/Products/herrings.webp',
       badge: null, badgeClass: '', inStock: false
     },
     {
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Vanilla Ice Cream (2L)',
       desc: 'Creamy, classic vanilla. A crowd-pleaser for any occasion.',
       price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
-      image: './images/products/vanilla-icecream.webp',
+      image: './images/Products/vanilla-icecream.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Chocolate Ice Cream (2L)',
       desc: 'Rich chocolate ice cream — everyone\'s second favourite.',
       price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
-      image: './images/products/chocolate-icecream.webp',
+      image: './images/Products/chocolate-icecream.webp',
       badge: 'Popular', badgeClass: 'badge-purple', inStock: true
     },
     {
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Strawberry Ice Cream (2L)',
       desc: 'Light, fruity strawberry ice cream. Great for kids and families.',
       price: 45.00, unit: 'per 2L tub', icon: 'fas fa-ice-cream',
-      image: './images/products/strawberry-icecream.webp',
+      image: './images/Products/strawberry-icecream.webp',
       badge: null, badgeClass: '', inStock: true
     },
     {
@@ -219,11 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Bulk Ice Cream (5L)',
       desc: 'Perfect for parties, events, and celebrations. Multiple flavours available.',
       price: 100.00, unit: 'per 5L tub', icon: 'fas fa-ice-cream',
-      image: './images/products/bulk-icecream.webp',
+      image: './images/Products/bulk-icecream.webp',
       badge: 'Event Size', badgeClass: 'badge-purple', inStock: false
     },
   ];
-
   /* ════════════════════════════════════════════════
      CART STATE
   ════════════════════════════════════════════════ */
