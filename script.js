@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nsdInner) nsdInner.innerHTML = '';
     }
   });
-   function renderNavResults(results, term) {
+    function renderNavResults(results, term) {
     if (!nsdInner) return;
     nsdInner.innerHTML = '';
     navSearchDropdown?.classList.add('show');
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Header
     var hdr = document.createElement('div');
     hdr.className = 'nsd-header';
-    hdr.innerHTML = '<span>Search Results</span><span class="nsd-count">' + results.length + ' found</span>';
+    hdr.innerHTML = '<span>' + results.length + ' result' + (results.length !== 1 ? 's' : '') + ' for "' + term + '"</span>';
     nsdInner.appendChild(hdr);
 
     if (results.length === 0) {
@@ -537,213 +537,159 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Limit to 4 results in dropdown
-    var displayResults = results.slice(0, 4);
+    // Limit to 6 results in the dropdown
+    var displayResults = results.slice(0, 6);
 
-    // Create container for product cards
-    var cardsContainer = document.createElement('div');
-    cardsContainer.className = 'nsd-cards-container';
+    // Create list container
+    var listContainer = document.createElement('div');
+    listContainer.className = 'nsd-list';
 
     displayResults.forEach(function(product) {
       var inCart = cart.find(function(c) { return c.product.id === product.id; });
-      var btnText = inCart ? 'Added' : 'Add to Cart';
-      var btnClass = inCart ? 'nsd-card-add-btn added' : 'nsd-card-add-btn';
 
       // Highlight the search term in the name
       var regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
       var highlightedName = product.name.replace(regex, '<span class="nsd-highlight">$1</span>');
 
-      // Wholesale badge
-      var wholesaleBadge = '';
+      // Wholesale label
+      var wholesaleLabel = '';
       if (product.isWholesale) {
-        wholesaleBadge = '<span class="nsd-card-wholesale-badge">🏢 WHOLESALE</span>';
+        wholesaleLabel = '<span class="nsd-list-wholesale">🏢 Wholesale</span>';
       }
 
-      // Create the card
-      var card = document.createElement('div');
-      card.className = 'nsd-card';
-      card.dataset.id = product.id;
+      // Out of stock label
+      var stockLabel = '';
+      if (!product.inStock) {
+        stockLabel = '<span class="nsd-list-oos">Out of Stock</span>';
+      }
 
-      var cardHTML = '';
-      
-      // Image section
-      cardHTML += '<div class="nsd-card-img nsd-card-img-' + (product.isWholesale ? 'wholesale' : product.cat) + '">';
+      // Create list item
+      var item = document.createElement('div');
+      item.className = 'nsd-list-item' + (!product.inStock ? ' nsd-list-item-oos' : '');
+      item.dataset.id = product.id;
+
+      var itemHTML = '';
+
+      // Image/Icon section
+      itemHTML += '<div class="nsd-list-img nsd-list-img-' + (product.isWholesale ? 'wholesale' : product.cat) + '">';
       
       if (product.image && !product.isWholesale) {
-        cardHTML += '<img src="' + product.image + '" alt="' + product.name + '" loading="lazy" />';
+        itemHTML += '<img src="' + product.image + '" alt="' + product.name + '" loading="lazy" />';
       } else if (product.isWholesale) {
-        cardHTML += '<span class="nsd-card-emoji">' + product.icon + '</span>';
+        itemHTML += '<span class="nsd-list-emoji">' + product.icon + '</span>';
       } else {
-        cardHTML += '<i class="' + product.icon + '"></i>';
+        itemHTML += '<i class="' + product.icon + '"></i>';
       }
       
-      // Badges
-      if (product.badge && product.inStock && !product.isWholesale) {
-        cardHTML += '<span class="nsd-card-badge ' + product.badgeClass + '">' + product.badge + '</span>';
-      }
-      
-      if (product.isWholesale) {
-        cardHTML += wholesaleBadge;
-      }
-      
-      // Out of stock overlay
-      if (!product.inStock) {
-        cardHTML += '<div class="nsd-card-oos"><i class="fas fa-times-circle"></i><span>Out of Stock</span></div>';
-      }
-      
-      cardHTML += '</div>';
-      
-      // Card body
-      cardHTML += '<div class="nsd-card-body">';
-      cardHTML += '<p class="nsd-card-name">' + highlightedName + '</p>';
-      cardHTML += '<p class="nsd-card-desc">' + product.desc + '</p>';
-      
-      // Price section
-      cardHTML += '<div class="nsd-card-price">';
-      cardHTML += '<strong>GH₵ ' + product.price.toFixed(2) + '</strong>';
-      
-      if (product.isWholesale && product.originalPrice) {
-        cardHTML += '<span class="nsd-card-original-price">Was GH₵ ' + product.originalPrice.toFixed(2) + '</span>';
-      }
-      
-      cardHTML += '<small>📦 ' + product.unit + '</small>';
-      
-      if (product.isWholesale && product.savings) {
-        cardHTML += '<span class="nsd-card-savings">💰 Save ' + product.savings + '%</span>';
-      }
-      
-      cardHTML += '</div>';
-      
-      // Actions section
+      itemHTML += '</div>';
+
+      // Info section
+      itemHTML += '<div class="nsd-list-info">';
+      itemHTML += '<p class="nsd-list-name">' + highlightedName + wholesaleLabel + stockLabel + '</p>';
+      itemHTML += '<p class="nsd-list-meta"><strong>GH₵ ' + product.price.toFixed(2) + '</strong> · ' + product.unit + '</p>';
+      itemHTML += '</div>';
+
+      // Add button
       if (product.inStock) {
-        cardHTML += '<div class="nsd-card-actions">';
-        cardHTML += '<div class="nsd-card-qty">';
-        cardHTML += '<button class="nsd-card-qty-btn nsd-card-qty-minus" data-id="' + product.id + '" aria-label="Decrease"><i class="fas fa-minus"></i></button>';
-        cardHTML += '<input type="number" class="nsd-card-qty-input" data-id="' + product.id + '" value="1" min="1" max="99" aria-label="Quantity" />';
-        cardHTML += '<button class="nsd-card-qty-btn nsd-card-qty-plus" data-id="' + product.id + '" aria-label="Increase"><i class="fas fa-plus"></i></button>';
-        cardHTML += '</div>';
-        cardHTML += '<button class="' + btnClass + '" data-id="' + product.id + '"><i class="fas fa-shopping-basket"></i> ' + btnText + '</button>';
-        cardHTML += '</div>';
+        itemHTML += '<button class="nsd-list-add-btn ' + (inCart ? 'added' : '') + '" data-id="' + product.id + '" aria-label="Add to cart"><i class="fas fa-' + (inCart ? 'check' : 'plus') + '"></i></button>';
       } else {
-        cardHTML += '<button class="nsd-card-add-btn nsd-card-oos-btn" disabled><i class="fas fa-times"></i> Out of Stock</button>';
+        itemHTML += '<button class="nsd-list-add-btn nsd-list-add-btn-disabled" disabled aria-label="Out of stock"><i class="fas fa-times"></i></button>';
       }
-      
-      cardHTML += '</div>';
-      
-      card.innerHTML = cardHTML;
-      cardsContainer.appendChild(card);
+
+      item.innerHTML = itemHTML;
+      listContainer.appendChild(item);
+
+      // Click on item (not button) → navigate to product
+      item.addEventListener('click', function(e) {
+        if (e.target.closest('.nsd-list-add-btn')) return;
+        
+        if (product.isWholesale) {
+          // Scroll to wholesale section
+          var wholesaleSection = document.getElementById('wholesale');
+          if (wholesaleSection) {
+            var wTabs = document.querySelectorAll('#wholesale-tabs .cat-tab');
+            wTabs.forEach(function(t) { t.classList.remove('active'); });
+            var matchWTab = document.querySelector('#wholesale-tabs .cat-tab[data-wcat="' + product.cat + '"]');
+            if (matchWTab) matchWTab.classList.add('active');
+            renderWholesale(product.cat);
+            
+            var off = (header?.offsetHeight || 64) + 80;
+            window.scrollTo({ top: wholesaleSection.offsetTop - off, behavior: 'smooth' });
+          }
+        } else {
+          // Scroll to retail products section
+          catTabs.forEach(function(t) { t.classList.remove('active'); });
+          var matchTab = document.querySelector('.cat-tab[data-cat="' + product.cat + '"]');
+          if (matchTab) matchTab.classList.add('active');
+          renderProducts(product.cat, product.name);
+          
+          var menuSection = document.getElementById('menu');
+          if (menuSection) {
+            var off = (header?.offsetHeight || 64) + 80;
+            window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+          }
+        }
+        
+        closeNavSearch();
+      });
     });
 
-    nsdInner.appendChild(cardsContainer);
+    nsdInner.appendChild(listContainer);
 
-    // Add to Cart handlers for cards
-    cardsContainer.querySelectorAll('.nsd-card-add-btn:not([disabled])').forEach(function(btn) {
+    // Add to Cart button handlers
+    listContainer.querySelectorAll('.nsd-list-add-btn:not([disabled])').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
         var id = parseInt(btn.dataset.id);
-        var qtyInput = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
-        var qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
         
         if (id) {
-          addToCart(id, qty);
+          addToCart(id, 1);
           
           // Visual feedback
           btn.classList.add('added');
-          btn.innerHTML = '<i class="fas fa-check"></i> Added';
-          
-          // Reset qty input
-          if (qtyInput) qtyInput.value = 1;
+          btn.innerHTML = '<i class="fas fa-check"></i>';
           
           setTimeout(function() {
-            btn.innerHTML = '<i class="fas fa-shopping-basket"></i> Add More';
+            btn.innerHTML = '<i class="fas fa-plus"></i>';
             btn.classList.remove('added');
           }, 1500);
         }
       });
     });
 
-    // Quantity minus handlers
-    cardsContainer.querySelectorAll('.nsd-card-qty-minus').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var id = btn.dataset.id;
-        var input = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
-        if (input) {
-          var val = parseInt(input.value) || 1;
-          if (val > 1) {
-            input.value = val - 1;
-            input.classList.add('bumped');
-            setTimeout(function() { input.classList.remove('bumped'); }, 200);
-          }
-        }
-      });
-    });
-
-    // Quantity plus handlers
-    cardsContainer.querySelectorAll('.nsd-card-qty-plus').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var id = btn.dataset.id;
-        var input = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
-        if (input) {
-          var val = parseInt(input.value) || 1;
-          if (val < 99) {
-            input.value = val + 1;
-            input.classList.add('bumped');
-            setTimeout(function() { input.classList.remove('bumped'); }, 200);
-          }
-        }
-      });
-    });
-
-    // Quantity input validation
-    cardsContainer.querySelectorAll('.nsd-card-qty-input').forEach(function(input) {
-      input.addEventListener('click', function(e) { e.stopPropagation(); });
-      input.addEventListener('input', function() {
-        var val = parseInt(input.value) || 1;
-        if (val < 1) val = 1;
-        if (val > 99) val = 99;
-        input.value = val;
-      });
-      input.addEventListener('blur', function() {
-        if (!input.value || parseInt(input.value) < 1) {
-          input.value = 1;
-        }
-      });
-    });
-
-    // Footer with View All button
-    var footer = document.createElement('div');
-    footer.className = 'nsd-footer';
-    
-    var footerText = results.length > 4 
-      ? 'View all ' + results.length + ' results in menu' 
-      : 'View results in menu';
-    
-    footer.innerHTML = '<button class="nsd-footer-btn" id="nsd-view-all"><i class="fas fa-th"></i> ' + footerText + ' <i class="fas fa-arrow-right"></i></button>';
-    nsdInner.appendChild(footer);
-
-    footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
-      var searchTerm = navSearchInput?.value.trim() || '';
-      catTabs.forEach(function(t) { t.classList.remove('active'); });
-      document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
+    // Footer with View All button (if more than 6 results)
+    if (results.length > 0) {
+      var footer = document.createElement('div');
+      footer.className = 'nsd-footer';
       
-      if (searchInput) {
-        searchInput.value = searchTerm;
-        currentSearch = searchTerm;
-      }
+      var footerText = results.length > 6 
+        ? 'View all ' + results.length + ' results' 
+        : 'View in menu';
       
-      renderProducts('all', searchTerm);
-      
-      var menuSection = document.getElementById('menu');
-      if (menuSection) {
-        var off = (header?.offsetHeight || 64) + 80;
-        window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
-      }
-      closeNavSearch();
-    });
+      footer.innerHTML = '<button class="nsd-footer-btn" id="nsd-view-all"><i class="fas fa-th"></i> ' + footerText + ' <i class="fas fa-arrow-right"></i></button>';
+      nsdInner.appendChild(footer);
+
+      footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
+        var searchTerm = navSearchInput?.value.trim() || '';
+        catTabs.forEach(function(t) { t.classList.remove('active'); });
+        document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
+        
+        if (searchInput) {
+          searchInput.value = searchTerm;
+          currentSearch = searchTerm;
+        }
+        
+        renderProducts('all', searchTerm);
+        
+        var menuSection = document.getElementById('menu');
+        if (menuSection) {
+          var off = (header?.offsetHeight || 64) + 80;
+          window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+        }
+        closeNavSearch();
+      });
+    }
   }
-
   /* ════════════════════════════════════════════════
      SMART FUZZY SEARCH SYSTEM
   ════════════════════════════════════════════════ */
