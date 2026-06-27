@@ -1498,32 +1498,23 @@ function addToCart(productId) {
 
   acsCloseBtn?.addEventListener('click', acsDismissBanner);
 
-/* ── ACS Init ── */
+  /* ── ACS Init ── */
   (function acsInit() {
-    // Wait for page to fully load + idle before showing popups
-    const initACS = () => {
-      const customer  = JSON.parse(localStorage.getItem(ACS_CUSTOMER) || 'null');
-      const lastOrder = JSON.parse(localStorage.getItem(ACS_ORDER)    || 'null');
-      const skipped   = localStorage.getItem(ACS_SKIPPED);
-      const dismissed = localStorage.getItem(ACS_DISMISSED);
+    const customer  = JSON.parse(localStorage.getItem(ACS_CUSTOMER) || 'null');
+    const lastOrder = JSON.parse(localStorage.getItem(ACS_ORDER)    || 'null');
+    const skipped   = localStorage.getItem(ACS_SKIPPED);
+    const dismissed = localStorage.getItem(ACS_DISMISSED);
 
-      if (customer && lastOrder && !dismissed) {
-        setTimeout(() => acsShowBanner(customer, lastOrder), 2000);
-        return;
-      }
+    if (customer && lastOrder && !dismissed) {
+      setTimeout(() => acsShowBanner(customer, lastOrder), 1500);
+      return;
+    }
 
-      if (!customer && !skipped) {
-        setTimeout(acsShowPopup, 5000);
-      }
-    };
-
-    // Use requestIdleCallback to delay until browser is free
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(initACS, { timeout: 3000 });
-    } else {
-      setTimeout(initACS, 2000);
+    if (!customer && !skipped) {
+      setTimeout(acsShowPopup, 3000);
     }
   })();
+
   /* ════════════════════════════════════════════════
      INIT — Render products & cart on load
   ════════════════════════════════════════════════ */
