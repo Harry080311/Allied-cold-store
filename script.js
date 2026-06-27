@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
      CONSTANTS — Declared FIRST to avoid any
      "used before declaration" errors
   ════════════════════════════════════════════════ */
-  const WA_NUMBER     = '233542559031';
+ const WA_NUMBER     = '233247221043';
   const ACS_CUSTOMER  = 'acs-customer';
   const ACS_ORDER     = 'acs-last-order';
   const ACS_SKIPPED   = 'acs-skipped';
@@ -820,13 +820,60 @@ document.addEventListener('DOMContentLoaded', () => {
       dismissToast(allToasts[0]);
     }
   }
+  function showOrderIdToast(orderId, totalItems, total) {
+    if (!toastContainer) return;
 
+    var toast = document.createElement('div');
+    toast.className = 'toast toast-info';
+
+    var toastHTML = '';
+    toastHTML += '<div class="toast-icon"><i class="fas fa-receipt"></i></div>';
+    toastHTML += '<div class="toast-content">';
+    toastHTML += '<p class="toast-title"><i class="fas fa-check-circle"></i> Order Created!</p>';
+    toastHTML += '<p class="toast-name">' + orderId + '</p>';
+    toastHTML += '<p class="toast-meta">' + totalItems + ' items · <strong>GH₵ ' + total.toFixed(2) + '</strong></p>';
+    toastHTML += '</div>';
+    toastHTML += '<div class="toast-progress"></div>';
+
+    toast.innerHTML = toastHTML;
+    toastContainer.appendChild(toast);
+
+    // This toast stays longer (5 seconds) so customer can see the Order ID
+    var dismissTimer = setTimeout(function() {
+      dismissToast(toast);
+    }, 5000);
+
+    toast.addEventListener('click', function() {
+      clearTimeout(dismissTimer);
+      dismissToast(toast);
+    });
+  }
   function dismissToast(toast) {
     if (!toast || toast.classList.contains('toast-hide')) return;
     toast.classList.add('toast-hide');
     setTimeout(() => {
       if (toast.parentNode) toast.remove();
     }, 350);
+  }
+  /* ════════════════════════════════════════════════
+     ORDER ID GENERATOR
+  ════════════════════════════════════════════════ */
+  function generateOrderId() {
+    // Get current date
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, '0');
+    var day = String(now.getDate()).padStart(2, '0');
+    var dateStr = '' + year + month + day;
+
+    // Generate 4 random alphanumeric characters (uppercase)
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var randomStr = '';
+    for (var i = 0; i < 4; i++) {
+      randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return 'ACS-' + dateStr + '-' + randomStr;
   }
   /* ════════════════════════════════════════════════
      CART SYSTEM
@@ -1077,8 +1124,8 @@ function addToCart(productId, qty = 1) {
   });
 
   // Confirm & Send button
-  cmConfirmBtn?.addEventListener('click', () => {
-    const selectedBranch = cmBranchSelect.value;
+  cmConfirmBtn?.addEventListener('click', function() {
+    var selectedBranch = cmBranchSelect.value;
 
     if (!selectedBranch) {
       cmBranchSelect.classList.add('err');
@@ -1087,53 +1134,72 @@ function addToCart(productId, qty = 1) {
       return;
     }
 
-    const total = getTotal();
-    const lines = cart.map(({ product, qty }) =>
-      `• ${product.name} x${qty} — GH₵ ${(product.price * qty).toFixed(2)} (${product.unit})`
-    );
+    // Generate unique Order ID
+    var orderId = generateOrderId();
 
-    const message = [
-      '🛒 *New Order — Allied Cold Store*',
-      '',
-      `🏪 *Branch: ${selectedBranch}*`,
-      '',
-      '*Order Details:*',
-      ...lines,
-      '',
-      `*Total: GH₵ ${total.toFixed(2)}*`,
-      '',
-      '📍 Please confirm my order and arrange pickup/delivery.',
-      '',
-      '_Sent from alliedcoldstore.com_'
-    ].join('\n');
+    var total = getTotal();
+    var totalItems = getTotalItems();
 
-    // Save last order
-    const order = {
-      items: cart.map(({ product, qty }) => ({
-        id:    product.id,
-        name:  product.name,
-        price: product.price,
-        unit:  product.unit,
-        icon:  product.icon,
-        cat:   product.cat,
-        qty
-      })),
-      total:  getTotal(),
+    // Build order lines
+    var lines = [];
+    cart.forEach(function(item) {
+      var subtotal = (item.product.price * item.qty).toFixed(2);
+      lines.push('• ' + item.product.name + ' x' + item.qty + ' — GH₵ ' + subtotal + ' (' + item.product.unit + ')');
+    });
+
+    // Build WhatsApp message with Order ID
+    var message = '🛒 *New Order — Allied Cold Store*\n';
+    message += '\n';
+    message += '📦 *Order ID: ' + orderId + '*\n';
+    message += '\n';
+    message += '🏪 *Branch: ' + selectedBranch + '*\n';
+    message += '\n';
+    message += '*Order Details:*\n';
+    message += lines.join('\n') + '\n';
+    message += '\n';
+    message += '📊 *Items: ' + totalItems + '*\n';
+    message += '*Total: GH₵ ' + total.toFixed(2) + '*\n';
+    message += '\n';
+    message += '📍 Please confirm my order and arrange pickup/delivery.\n';
+    message += '\n';
+    message += '_Order ID: ' + orderId + '_\n';
+    message += '_Sent from alliedcoldstore.com_';
+
+    // Save last order with Order ID
+    var orderData = {
+      orderId: orderId,
+      items: cart.map(function(item) {
+        return {
+          id:    item.product.id,
+          name:  item.product.name,
+          price: item.product.price,
+          unit:  item.product.unit,
+          icon:  item.product.icon,
+          cat:   item.product.cat,
+          qty:   item.qty
+        };
+      }),
+      total:  total,
       branch: selectedBranch,
       date:   new Date().toLocaleDateString('en-GH', {
         day: 'numeric', month: 'short', year: 'numeric'
       })
     };
-    localStorage.setItem(ACS_ORDER, JSON.stringify(order));
+    localStorage.setItem(ACS_ORDER, JSON.stringify(orderData));
+
+    // Show Order ID toast before opening WhatsApp
+    showOrderIdToast(orderId, totalItems, total);
 
     closeConfirmModal();
     closeCart();
 
-    // Open WhatsApp
-    window.open(
-      `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`,
-      '_blank'
-    );
+    // Small delay so user sees the Order ID toast first
+    setTimeout(function() {
+      window.open(
+        'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(message),
+        '_blank'
+      );
+    }, 800);
   });
 
   // ESC key closes modal
@@ -1357,22 +1423,20 @@ function addToCart(productId, qty = 1) {
     acsPopup.style.display       = 'none';
     document.body.style.overflow = '';
   }
-
   function acsShowBanner(customer, lastOrder) {
     if (!acsBanner) return;
     if (acsGreeting) {
-      acsGreeting.textContent = `Welcome back ${customer.name}! 👋`;
+      acsGreeting.textContent = 'Welcome back ' + customer.name + '! 👋';
     }
     if (acsOrderSum && lastOrder) {
-      const count = lastOrder.items.reduce((s, i) => s + i.qty, 0);
-      acsOrderSum.textContent =
-        `Last order: ${count} item${count !== 1 ? 's' : ''} · ` +
-        `GH₵ ${lastOrder.total.toFixed(2)} · ${lastOrder.date}`;
+      var count = lastOrder.items.reduce(function(s, i) { return s + i.qty; }, 0);
+      var itemText = count !== 1 ? 's' : '';
+      var orderIdText = lastOrder.orderId ? ' · ' + lastOrder.orderId : '';
+      acsOrderSum.textContent = 'Last order: ' + count + ' item' + itemText + ' · GH₵ ' + lastOrder.total.toFixed(2) + ' · ' + lastOrder.date + orderIdText;
     }
     acsBanner.style.display = 'block';
     if (lastOrder) acsRenderDetails(lastOrder);
   }
-
   function acsRenderDetails(lastOrder) {
     if (!acsOdInner) return;
     acsOdInner.innerHTML = '';
