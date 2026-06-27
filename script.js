@@ -450,259 +450,67 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ════════════════════════════════════════════════
-     NAV SEARCH SYSTEM
+   /* ════════════════════════════════════════════════
+     NAV SEARCH — SCROLL TO PRODUCTS (NEW VERSION)
   ════════════════════════════════════════════════ */
-  const navSearchBtn      = document.getElementById('nav-search-btn');
-  const navSearchBox      = document.getElementById('nav-search-box');
-  const navSearchInput    = document.getElementById('nav-search-input');
-  const navSearchClear    = document.getElementById('nav-search-clear');
-  const navSearchDropdown = document.getElementById('nav-search-dropdown');
-  const nsdInner          = document.getElementById('nsd-inner');
+  var navSearchBtn = document.getElementById('nav-search-btn');
+  var productSearchInput = document.getElementById('product-search');
+  var productSearchBox = document.querySelector('.search-box');
 
-  let navSearchOpen = false;
-
-   function openNavSearch() {
-    navSearchOpen = true;
-    navSearchBox?.classList.add('open');
-    navSearchBtn?.classList.add('active');
-    
-    // Hide nav menu on desktop to prevent overlap
-    if (window.innerWidth >= 768) {
-      navMenu?.classList.add('search-hidden');
-    }
-    
-    setTimeout(function() { navSearchInput?.focus(); }, 400);
-  }
-
-  function closeNavSearch() {
-    navSearchOpen = false;
-    navSearchBox?.classList.remove('open');
-    navSearchBtn?.classList.remove('active');
-    navSearchDropdown?.classList.remove('show');
-    
-    // Show nav menu again
-    navMenu?.classList.remove('search-hidden');
-    
-    if (navSearchInput) navSearchInput.value = '';
-    navSearchClear?.classList.remove('show');
-    if (nsdInner) nsdInner.innerHTML = '';
-  }
-  navSearchBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    navSearchOpen ? closeNavSearch() : openNavSearch();
-  });
-
-  document.addEventListener('click', (e) => {
-    const wrap = document.getElementById('nav-search-wrap');
-    if (wrap && !wrap.contains(e.target)) closeNavSearch();
-  });
-
-  navSearchInput?.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeNavSearch();
-  });
-
-  navSearchClear?.addEventListener('click', () => {
-    if (navSearchInput) navSearchInput.value = '';
-    navSearchClear.classList.remove('show');
-    navSearchDropdown?.classList.remove('show');
-    if (nsdInner) nsdInner.innerHTML = '';
-    navSearchInput?.focus();
-  });
-
- navSearchInput?.addEventListener('input', function () {
-    const term = this.value.trim();
-    if (term.length > 0) {
-      navSearchClear?.classList.add('show');
-      const results = PRODUCTS.filter(p => {
-        const name = p.name.toLowerCase();
-        const desc = p.desc.toLowerCase();
-        const q    = term.toLowerCase();
-        return name.includes(q) || desc.includes(q);
-      }).slice(0, 6);
-      renderNavResults(results, term);
-    } else {
-      navSearchClear?.classList.remove('show');
-      navSearchDropdown?.classList.remove('show');
-      if (nsdInner) nsdInner.innerHTML = '';
-    }
-  });
-    function renderNavResults(results, term) {
-    if (!nsdInner) return;
-    nsdInner.innerHTML = '';
-    navSearchDropdown?.classList.add('show');
-
-    // Header
-    var hdr = document.createElement('div');
-    hdr.className = 'nsd-header';
-    hdr.innerHTML = '<span>' + results.length + ' result' + (results.length !== 1 ? 's' : '') + ' for "' + term + '"</span>';
-    nsdInner.appendChild(hdr);
-
-    if (results.length === 0) {
-      var empty = document.createElement('div');
-      empty.className = 'nsd-empty';
-      empty.innerHTML = '<i class="fas fa-search"></i><p>No products found</p><span>Try a different search term</span>';
-      nsdInner.appendChild(empty);
-      return;
-    }
-
-    // Limit to 6 results in the dropdown
-    var displayResults = results.slice(0, 6);
-
-    // Create list container
-    var listContainer = document.createElement('div');
-    listContainer.className = 'nsd-list';
-
-    displayResults.forEach(function(product) {
-      var inCart = cart.find(function(c) { return c.product.id === product.id; });
-
-      // Highlight the search term in the name
-      var regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-      var highlightedName = product.name.replace(regex, '<span class="nsd-highlight">$1</span>');
-
-      // Wholesale label
-      var wholesaleLabel = '';
-      if (product.isWholesale) {
-        wholesaleLabel = '<span class="nsd-list-wholesale">🏢 Wholesale</span>';
-      }
-
-      // Out of stock label
-      var stockLabel = '';
-      if (!product.inStock) {
-        stockLabel = '<span class="nsd-list-oos">Out of Stock</span>';
-      }
-
-      // Create list item
-      var item = document.createElement('div');
-      item.className = 'nsd-list-item' + (!product.inStock ? ' nsd-list-item-oos' : '');
-      item.dataset.id = product.id;
-
-      var itemHTML = '';
-
-      // Image/Icon section
-      itemHTML += '<div class="nsd-list-img nsd-list-img-' + (product.isWholesale ? 'wholesale' : product.cat) + '">';
+  if (navSearchBtn) {
+    navSearchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
       
-      if (product.image && !product.isWholesale) {
-        itemHTML += '<img src="' + product.image + '" alt="' + product.name + '" loading="lazy" />';
-      } else if (product.isWholesale) {
-        itemHTML += '<span class="nsd-list-emoji">' + product.icon + '</span>';
-      } else {
-        itemHTML += '<i class="' + product.icon + '"></i>';
-      }
+      // Close mobile nav if open
+      closeNav();
       
-      itemHTML += '</div>';
-
-      // Info section
-      itemHTML += '<div class="nsd-list-info">';
+      // Get the menu section
+      var menuSection = document.getElementById('menu');
+      if (!menuSection) return;
       
-      // Badges above name
-      if (wholesaleLabel || stockLabel) {
-        itemHTML += '<div class="nsd-list-badges">' + wholesaleLabel + stockLabel + '</div>';
-      }
+      // Calculate scroll position
+      var headerHeight = header?.offsetHeight || 64;
+      var scrollOffset = headerHeight + 20;
+      var targetY = menuSection.offsetTop - scrollOffset;
       
-      itemHTML += '<p class="nsd-list-name">' + highlightedName + '</p>';
-      itemHTML += '<p class="nsd-list-meta"><strong>GH₵ ' + product.price.toFixed(2) + '</strong> · ' + product.unit + '</p>';
-      itemHTML += '</div>';
-      // Add button
-      if (product.inStock) {
-        itemHTML += '<button class="nsd-list-add-btn ' + (inCart ? 'added' : '') + '" data-id="' + product.id + '" aria-label="Add to cart"><i class="fas fa-' + (inCart ? 'check' : 'plus') + '"></i></button>';
-      } else {
-        itemHTML += '<button class="nsd-list-add-btn nsd-list-add-btn-disabled" disabled aria-label="Out of stock"><i class="fas fa-times"></i></button>';
-      }
-
-      item.innerHTML = itemHTML;
-      listContainer.appendChild(item);
-
-      // Click on item (not button) → navigate to product
-      item.addEventListener('click', function(e) {
-        if (e.target.closest('.nsd-list-add-btn')) return;
-        
-        if (product.isWholesale) {
-          // Scroll to wholesale section
-          var wholesaleSection = document.getElementById('wholesale');
-          if (wholesaleSection) {
-            var wTabs = document.querySelectorAll('#wholesale-tabs .cat-tab');
-            wTabs.forEach(function(t) { t.classList.remove('active'); });
-            var matchWTab = document.querySelector('#wholesale-tabs .cat-tab[data-wcat="' + product.cat + '"]');
-            if (matchWTab) matchWTab.classList.add('active');
-            renderWholesale(product.cat);
-            
-            var off = (header?.offsetHeight || 64) + 80;
-            window.scrollTo({ top: wholesaleSection.offsetTop - off, behavior: 'smooth' });
-          }
-        } else {
-          // Scroll to retail products section
-          catTabs.forEach(function(t) { t.classList.remove('active'); });
-          var matchTab = document.querySelector('.cat-tab[data-cat="' + product.cat + '"]');
-          if (matchTab) matchTab.classList.add('active');
-          renderProducts(product.cat, product.name);
+      // Smooth scroll to product search (500ms via CSS scroll-behavior)
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      });
+      
+      // After scroll completes, focus the search input and add pulse animation
+      setTimeout(function() {
+        if (productSearchInput) {
+          // Clear any previous search
+          productSearchInput.value = '';
+          currentSearch = '';
           
-          var menuSection = document.getElementById('menu');
-          if (menuSection) {
-            var off = (header?.offsetHeight || 64) + 80;
-            window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+          // Reset the products to show all
+          if (typeof renderProducts === 'function') {
+            renderProducts(currentFilter || 'all', '');
           }
+          
+          // Focus the input (this opens mobile keyboard too)
+          productSearchInput.focus();
         }
         
-        closeNavSearch();
-      });
-    });
-
-    nsdInner.appendChild(listContainer);
-
-    // Add to Cart button handlers
-    listContainer.querySelectorAll('.nsd-list-add-btn:not([disabled])').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var id = parseInt(btn.dataset.id);
-        
-        if (id) {
-          addToCart(id, 1);
+        // Add pulse animation to the search box
+        if (productSearchBox) {
+          productSearchBox.classList.add('pulse-highlight');
           
-          // Visual feedback
-          btn.classList.add('added');
-          btn.innerHTML = '<i class="fas fa-check"></i>';
-          
+          // Remove animation class after it completes
           setTimeout(function() {
-            btn.innerHTML = '<i class="fas fa-plus"></i>';
-            btn.classList.remove('added');
+            productSearchBox.classList.remove('pulse-highlight');
           }, 1500);
         }
-      });
+      }, 600); // Wait for scroll to mostly complete
     });
+  }
 
-    // Footer with View All button (if more than 6 results)
-    if (results.length > 0) {
-      var footer = document.createElement('div');
-      footer.className = 'nsd-footer';
-      
-      var footerText = results.length > 6 
-        ? 'View all ' + results.length + ' results' 
-        : 'View in menu';
-      
-      footer.innerHTML = '<button class="nsd-footer-btn" id="nsd-view-all"><i class="fas fa-th"></i> ' + footerText + ' <i class="fas fa-arrow-right"></i></button>';
-      nsdInner.appendChild(footer);
-
-      footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
-        var searchTerm = navSearchInput?.value.trim() || '';
-        catTabs.forEach(function(t) { t.classList.remove('active'); });
-        document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
-        
-        if (searchInput) {
-          searchInput.value = searchTerm;
-          currentSearch = searchTerm;
-        }
-        
-        renderProducts('all', searchTerm);
-        
-        var menuSection = document.getElementById('menu');
-        if (menuSection) {
-          var off = (header?.offsetHeight || 64) + 80;
-          window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
-        }
-        closeNavSearch();
-      });
-    }
+  // Helper function for closing mobile nav (in case it's open)
+  function closeNavSearch() {
+    // Kept as empty function for compatibility with old code references
   }
   /* ════════════════════════════════════════════════
      SMART FUZZY SEARCH SYSTEM
