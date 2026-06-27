@@ -7885,3 +7885,38 @@ body.dark-mode @keyframes searchPulse {
     transform: scale(1);
   }
 }
+/* ═══════════════════════════════════════════════════
+   SEARCH BAR SPACING FIX
+   ═══════════════════════════════════════════════════ */
+
+/* Add breathing room around the search bar */
+.search-wrap {
+  margin-top: 24px;
+  margin-bottom: 28px;
+}
+
+@media (min-width: 768px) {
+  .search-wrap {
+    margin-top: 32px;
+    margin-bottom: 36px;
+  }
+}
+
+/* Add space between search and category tabs */
+.search-wrap + .cat-tabs,
+.search-info + .cat-tabs {
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .search-wrap + .cat-tabs,
+  .search-info + .cat-tabs {
+    margin-top: 12px;
+  }
+}
+
+/* If there's a search info bar showing, add some space after it too */
+.search-info {
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
