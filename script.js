@@ -31,34 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ACS_SKIPPED   = 'acs-skipped';
   const ACS_DISMISSED = 'acs-dismissed';
 
-  /* ════════════════════════════════════════════════
-     PAGE LOADER — wrapped in try/catch so any
-     error below never keeps the loader stuck
-  ════════════════════════════════════════════════ */
-  const pageLoader = document.getElementById('page-loader');
-
-  function hideLoader() {
-    if (!pageLoader) return;
-    pageLoader.classList.add('hide');
-    setTimeout(() => {
-      if (pageLoader.parentNode) pageLoader.remove();
-    }, 700);
-  }
-
-  // Safety net: always hide loader after 4 seconds no matter what
-  const loaderSafetyTimeout = setTimeout(hideLoader, 4000);
-
-  if (document.readyState === 'complete') {
-    clearTimeout(loaderSafetyTimeout);
-    setTimeout(hideLoader, 1500);
-  } else {
-    window.addEventListener('load', () => {
-      clearTimeout(loaderSafetyTimeout);
-      setTimeout(hideLoader, 1500);
-    });
-  }
-
-  /* ════════════════════════════════════════════════
+    /* ════════════════════════════════════════════════
      PRODUCT DATABASE
   ════════════════════════════════════════════════ */
   const PRODUCTS = [
