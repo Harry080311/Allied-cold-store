@@ -195,6 +195,133 @@ document.addEventListener('DOMContentLoaded', () => {
       image: './images/Products/bulk-icecream.webp',
       badge: 'Event Size', badgeClass: 'badge-purple', inStock: false
     },
+    // ═══════════════════════════════════════════════════
+    // WHOLESALE PRODUCTS (Chicken & Fish only)
+    // ═══════════════════════════════════════════════════
+    
+    // WHOLESALE CHICKEN
+    {
+      id: 101, cat: 'wholesale-chicken',
+      name: 'Whole Frozen Chicken (Carton)',
+      desc: 'Bulk pack of premium whole chickens — perfect for restaurants, events, and bulk buyers.',
+      price: 1800.00, originalPrice: 2000.00, savings: 10,
+      unit: 'per carton (10 birds)', icon: '🐔',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 102, cat: 'wholesale-chicken',
+      name: 'Chicken Thighs (10kg Bulk)',
+      desc: 'Premium chicken thighs in bulk packaging — ideal for caterers and food businesses.',
+      price: 850.00, originalPrice: 999.90, savings: 15,
+      unit: 'per 10kg pack', icon: '🍗',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 103, cat: 'wholesale-chicken',
+      name: 'Chicken Wings (10kg Bulk)',
+      desc: 'Crispy chicken wings in bulk — perfect for parties, events, and wholesale buyers.',
+      price: 2700.00, originalPrice: 2999.90, savings: 10,
+      unit: 'per 10kg pack', icon: '🍗',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 104, cat: 'wholesale-chicken',
+      name: 'Chicken Legs (10kg Bulk)',
+      desc: 'Full chicken legs in bulk packaging — staple for restaurants and large families.',
+      price: 1850.00, originalPrice: 1950.00, savings: 5,
+      unit: 'per 10kg pack', icon: '🍗',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 105, cat: 'wholesale-chicken',
+      name: 'Chicken Gizzards (10kg Bulk)',
+      desc: 'Premium gizzards in bulk — popular for traditional dishes and restaurants.',
+      price: 1600.00, originalPrice: 1750.00, savings: 9,
+      unit: 'per 10kg pack', icon: '🐔',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 106, cat: 'wholesale-chicken',
+      name: 'Chicken Breast (10kg Bulk)',
+      desc: 'Lean chicken breast in bulk — perfect for healthy meal preparation businesses.',
+      price: 2700.00, originalPrice: 2850.00, savings: 5,
+      unit: 'per 10kg pack', icon: '🍗',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 107, cat: 'wholesale-chicken',
+      name: 'Chicken Feet (10kg Bulk)',
+      desc: 'Cleaned chicken feet in bulk — great for soup vendors and traditional dishes.',
+      price: 800.00, originalPrice: 890.00, savings: 10,
+      unit: 'per 10kg pack', icon: '🐔',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 108, cat: 'wholesale-chicken',
+      name: 'Mixed Chicken Parts (20kg Bulk)',
+      desc: 'Assorted chicken parts in bulk — best value for large events and caterers.',
+      price: 2300.00, originalPrice: 2499.90, savings: 8,
+      unit: 'per 20kg pack', icon: '🍗',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    
+    // WHOLESALE FISH
+    {
+      id: 109, cat: 'wholesale-fish',
+      name: 'Whole Tilapia (20kg Carton)',
+      desc: 'Fresh tilapia in bulk — popular for restaurants, hotels, and fish vendors.',
+      price: 750.00, originalPrice: 800.00, savings: 6,
+      unit: 'per 20kg carton', icon: '🐟',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 110, cat: 'wholesale-fish',
+      name: 'Mackerel / Titus (20kg Carton)',
+      desc: 'Classic Titus mackerel in bulk — best price for wholesale buyers.',
+      price: 650.00, originalPrice: 700.00, savings: 7,
+      unit: 'per 20kg carton', icon: '🐠',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 111, cat: 'wholesale-fish',
+      name: 'Catfish (20kg Carton)',
+      desc: 'Premium frozen catfish in bulk — perfect for soup vendors and restaurants.',
+      price: 850.00, originalPrice: 900.00, savings: 6,
+      unit: 'per 20kg carton', icon: '🐟',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
+    {
+      id: 112, cat: 'wholesale-fish',
+      name: 'Herrings (10kg Carton)',
+      desc: 'Smoked herrings in bulk — popular for bulk distribution.',
+      price: 280.00, originalPrice: 330.00, savings: 15,
+      unit: 'per 10kg carton', icon: '🐟',
+      image: null,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      isWholesale: true
+    },
   ];
   /* ════════════════════════════════════════════════
      CART STATE
@@ -374,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navSearchInput?.focus();
   });
 
-  navSearchInput?.addEventListener('input', function () {
+ navSearchInput?.addEventListener('input', function () {
     const term = this.value.trim();
     if (term.length > 0) {
       navSearchClear?.classList.add('show');
@@ -391,7 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nsdInner) nsdInner.innerHTML = '';
     }
   });
-
   function renderNavResults(results, term) {
     if (!nsdInner) return;
     nsdInner.innerHTML = '';
@@ -428,13 +554,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const item = document.createElement('div');
       item.className = 'nsd-item';
+          // Determine category display name and icon class
+      var catDisplay = product.cat;
+      var catIconClass = product.cat;
+      var wholesaleBadge = '';
+      
+      if (product.isWholesale) {
+        // Map wholesale categories to their base category for styling
+        if (product.cat === 'wholesale-chicken') {
+          catIconClass = 'chicken';
+          catDisplay = 'Wholesale Chicken';
+        } else if (product.cat === 'wholesale-fish') {
+          catIconClass = 'fish';
+          catDisplay = 'Wholesale Fish';
+        }
+        wholesaleBadge = '<span style="display:inline-block;background:linear-gradient(135deg,#1a56db,#1241a8);color:#fff;font-size:0.55rem;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:6px;vertical-align:middle;">🏢 WHOLESALE</span>';
+      }
+      
       item.innerHTML = `
-        <div class="nsd-item-icon nsd-icon-${product.cat}">
-          <i class="${product.icon}"></i>
+        <div class="nsd-item-icon nsd-icon-${catIconClass}">
+          <i class="${product.isWholesale ? 'fas fa-box' : product.icon}"></i>
         </div>
         <div class="nsd-item-info">
-          <p class="nsd-item-name">${highlightedName}</p>
-          <span class="nsd-item-cat">${product.cat}</span>
+          <p class="nsd-item-name">${highlightedName}${wholesaleBadge}</p>
+          <span class="nsd-item-cat">${catDisplay}</span>
         </div>
         <span class="nsd-item-price">GH₵ ${product.price.toFixed(2)}</span>
         <button class="nsd-add-btn ${inCart ? 'added' : ''}"
@@ -442,23 +585,41 @@ document.addEventListener('DOMContentLoaded', () => {
           <i class="fas fa-${inCart ? 'check' : 'plus'}"></i>
         </button>
       `;
-
-      item.addEventListener('click', (e) => {
+        item.addEventListener('click', function(e) {
         if (e.target.closest('.nsd-add-btn')) return;
-        catTabs.forEach(t => t.classList.remove('active'));
-        const matchTab = document.querySelector(
-          `.cat-tab[data-cat="${product.cat}"]`
-        );
-        if (matchTab) matchTab.classList.add('active');
-        renderProducts(product.cat, product.name);
-        const menuSection = document.getElementById('menu');
-        if (menuSection) {
-          const off = (header?.offsetHeight || 64) + 80;
-          window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+        
+        // If it's a wholesale product, scroll to wholesale section
+        if (product.isWholesale) {
+          var wholesaleSection = document.getElementById('wholesale');
+          if (wholesaleSection) {
+            // Set the correct wholesale tab
+            var wTabs = document.querySelectorAll('#wholesale-tabs .cat-tab');
+            wTabs.forEach(function(t) { t.classList.remove('active'); });
+            var matchWTab = document.querySelector('#wholesale-tabs .cat-tab[data-wcat="' + product.cat + '"]');
+            if (matchWTab) matchWTab.classList.add('active');
+            
+            // Render wholesale with the matching category
+            renderWholesale(product.cat);
+            
+            // Scroll to wholesale section
+            var off = (header?.offsetHeight || 64) + 80;
+            window.scrollTo({ top: wholesaleSection.offsetTop - off, behavior: 'smooth' });
+          }
+        } else {
+          // Regular retail product - scroll to menu section
+          catTabs.forEach(function(t) { t.classList.remove('active'); });
+          var matchTab = document.querySelector('.cat-tab[data-cat="' + product.cat + '"]');
+          if (matchTab) matchTab.classList.add('active');
+          renderProducts(product.cat, product.name);
+          var menuSection = document.getElementById('menu');
+          if (menuSection) {
+            var off = (header?.offsetHeight || 64) + 80;
+            window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+          }
         }
+        
         closeNavSearch();
       });
-
       const addBtn = item.querySelector('.nsd-add-btn');
       addBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -486,14 +647,22 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       nsdInner.appendChild(footer);
 
-      footer.querySelector('#nsd-view-all')?.addEventListener('click', () => {
-        const t = navSearchInput?.value.trim() || '';
-        catTabs.forEach(t => t.classList.remove('active'));
+         footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
+        var searchTerm = navSearchInput?.value.trim() || '';
+        catTabs.forEach(function(t) { t.classList.remove('active'); });
         document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
-        renderProducts('all', t);
-        const menuSection = document.getElementById('menu');
+        
+        // Also update the product search bar with the search term
+        if (searchInput) {
+          searchInput.value = searchTerm;
+          currentSearch = searchTerm;
+        }
+        
+        renderProducts('all', searchTerm);
+        
+        var menuSection = document.getElementById('menu');
         if (menuSection) {
-          const off = (header?.offsetHeight || 64) + 80;
+          var off = (header?.offsetHeight || 64) + 80;
           window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
         }
         closeNavSearch();
@@ -538,21 +707,38 @@ document.addEventListener('DOMContentLoaded', () => {
     return 0;
   }
 
-  function getSearchResults(search, categoryFilter) {
-    let results = PRODUCTS;
-    if (categoryFilter !== 'all') {
-      results = results.filter(p => p.cat === categoryFilter);
+    function getSearchResults(search, categoryFilter) {
+    var results;
+    
+    // If user is searching (typed something), show ALL products including wholesale
+    if (search && search.trim() !== '') {
+      results = PRODUCTS; // Include everything when searching
+    } else {
+      // If not searching, only show retail products (wholesale has its own section)
+      results = PRODUCTS.filter(function(p) {
+        return p.isWholesale !== true;
+      });
     }
+    
+    if (categoryFilter !== 'all') {
+      results = results.filter(function(p) {
+        return p.cat === categoryFilter;
+      });
+    }
+    
     if (!search || search.trim() === '') return results;
-    const scored = results.map(product => ({
-      product,
-      score: getMatchScore(product, search)
-    }));
-    const matches = scored.filter(item => item.score > 0);
-    matches.sort((a, b) => b.score - a.score);
-    return matches.map(item => item.product);
+    
+    var scored = results.map(function(product) {
+      return {
+        product: product,
+        score: getMatchScore(product, search)
+      };
+    });
+    
+    var matches = scored.filter(function(item) { return item.score > 0; });
+    matches.sort(function(a, b) { return b.score - a.score; });
+    return matches.map(function(item) { return item.product; });
   }
-
   function updateSearchUI(search, resultCount, totalCount) {
     if (!searchClear || !searchInfo || !searchInfoTx) return;
     if (search && search.trim() !== '') {
@@ -1636,11 +1822,184 @@ function addToCart(productId, qty = 1) {
       setTimeout(acsShowPopup, 3000);
     }
   })();
-
   /* ════════════════════════════════════════════════
+     WHOLESALE PRODUCTS RENDERING
+  ════════════════════════════════════════════════ */
+  var wholesaleGrid = document.getElementById('wholesale-grid');
+  var wholesaleTabs = document.querySelectorAll('#wholesale-tabs .cat-tab');
+  var currentWholesaleFilter = 'all';
+
+  function renderWholesale(filter) {
+    if (!wholesaleGrid) return;
+    
+    currentWholesaleFilter = filter || 'all';
+    
+    // Get wholesale products only
+    var wholesaleProducts = PRODUCTS.filter(function(p) {
+      return p.isWholesale === true;
+    });
+    
+    // Apply category filter
+    var filtered;
+    if (currentWholesaleFilter === 'all') {
+      filtered = wholesaleProducts;
+    } else {
+      filtered = wholesaleProducts.filter(function(p) {
+        return p.cat === currentWholesaleFilter;
+      });
+    }
+    
+    wholesaleGrid.innerHTML = '';
+    
+    if (filtered.length === 0) {
+      var noResults = document.createElement('div');
+      noResults.className = 'no-results';
+      noResults.innerHTML = '<div class="no-results-icon"><i class="fas fa-box-open"></i></div><h4>No wholesale products in this category</h4><p>Please check other categories or contact us for custom orders.</p>';
+      wholesaleGrid.appendChild(noResults);
+      return;
+    }
+    
+    filtered.forEach(function(prod, i) {
+      var card = document.createElement('div');
+      card.className = 'prod-card reveal';
+      card.style.transitionDelay = (i % 4) * 0.07 + 's';
+      card.dataset.id = prod.id;
+      
+      var inCart = cart.find(function(c) { return c.product.id === prod.id; });
+      var btnText = inCart ? 'Added' : 'Add to Cart';
+      var btnClass = inCart ? 'pc-add-btn added' : 'pc-add-btn';
+      
+      var cardHTML = '';
+      cardHTML += '<div class="pc-img ' + (!prod.inStock ? 'pc-img-oos' : '') + '">';
+      
+      if (prod.image) {
+        cardHTML += '<img src="' + prod.image + '" alt="' + prod.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />';
+      } else {
+        // Use sticker emoji as placeholder
+        cardHTML += '<span style="font-size:inherit;">' + prod.icon + '</span>';
+      }
+      
+      if (prod.badge && prod.inStock) {
+        cardHTML += '<span class="pc-badge ' + prod.badgeClass + '">' + prod.badge + '</span>';
+      }
+      
+      if (!prod.inStock) {
+        cardHTML += '<div class="pc-oos-overlay"><div class="pc-oos-inner"><i class="fas fa-times-circle"></i><span>Out of Stock</span></div></div>';
+      }
+      
+      cardHTML += '</div>';
+      cardHTML += '<div class="pc-body">';
+      cardHTML += '<p class="pc-name">' + prod.name + '</p>';
+      cardHTML += '<p class="pc-desc">' + prod.desc + '</p>';
+      
+      // Wholesale price with savings
+      cardHTML += '<div class="pc-price pc-wholesale-price">';
+      cardHTML += '<span>GH₵ ' + prod.price.toFixed(2) + '</span>';
+      if (prod.originalPrice) {
+        cardHTML += '<span class="pc-original-price">Was GH₵ ' + prod.originalPrice.toFixed(2) + '</span>';
+      }
+      cardHTML += '<small class="pc-unit-label">📦 ' + prod.unit + '</small>';
+      if (prod.savings) {
+        cardHTML += '<span class="pc-savings-badge">💰 Save ' + prod.savings + '%</span>';
+      }
+      cardHTML += '</div>';
+      
+      if (prod.inStock) {
+        cardHTML += '<div class="pc-actions">';
+        cardHTML += '<div class="pc-qty-selector" data-id="' + prod.id + '">';
+        cardHTML += '<button class="pc-qty-btn pc-qty-minus" data-id="' + prod.id + '" aria-label="Decrease quantity"><i class="fas fa-minus"></i></button>';
+        cardHTML += '<input type="number" class="pc-qty-input" data-id="' + prod.id + '" value="1" min="1" max="99" aria-label="Quantity" />';
+        cardHTML += '<button class="pc-qty-btn pc-qty-plus" data-id="' + prod.id + '" aria-label="Increase quantity"><i class="fas fa-plus"></i></button>';
+        cardHTML += '</div>';
+        cardHTML += '<button class="' + btnClass + '" data-id="' + prod.id + '"><i class="fas fa-shopping-basket"></i> ' + btnText + '</button>';
+        cardHTML += '</div>';
+      } else {
+        cardHTML += '<button class="pc-add-btn pc-oos-btn" disabled><i class="fas fa-times"></i> Out of Stock</button>';
+      }
+      
+      cardHTML += '</div>';
+      
+      card.innerHTML = cardHTML;
+      wholesaleGrid.appendChild(card);
+    });
+    
+    // Animate reveal
+    wholesaleGrid.querySelectorAll('.reveal').forEach(function(el) {
+      revealObserver.observe(el);
+    });
+    
+    // Add to Cart button handlers
+    wholesaleGrid.querySelectorAll('.pc-add-btn:not([disabled])').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = parseInt(btn.dataset.id);
+        var qtyInput = wholesaleGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        var qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+        if (id) addToCart(id, qty);
+      });
+    });
+    
+    // Quantity minus button handlers
+    wholesaleGrid.querySelectorAll('.pc-qty-minus').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = btn.dataset.id;
+        var input = wholesaleGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        if (input) {
+          var val = parseInt(input.value) || 1;
+          if (val > 1) {
+            input.value = val - 1;
+            input.classList.add('bumped');
+            setTimeout(function() { input.classList.remove('bumped'); }, 200);
+          }
+        }
+      });
+    });
+    
+    // Quantity plus button handlers
+    wholesaleGrid.querySelectorAll('.pc-qty-plus').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = btn.dataset.id;
+        var input = wholesaleGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        if (input) {
+          var val = parseInt(input.value) || 1;
+          if (val < 99) {
+            input.value = val + 1;
+            input.classList.add('bumped');
+            setTimeout(function() { input.classList.remove('bumped'); }, 200);
+          }
+        }
+      });
+    });
+    
+    // Validate quantity input
+    wholesaleGrid.querySelectorAll('.pc-qty-input').forEach(function(input) {
+      input.addEventListener('input', function() {
+        var val = parseInt(input.value) || 1;
+        if (val < 1) val = 1;
+        if (val > 99) val = 99;
+        input.value = val;
+      });
+      
+      input.addEventListener('blur', function() {
+        if (!input.value || parseInt(input.value) < 1) {
+          input.value = 1;
+        }
+      });
+    });
+  }
+  
+  // Wholesale tab handlers
+  wholesaleTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      wholesaleTabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      renderWholesale(tab.dataset.wcat);
+    });
+  });
+/* ════════════════════════════════════════════════
      INIT — Render products & cart on load
   ════════════════════════════════════════════════ */
   renderProducts('all', '');
+  renderWholesale('all');                              /* ← NEW LINE ADDED */
   updateCart();
   if (cartCount) cartCount.style.display = 'none';
 

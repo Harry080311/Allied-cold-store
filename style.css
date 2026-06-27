@@ -7081,3 +7081,312 @@ body.dark-mode .toast-action {
     gap: 6px;
   }
 }
+/* ═══════════════════════════════════════════════════
+   WHOLESALE SECTION
+   ═══════════════════════════════════════════════════ */
+.wholesale-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #eff4ff 100%);
+  padding: 60px 0;
+  transition: var(--t-theme);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) { .wholesale-section { padding: 80px 0; } }
+@media (min-width: 1024px){ .wholesale-section { padding: 100px 0; } }
+
+body.dark-mode .wholesale-section {
+  background: linear-gradient(135deg, var(--bg-section) 0%, var(--bg-section2) 100%);
+}
+
+/* Decorative background */
+.wholesale-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--orange), var(--green-wa));
+}
+
+/* Wholesale Pill Label */
+.sl-pill-wholesale {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 12px rgba(26, 86, 219, 0.3);
+}
+
+/* Wholesale Info Banner */
+.wholesale-banner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  background: var(--bg-card);
+  border: 2px solid var(--blue-mid);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  transition: var(--t-theme);
+}
+
+@media (min-width: 480px) {
+  .wholesale-banner {
+    grid-template-columns: 1fr 1px 1fr;
+    padding: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .wholesale-banner {
+    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+    padding: 28px 32px;
+    gap: 20px;
+  }
+}
+
+.wb-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+}
+
+@media (min-width: 480px) {
+  .wb-item:nth-child(odd) { padding: 14px 16px 14px 0; }
+  .wb-item:nth-child(2n+3) { padding: 14px 0 14px 16px; }
+}
+
+@media (min-width: 768px) {
+  .wb-item { 
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+.wb-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .wb-icon { font-size: 1.8rem; }
+}
+
+.wb-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wb-text strong {
+  font-family: var(--ff-head);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-head);
+  line-height: 1.2;
+  transition: var(--t-theme);
+}
+
+@media (min-width: 768px) { .wb-text strong { font-size: 1rem; } }
+
+.wb-text span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.wb-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+@media (min-width: 480px) {
+  .wb-divider {
+    width: 1px;
+    height: auto;
+  }
+}
+
+/* Wholesale Tabs - slightly different from retail */
+.wholesale-tabs .cat-tab.active {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+}
+
+/* Wholesale Product Cards */
+.wholesale-grid .prod-card {
+  border: 2px solid var(--blue-mid);
+  position: relative;
+  overflow: visible;
+}
+
+.wholesale-grid .prod-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--orange));
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  z-index: 1;
+}
+
+body.dark-mode .wholesale-grid .prod-card {
+  border-color: rgba(26, 86, 219, 0.3);
+}
+
+/* Wholesale Badge */
+.pc-badge.badge-wholesale {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(26, 86, 219, 0.35);
+}
+
+/* Wholesale image area (uses sticker emojis) */
+.wholesale-grid .pc-img {
+  background: linear-gradient(135deg, var(--blue-light), #ffffff);
+  font-size: 4rem;
+}
+
+@media (min-width: 768px) {
+  .wholesale-grid .pc-img { font-size: 5rem; }
+}
+
+body.dark-mode .wholesale-grid .pc-img {
+  background: linear-gradient(135deg, rgba(26, 86, 219, 0.1), rgba(255, 255, 255, 0.02));
+}
+
+/* Wholesale price display */
+.pc-wholesale-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pc-original-price {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.pc-savings-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, var(--green-wa), var(--green-wa-d));
+  color: #ffffff;
+  font-family: var(--ff-head);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-top: 4px;
+  width: fit-content;
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);
+}
+
+@media (min-width: 768px) {
+  .pc-savings-badge {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+}
+
+/* Wholesale CTA */
+.wholesale-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  background: var(--bg-card);
+  border: 2px solid var(--blue-mid);
+  border-radius: var(--r-xl);
+  padding: 32px 24px;
+  margin-top: 40px;
+  box-shadow: var(--shadow-md);
+  transition: var(--t-theme);
+}
+
+@media (min-width: 768px) {
+  .wholesale-cta {
+    flex-direction: row;
+    text-align: left;
+    padding: 36px 40px;
+    gap: 24px;
+  }
+}
+
+.wcta-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+  animation: pulseWA 2s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .wcta-icon { font-size: 3.5rem; }
+}
+
+.wcta-content {
+  flex: 1;
+}
+
+.wcta-content h3 {
+  font-family: var(--ff-head);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-head);
+  margin-bottom: 6px;
+  transition: var(--t-theme);
+}
+
+@media (min-width: 768px) {
+  .wcta-content h3 { font-size: 1.3rem; }
+}
+
+.wcta-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .wcta-content p { font-size: 0.92rem; }
+}
+
+.wcta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .wcta-actions {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .wcta-actions { width: auto; }
+}
+
+.wcta-actions .btn-primary,
+.wcta-actions .btn-wa {
+  flex: 1;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .wcta-actions .btn-primary,
+  .wcta-actions .btn-wa { flex: none; }
+}
