@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: 850.00, originalPrice: 999.90, savings: 15,
       unit: 'per 10kg pack', icon: '🍗',
       image: null,
-      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: true,
+      badge: '🏢 Wholesale', badgeClass: 'badge-wholesale', inStock: false,
       isWholesale: true
     },
     {
@@ -462,11 +462,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let navSearchOpen = false;
 
-  function openNavSearch() {
+   function openNavSearch() {
     navSearchOpen = true;
     navSearchBox?.classList.add('open');
     navSearchBtn?.classList.add('active');
-    setTimeout(() => navSearchInput?.focus(), 400);
+    
+    // Hide nav menu on desktop to prevent overlap
+    if (window.innerWidth >= 768) {
+      navMenu?.classList.add('search-hidden');
+    }
+    
+    setTimeout(function() { navSearchInput?.focus(); }, 400);
   }
 
   function closeNavSearch() {
@@ -474,11 +480,14 @@ document.addEventListener('DOMContentLoaded', () => {
     navSearchBox?.classList.remove('open');
     navSearchBtn?.classList.remove('active');
     navSearchDropdown?.classList.remove('show');
+    
+    // Show nav menu again
+    navMenu?.classList.remove('search-hidden');
+    
     if (navSearchInput) navSearchInput.value = '';
     navSearchClear?.classList.remove('show');
     if (nsdInner) nsdInner.innerHTML = '';
   }
-
   navSearchBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     navSearchOpen ? closeNavSearch() : openNavSearch();
@@ -585,10 +594,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Info section
       itemHTML += '<div class="nsd-list-info">';
-      itemHTML += '<p class="nsd-list-name">' + highlightedName + wholesaleLabel + stockLabel + '</p>';
+      
+      // Badges above name
+      if (wholesaleLabel || stockLabel) {
+        itemHTML += '<div class="nsd-list-badges">' + wholesaleLabel + stockLabel + '</div>';
+      }
+      
+      itemHTML += '<p class="nsd-list-name">' + highlightedName + '</p>';
       itemHTML += '<p class="nsd-list-meta"><strong>GH₵ ' + product.price.toFixed(2) + '</strong> · ' + product.unit + '</p>';
       itemHTML += '</div>';
-
       // Add button
       if (product.inStock) {
         itemHTML += '<button class="nsd-list-add-btn ' + (inCart ? 'added' : '') + '" data-id="' + product.id + '" aria-label="Add to cart"><i class="fas fa-' + (inCart ? 'check' : 'plus') + '"></i></button>';

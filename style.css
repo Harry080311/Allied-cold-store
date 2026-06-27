@@ -1039,11 +1039,11 @@ body.dark-mode .nsd-footer-btn { color: var(--blue-xl); }
 
 /* Search Highlight */
 .nsd-highlight {
-  background: rgba(249,115,22,0.2);
   color: var(--orange);
-  border-radius: 2px;
-  padding: 0 2px;
-  font-weight: 700;
+  font-weight: 900;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
 /* Theme toggle */
 .theme-toggle {
@@ -7419,14 +7419,13 @@ body.dark-mode .wholesale-grid .pc-img {
 .nsd-list-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: var(--t), var(--t-theme);
   -webkit-tap-highlight-color: transparent;
 }
-
 .nsd-list-item:last-child {
   border-bottom: none;
 }
@@ -7522,18 +7521,25 @@ body.dark-mode .nsd-list-img-wholesale {
 
 .nsd-list-name {
   font-family: var(--ff-head);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-head);
-  line-height: 1.3;
+  line-height: 1.35;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
   transition: var(--t-theme);
 }
+/* Badges above product name */
+.nsd-list-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 4px;
+}
 
+.nsd-list-badges:empty {
+  display: none;
+  margin-bottom: 0;
+}
 .nsd-list-meta {
   font-size: 0.74rem;
   color: var(--text-muted);
@@ -7556,27 +7562,27 @@ body.dark-mode .nsd-list-img-wholesale {
   background: linear-gradient(135deg, var(--blue), var(--blue-dark));
   color: #ffffff;
   font-family: var(--ff-head);
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 3px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(26, 86, 219, 0.3);
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(26, 86, 219, 0.35);
 }
-
 /* Out of stock label */
 .nsd-list-oos {
   display: inline-block;
   background: #ef4444;
   color: #ffffff;
   font-family: var(--ff-head);
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 3px 9px;
   border-radius: 999px;
   white-space: nowrap;
+  letter-spacing: 0.3px;
 }
-
 /* Add button */
 .nsd-list-add-btn {
   width: 34px;
@@ -7626,13 +7632,12 @@ body.dark-mode .nsd-list-add-btn-disabled {
 
 /* Search term highlight */
 .nsd-highlight {
-  background: rgba(249, 115, 22, 0.2);
   color: var(--orange);
-  padding: 0 3px;
-  border-radius: 3px;
-  font-weight: 800;
+  font-weight: 900;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
-
 /* Mobile: Full-width dropdown */
 @media (max-width: 767px) {
   .nav-search-dropdown {
@@ -7680,4 +7685,78 @@ body.dark-mode .nsd-list-add-btn-disabled {
 
 .nsd-inner::-webkit-scrollbar-thumb:hover {
   background: var(--text-faint);
+}
+/* ═══════════════════════════════════════════════════
+   NAV SEARCH FIX — DESKTOP OVERLAP ISSUE
+   ═══════════════════════════════════════════════════ */
+
+/* Desktop: Make search appear ABOVE everything, not overlap nav */
+@media (min-width: 768px) {
+  
+  /* Nav search wrap should NOT push other elements */
+  .nav-search-wrap {
+    position: relative;
+    z-index: 1001;
+  }
+  
+  /* Search box closed state - just the icon */
+  .nav-search-box {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 2px solid transparent !important;
+    border-radius: var(--r-full) !important;
+    transform: translateY(-50%) !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.35s ease,
+                border-color 0.35s ease,
+                background 0.35s ease,
+                box-shadow 0.35s ease !important;
+    z-index: 1002;
+  }
+  
+  /* Search box OPEN state */
+  .nav-search-box.open {
+    width: 320px !important;
+    padding: 8px 14px !important;
+    border-color: var(--blue) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.1),
+                0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  }
+  
+  body.dark-mode .nav-search-box.open {
+    border-color: var(--blue-l) !important;
+    background: var(--bg-input) !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15),
+                0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* When search is open, HIDE nav menu items to prevent overlap */
+  .nav-search-box.open ~ .theme-toggle,
+  .nav-search-wrap:has(.nav-search-box.open) ~ .theme-toggle {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Hide nav menu when search is open */
+  .nav-menu.search-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  /* Make sure dropdown appears below search */
+  .nav-search-dropdown {
+    z-index: 1001;
+  }
 }
