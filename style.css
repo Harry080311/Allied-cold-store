@@ -3528,16 +3528,6 @@ body.dark-mode .pc-img-icecream{ background: linear-gradient(135deg, #0f0520, #2
   .pc-desc { font-size: 0.78rem; -webkit-line-clamp: 3; }
 }
 
-/* Price Row — Price and Button on Separate Lines */
-.pc-price-row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
-}
-
 /* Price */
 .pc-price {
   font-family: var(--ff-head);
@@ -6943,5 +6933,151 @@ body.dark-mode .toast-action {
       padding-top: 0;
       padding-bottom: 0;
     }
+  }
+}
+/* ═══════════════════════════════════════════════════
+   QUANTITY SELECTOR ON PRODUCT CARDS
+   ═══════════════════════════════════════════════════ */
+
+/* Product Card Actions Container */
+.pc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* Quantity Selector */
+.pc-qty-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-section);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  width: 100%;
+  transition: var(--t), var(--t-theme);
+}
+
+.pc-qty-selector:hover {
+  border-color: var(--blue-mid);
+}
+
+/* Quantity Buttons */
+.pc-qty-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-card);
+  color: var(--text-body);
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--t);
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.pc-qty-btn:hover,
+.pc-qty-btn:active {
+  background: var(--blue);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.pc-qty-btn:active {
+  transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+  .pc-qty-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Quantity Input */
+.pc-qty-input {
+  flex: 1;
+  text-align: center;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--ff-head);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-head);
+  width: 100%;
+  min-width: 0;
+  padding: 0 4px;
+  transition: var(--t-theme);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Remove default number input arrows */
+.pc-qty-input::-webkit-outer-spin-button,
+.pc-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .pc-qty-input {
+    font-size: 0.95rem;
+  }
+}
+
+/* Bumped animation when qty changes */
+.pc-qty-input.bumped {
+  animation: qtyBump 0.2s ease;
+  color: var(--orange);
+}
+
+@keyframes qtyBump {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Remove the old price-row border since we changed structure */
+.pc-price {
+  margin-bottom: 0;
+}
+
+/* Update add button to be full width */
+.pc-actions .pc-add-btn {
+  width: 100%;
+  margin-top: 2px;
+}
+
+/* Mobile compact layout */
+@media (max-width: 480px) {
+  .pc-qty-btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.62rem;
+  }
+
+  .pc-qty-input {
+    font-size: 0.82rem;
+  }
+
+  .pc-qty-selector {
+    padding: 2px;
+  }
+
+  .pc-actions {
+    gap: 6px;
   }
 }

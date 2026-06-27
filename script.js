@@ -646,66 +646,113 @@ document.addEventListener('DOMContentLoaded', () => {
       card.dataset.id = prod.id;
 
       const inCart  = cart.find(c => c.product.id === prod.id);
-      const btnText = inCart ? 'Added' : 'Add to Order';
+      const btnText = inCart ? 'Added' : 'Add to Cart';
       const btnClass = inCart ? 'pc-add-btn added' : 'pc-add-btn';
 
-      card.innerHTML = `
-        <div class="pc-img pc-img-${prod.cat} ${!prod.inStock ? 'pc-img-oos' : ''}">
-          ${prod.image
-            ? `<img src="${prod.image}" alt="${prod.name}" loading="lazy"
-                    style="width:100%;height:100%;object-fit:cover;display:block;" />`
-            : `<i class="${prod.icon}"></i>`
-          }
-          ${prod.badge && prod.inStock
-            ? `<span class="pc-badge ${prod.badgeClass}">${prod.badge}</span>`
-            : ''
-          }
-          ${!prod.inStock ? `
-            <div class="pc-oos-overlay">
-              <div class="pc-oos-inner">
-                <i class="fas fa-times-circle"></i>
-                <span>Out of Stock</span>
-              </div>
-            </div>` : ''
-          }
-        </div>
-        <div class="pc-body">
-          <p class="pc-name">${prod.name}</p>
-          <p class="pc-desc">${prod.desc}</p>
-          <div class="pc-price-row">
-            <div class="pc-price">
-              GH₵ ${prod.price.toFixed(2)}
-              <small class="pc-unit-label">📦 ${prod.unit}</small>
-            </div>
-            ${prod.inStock
-              ? `<button class="${btnClass}" data-id="${prod.id}">
-                   <i class="fas fa-plus"></i>
-                   ${btnText}
-                 </button>`
-              : `<button class="pc-add-btn pc-oos-btn" disabled>
-                   <i class="fas fa-times"></i>
-                   Out of Stock
-                 </button>`
-            }
-          </div>
-        </div>
-      `;
-
+      let cardHTML = '';
+      cardHTML += '<div class="pc-img pc-img-' + prod.cat + ' ' + (!prod.inStock ? 'pc-img-oos' : '') + '">';
+      
+      if (prod.image) {
+        cardHTML += '<img src="' + prod.image + '" alt="' + prod.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />';
+      } else {
+        cardHTML += '<i class="' + prod.icon + '"></i>';
+      }
+      
+      if (prod.badge && prod.inStock) {
+        cardHTML += '<span class="pc-badge ' + prod.badgeClass + '">' + prod.badge + '</span>';
+      }
+      
+      if (!prod.inStock) {
+        cardHTML += '<div class="pc-oos-overlay"><div class="pc-oos-inner"><i class="fas fa-times-circle"></i><span>Out of Stock</span></div></div>';
+      }
+      
+      cardHTML += '</div>';
+      cardHTML += '<div class="pc-body">';
+      cardHTML += '<p class="pc-name">' + prod.name + '</p>';
+      cardHTML += '<p class="pc-desc">' + prod.desc + '</p>';
+      cardHTML += '<div class="pc-price">GH₵ ' + prod.price.toFixed(2) + '<small class="pc-unit-label">📦 ' + prod.unit + '</small></div>';
+      
+      if (prod.inStock) {
+        cardHTML += '<div class="pc-actions">';
+        cardHTML += '<div class="pc-qty-selector" data-id="' + prod.id + '">';
+        cardHTML += '<button class="pc-qty-btn pc-qty-minus" data-id="' + prod.id + '" aria-label="Decrease quantity"><i class="fas fa-minus"></i></button>';
+        cardHTML += '<input type="number" class="pc-qty-input" data-id="' + prod.id + '" value="1" min="1" max="99" aria-label="Quantity" />';
+        cardHTML += '<button class="pc-qty-btn pc-qty-plus" data-id="' + prod.id + '" aria-label="Increase quantity"><i class="fas fa-plus"></i></button>';
+        cardHTML += '</div>';
+        cardHTML += '<button class="' + btnClass + '" data-id="' + prod.id + '"><i class="fas fa-shopping-basket"></i> ' + btnText + '</button>';
+        cardHTML += '</div>';
+      } else {
+        cardHTML += '<button class="pc-add-btn pc-oos-btn" disabled><i class="fas fa-times"></i> Out of Stock</button>';
+      }
+      
+      cardHTML += '</div>';
+      
+      card.innerHTML = cardHTML;
       productGrid.appendChild(card);
     });
 
-    productGrid.querySelectorAll('.reveal').forEach(el =>
-      revealObserver.observe(el)
-    );
+    productGrid.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
 
+    // Add to Cart button handlers
     productGrid.querySelectorAll('.pc-add-btn:not([disabled])').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = parseInt(btn.dataset.id);
-        if (id) addToCart(id);
+        const qtyInput = productGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+        if (id) addToCart(id, qty);
+      });
+    });
+
+    // Quantity minus button handlers
+    productGrid.querySelectorAll('.pc-qty-minus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const input = productGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        if (input) {
+          let val = parseInt(input.value) || 1;
+          if (val > 1) {
+            input.value = val - 1;
+            input.classList.add('bumped');
+            setTimeout(() => input.classList.remove('bumped'), 200);
+          }
+        }
+      });
+    });
+
+    // Quantity plus button handlers
+    productGrid.querySelectorAll('.pc-qty-plus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const input = productGrid.querySelector('.pc-qty-input[data-id="' + id + '"]');
+        if (input) {
+          let val = parseInt(input.value) || 1;
+          if (val < 99) {
+            input.value = val + 1;
+            input.classList.add('bumped');
+            setTimeout(() => input.classList.remove('bumped'), 200);
+          }
+        }
+      });
+    });
+
+    // Validate quantity input
+    productGrid.querySelectorAll('.pc-qty-input').forEach(input => {
+      input.addEventListener('input', () => {
+        let val = parseInt(input.value) || 1;
+        if (val < 1) val = 1;
+        if (val > 99) val = 99;
+        input.value = val;
+      });
+
+      input.addEventListener('blur', () => {
+        if (!input.value || parseInt(input.value) < 1) {
+          input.value = 1;
+        }
       });
     });
   }
-
   /* ════════════════════════════════════════════════
      CATEGORY FILTER TABS
   ════════════════════════════════════════════════ */
@@ -800,20 +847,31 @@ document.addEventListener('DOMContentLoaded', () => {
   cartClose?.addEventListener('click', closeCart);
   cartOverlay?.addEventListener('click', closeCart);
 
-function addToCart(productId) {
+function addToCart(productId, qty = 1) {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product || !product.inStock) return;
 
+    // Ensure qty is a valid number
+    qty = parseInt(qty) || 1;
+    if (qty < 1) qty = 1;
+    if (qty > 99) qty = 99;
+
     const existing = cart.find(c => c.product.id === productId);
     if (existing) {
-      existing.qty += 1;
+      existing.qty += qty;
+      // Cap at 99
+      if (existing.qty > 99) existing.qty = 99;
     } else {
-      cart.push({ product, qty: 1 });
+      cart.push({ product, qty });
     }
 
     updateCart();
     bumpCount();
-    showToast(product, 1);   // ← NEW LINE ADDED
+    showToast(product, qty);
+
+    // Reset quantity selector to 1 after adding
+    const qtyInput = productGrid?.querySelector(`.pc-qty-input[data-id="${productId}"]`);
+    if (qtyInput) qtyInput.value = 1;
 
     const btn = productGrid?.querySelector(
       `.pc-add-btn[data-id="${productId}"]`
@@ -823,7 +881,7 @@ function addToCart(productId) {
       btn.innerHTML = '<i class="fas fa-check"></i> Added';
       btn.style.pointerEvents = 'none';
       setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-plus"></i> Add More';
+        btn.innerHTML = '<i class="fas fa-shopping-basket"></i> Add to Cart';
         btn.style.pointerEvents = 'auto';
       }, 1200);
     }
