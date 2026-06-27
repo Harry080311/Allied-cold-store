@@ -518,156 +518,230 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nsdInner) nsdInner.innerHTML = '';
     }
   });
-  function renderNavResults(results, term) {
+   function renderNavResults(results, term) {
     if (!nsdInner) return;
     nsdInner.innerHTML = '';
     navSearchDropdown?.classList.add('show');
 
-    const hdr = document.createElement('div');
+    // Header
+    var hdr = document.createElement('div');
     hdr.className = 'nsd-header';
-    hdr.innerHTML = `
-      <span>Search Results</span>
-      <span class="nsd-count">${results.length} found</span>
-    `;
+    hdr.innerHTML = '<span>Search Results</span><span class="nsd-count">' + results.length + ' found</span>';
     nsdInner.appendChild(hdr);
 
     if (results.length === 0) {
-      const empty = document.createElement('div');
+      var empty = document.createElement('div');
       empty.className = 'nsd-empty';
-      empty.innerHTML = `
-        <i class="fas fa-search"></i>
-        <p>No products found</p>
-        <span>Try a different search term</span>
-      `;
+      empty.innerHTML = '<i class="fas fa-search"></i><p>No products found</p><span>Try a different search term</span>';
       nsdInner.appendChild(empty);
       return;
     }
 
-    results.forEach(product => {
-      const inCart = cart.find(c => c.product.id === product.id);
-      const regex  = new RegExp(
-        `(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'
-      );
-      const highlightedName = product.name.replace(
-        regex, '<span class="nsd-highlight">$1</span>'
-      );
+    // Limit to 4 results in dropdown
+    var displayResults = results.slice(0, 4);
 
-      const item = document.createElement('div');
-      item.className = 'nsd-item';
-          // Determine category display name and icon class
-      var catDisplay = product.cat;
-      var catIconClass = product.cat;
+    // Create container for product cards
+    var cardsContainer = document.createElement('div');
+    cardsContainer.className = 'nsd-cards-container';
+
+    displayResults.forEach(function(product) {
+      var inCart = cart.find(function(c) { return c.product.id === product.id; });
+      var btnText = inCart ? 'Added' : 'Add to Cart';
+      var btnClass = inCart ? 'nsd-card-add-btn added' : 'nsd-card-add-btn';
+
+      // Highlight the search term in the name
+      var regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      var highlightedName = product.name.replace(regex, '<span class="nsd-highlight">$1</span>');
+
+      // Wholesale badge
       var wholesaleBadge = '';
-      
       if (product.isWholesale) {
-        // Map wholesale categories to their base category for styling
-        if (product.cat === 'wholesale-chicken') {
-          catIconClass = 'chicken';
-          catDisplay = 'Wholesale Chicken';
-        } else if (product.cat === 'wholesale-fish') {
-          catIconClass = 'fish';
-          catDisplay = 'Wholesale Fish';
-        }
-        wholesaleBadge = '<span style="display:inline-block;background:linear-gradient(135deg,#1a56db,#1241a8);color:#fff;font-size:0.55rem;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:6px;vertical-align:middle;">🏢 WHOLESALE</span>';
+        wholesaleBadge = '<span class="nsd-card-wholesale-badge">🏢 WHOLESALE</span>';
+      }
+
+      // Create the card
+      var card = document.createElement('div');
+      card.className = 'nsd-card';
+      card.dataset.id = product.id;
+
+      var cardHTML = '';
+      
+      // Image section
+      cardHTML += '<div class="nsd-card-img nsd-card-img-' + (product.isWholesale ? 'wholesale' : product.cat) + '">';
+      
+      if (product.image && !product.isWholesale) {
+        cardHTML += '<img src="' + product.image + '" alt="' + product.name + '" loading="lazy" />';
+      } else if (product.isWholesale) {
+        cardHTML += '<span class="nsd-card-emoji">' + product.icon + '</span>';
+      } else {
+        cardHTML += '<i class="' + product.icon + '"></i>';
       }
       
-      item.innerHTML = `
-        <div class="nsd-item-icon nsd-icon-${catIconClass}">
-          <i class="${product.isWholesale ? 'fas fa-box' : product.icon}"></i>
-        </div>
-        <div class="nsd-item-info">
-          <p class="nsd-item-name">${highlightedName}${wholesaleBadge}</p>
-          <span class="nsd-item-cat">${catDisplay}</span>
-        </div>
-        <span class="nsd-item-price">GH₵ ${product.price.toFixed(2)}</span>
-        <button class="nsd-add-btn ${inCart ? 'added' : ''}"
-                data-id="${product.id}" aria-label="Add to cart">
-          <i class="fas fa-${inCart ? 'check' : 'plus'}"></i>
-        </button>
-      `;
-        item.addEventListener('click', function(e) {
-        if (e.target.closest('.nsd-add-btn')) return;
-        
-        // If it's a wholesale product, scroll to wholesale section
-        if (product.isWholesale) {
-          var wholesaleSection = document.getElementById('wholesale');
-          if (wholesaleSection) {
-            // Set the correct wholesale tab
-            var wTabs = document.querySelectorAll('#wholesale-tabs .cat-tab');
-            wTabs.forEach(function(t) { t.classList.remove('active'); });
-            var matchWTab = document.querySelector('#wholesale-tabs .cat-tab[data-wcat="' + product.cat + '"]');
-            if (matchWTab) matchWTab.classList.add('active');
-            
-            // Render wholesale with the matching category
-            renderWholesale(product.cat);
-            
-            // Scroll to wholesale section
-            var off = (header?.offsetHeight || 64) + 80;
-            window.scrollTo({ top: wholesaleSection.offsetTop - off, behavior: 'smooth' });
-          }
-        } else {
-          // Regular retail product - scroll to menu section
-          catTabs.forEach(function(t) { t.classList.remove('active'); });
-          var matchTab = document.querySelector('.cat-tab[data-cat="' + product.cat + '"]');
-          if (matchTab) matchTab.classList.add('active');
-          renderProducts(product.cat, product.name);
-          var menuSection = document.getElementById('menu');
-          if (menuSection) {
-            var off = (header?.offsetHeight || 64) + 80;
-            window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
-          }
-        }
-        
-        closeNavSearch();
-      });
-      const addBtn = item.querySelector('.nsd-add-btn');
-      addBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        addToCart(product.id);
-        addBtn.classList.add('added');
-        addBtn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => {
-          addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-          addBtn.classList.remove('added');
-        }, 1500);
-      });
-
-      nsdInner.appendChild(item);
+      // Badges
+      if (product.badge && product.inStock && !product.isWholesale) {
+        cardHTML += '<span class="nsd-card-badge ' + product.badgeClass + '">' + product.badge + '</span>';
+      }
+      
+      if (product.isWholesale) {
+        cardHTML += wholesaleBadge;
+      }
+      
+      // Out of stock overlay
+      if (!product.inStock) {
+        cardHTML += '<div class="nsd-card-oos"><i class="fas fa-times-circle"></i><span>Out of Stock</span></div>';
+      }
+      
+      cardHTML += '</div>';
+      
+      // Card body
+      cardHTML += '<div class="nsd-card-body">';
+      cardHTML += '<p class="nsd-card-name">' + highlightedName + '</p>';
+      cardHTML += '<p class="nsd-card-desc">' + product.desc + '</p>';
+      
+      // Price section
+      cardHTML += '<div class="nsd-card-price">';
+      cardHTML += '<strong>GH₵ ' + product.price.toFixed(2) + '</strong>';
+      
+      if (product.isWholesale && product.originalPrice) {
+        cardHTML += '<span class="nsd-card-original-price">Was GH₵ ' + product.originalPrice.toFixed(2) + '</span>';
+      }
+      
+      cardHTML += '<small>📦 ' + product.unit + '</small>';
+      
+      if (product.isWholesale && product.savings) {
+        cardHTML += '<span class="nsd-card-savings">💰 Save ' + product.savings + '%</span>';
+      }
+      
+      cardHTML += '</div>';
+      
+      // Actions section
+      if (product.inStock) {
+        cardHTML += '<div class="nsd-card-actions">';
+        cardHTML += '<div class="nsd-card-qty">';
+        cardHTML += '<button class="nsd-card-qty-btn nsd-card-qty-minus" data-id="' + product.id + '" aria-label="Decrease"><i class="fas fa-minus"></i></button>';
+        cardHTML += '<input type="number" class="nsd-card-qty-input" data-id="' + product.id + '" value="1" min="1" max="99" aria-label="Quantity" />';
+        cardHTML += '<button class="nsd-card-qty-btn nsd-card-qty-plus" data-id="' + product.id + '" aria-label="Increase"><i class="fas fa-plus"></i></button>';
+        cardHTML += '</div>';
+        cardHTML += '<button class="' + btnClass + '" data-id="' + product.id + '"><i class="fas fa-shopping-basket"></i> ' + btnText + '</button>';
+        cardHTML += '</div>';
+      } else {
+        cardHTML += '<button class="nsd-card-add-btn nsd-card-oos-btn" disabled><i class="fas fa-times"></i> Out of Stock</button>';
+      }
+      
+      cardHTML += '</div>';
+      
+      card.innerHTML = cardHTML;
+      cardsContainer.appendChild(card);
     });
 
-    if (results.length > 0) {
-      const footer = document.createElement('div');
-      footer.className = 'nsd-footer';
-      footer.innerHTML = `
-        <button class="nsd-footer-btn" id="nsd-view-all">
-          <i class="fas fa-th"></i>
-          View all results in menu
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      `;
-      nsdInner.appendChild(footer);
+    nsdInner.appendChild(cardsContainer);
 
-         footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
-        var searchTerm = navSearchInput?.value.trim() || '';
-        catTabs.forEach(function(t) { t.classList.remove('active'); });
-        document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
+    // Add to Cart handlers for cards
+    cardsContainer.querySelectorAll('.nsd-card-add-btn:not([disabled])').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var id = parseInt(btn.dataset.id);
+        var qtyInput = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
+        var qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
         
-        // Also update the product search bar with the search term
-        if (searchInput) {
-          searchInput.value = searchTerm;
-          currentSearch = searchTerm;
+        if (id) {
+          addToCart(id, qty);
+          
+          // Visual feedback
+          btn.classList.add('added');
+          btn.innerHTML = '<i class="fas fa-check"></i> Added';
+          
+          // Reset qty input
+          if (qtyInput) qtyInput.value = 1;
+          
+          setTimeout(function() {
+            btn.innerHTML = '<i class="fas fa-shopping-basket"></i> Add More';
+            btn.classList.remove('added');
+          }, 1500);
         }
-        
-        renderProducts('all', searchTerm);
-        
-        var menuSection = document.getElementById('menu');
-        if (menuSection) {
-          var off = (header?.offsetHeight || 64) + 80;
-          window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
-        }
-        closeNavSearch();
       });
-    }
+    });
+
+    // Quantity minus handlers
+    cardsContainer.querySelectorAll('.nsd-card-qty-minus').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var id = btn.dataset.id;
+        var input = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
+        if (input) {
+          var val = parseInt(input.value) || 1;
+          if (val > 1) {
+            input.value = val - 1;
+            input.classList.add('bumped');
+            setTimeout(function() { input.classList.remove('bumped'); }, 200);
+          }
+        }
+      });
+    });
+
+    // Quantity plus handlers
+    cardsContainer.querySelectorAll('.nsd-card-qty-plus').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var id = btn.dataset.id;
+        var input = cardsContainer.querySelector('.nsd-card-qty-input[data-id="' + id + '"]');
+        if (input) {
+          var val = parseInt(input.value) || 1;
+          if (val < 99) {
+            input.value = val + 1;
+            input.classList.add('bumped');
+            setTimeout(function() { input.classList.remove('bumped'); }, 200);
+          }
+        }
+      });
+    });
+
+    // Quantity input validation
+    cardsContainer.querySelectorAll('.nsd-card-qty-input').forEach(function(input) {
+      input.addEventListener('click', function(e) { e.stopPropagation(); });
+      input.addEventListener('input', function() {
+        var val = parseInt(input.value) || 1;
+        if (val < 1) val = 1;
+        if (val > 99) val = 99;
+        input.value = val;
+      });
+      input.addEventListener('blur', function() {
+        if (!input.value || parseInt(input.value) < 1) {
+          input.value = 1;
+        }
+      });
+    });
+
+    // Footer with View All button
+    var footer = document.createElement('div');
+    footer.className = 'nsd-footer';
+    
+    var footerText = results.length > 4 
+      ? 'View all ' + results.length + ' results in menu' 
+      : 'View results in menu';
+    
+    footer.innerHTML = '<button class="nsd-footer-btn" id="nsd-view-all"><i class="fas fa-th"></i> ' + footerText + ' <i class="fas fa-arrow-right"></i></button>';
+    nsdInner.appendChild(footer);
+
+    footer.querySelector('#nsd-view-all')?.addEventListener('click', function() {
+      var searchTerm = navSearchInput?.value.trim() || '';
+      catTabs.forEach(function(t) { t.classList.remove('active'); });
+      document.querySelector('.cat-tab[data-cat="all"]')?.classList.add('active');
+      
+      if (searchInput) {
+        searchInput.value = searchTerm;
+        currentSearch = searchTerm;
+      }
+      
+      renderProducts('all', searchTerm);
+      
+      var menuSection = document.getElementById('menu');
+      if (menuSection) {
+        var off = (header?.offsetHeight || 64) + 80;
+        window.scrollTo({ top: menuSection.offsetTop - off, behavior: 'smooth' });
+      }
+      closeNavSearch();
+    });
   }
 
   /* ════════════════════════════════════════════════
