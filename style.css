@@ -8598,3 +8598,180 @@ body.dark-mode .footer-premium {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); }
 }
+
+/* ═══════════════════════════════════════════════════
+   FOOTER — MOBILE COMPACT FIX
+   Makes footer shorter on mobile screens
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  
+  /* Tighter padding on the whole footer */
+  .fp-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+    padding: 28px 16px 22px;
+  }
+  
+  /* Brand column takes full width (both cols) */
+  .fp-brand-col {
+    grid-column: span 2;
+  }
+  
+  /* Contact column takes full width too */
+  .fp-main .fp-col:nth-child(2) {
+    grid-column: span 2;
+  }
+  
+  /* Quick Links and Branches sit side-by-side */
+  .fp-main .fp-col:nth-child(3),
+  .fp-main .fp-col:nth-child(4) {
+    grid-column: span 1;
+  }
+  
+  /* Tighter gaps inside columns */
+  .fp-col {
+    gap: 10px;
+  }
+  
+  /* Smaller logo on mobile */
+  .fp-logo img {
+    height: 42px;
+  }
+  
+  /* Shorter tagline */
+  .fp-tagline {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  
+  /* Smaller trust pills */
+  .fp-pill {
+    font-size: 0.66rem;
+    padding: 5px 10px;
+    gap: 5px;
+  }
+  
+  /* Tighter heading */
+  .fp-heading {
+    font-size: 0.85rem;
+    padding-bottom: 8px;
+    margin-bottom: 2px;
+  }
+  
+  /* Tighter contact rows */
+  .fp-contact-row {
+    padding: 7px 0;
+    gap: 10px;
+  }
+  
+  .fp-contact-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.78rem;
+  }
+  
+  .fp-contact-row span {
+    font-size: 0.65rem;
+  }
+  
+  .fp-contact-row strong {
+    font-size: 0.8rem;
+  }
+  
+  /* Tighter live status */
+  .fp-status {
+    padding: 9px 12px;
+    margin-top: 4px;
+  }
+  
+  .fp-status-text strong {
+    font-size: 0.74rem;
+  }
+  
+  .fp-status-text span {
+    font-size: 0.66rem;
+  }
+  
+  /* Tighter quick links */
+  .fp-links a {
+    padding: 5px 0;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+  
+  /* Tighter branch cards */
+  .fp-branches {
+    gap: 5px;
+  }
+  
+  .fp-branches a {
+    padding: 8px;
+    gap: 9px;
+  }
+  
+  .fp-branch-marker {
+    width: 28px;
+    height: 28px;
+    font-size: 0.68rem;
+  }
+  
+  .fp-branches strong {
+    font-size: 0.76rem;
+  }
+  
+  .fp-branches span {
+    font-size: 0.64rem;
+  }
+  
+  /* Smaller CTA banner */
+  .fp-cta-banner {
+    padding: 18px 0;
+  }
+  
+  .fp-cta-emoji {
+    font-size: 2rem;
+  }
+  
+  .fp-cta-text h3 {
+    font-size: 1rem;
+  }
+  
+  .fp-cta-text p {
+    font-size: 0.76rem;
+  }
+  
+  .fp-cta-wa,
+  .fp-cta-call {
+    padding: 10px 18px;
+    font-size: 0.8rem;
+  }
+  
+  /* Tighter payment bar */
+  .fp-payments-wrap {
+    padding: 14px 0;
+  }
+  
+  .fp-payments {
+    gap: 8px;
+  }
+  
+  .fp-payments-label {
+    font-size: 0.72rem;
+  }
+  
+  .fp-pay-pill {
+    font-size: 0.66rem;
+    padding: 5px 10px;
+  }
+  
+  /* Tighter bottom bar */
+  .fp-bottom {
+    padding: 14px 0;
+  }
+  
+  .fp-copyright,
+  .fp-made {
+    font-size: 0.7rem;
+  }
+}
