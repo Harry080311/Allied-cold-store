@@ -3190,13 +3190,12 @@ body.dark-mode .test-card:hover {
 ───────────────────────────────────────────────────── */
 .menu-section {
   background: var(--bg-body);
-  padding: 30px 0 100px;
+  padding: 30px 0 40px;
   transition: var(--t-theme);
-  border-top: 1px solid var(--border);   /* ← NEW LINE ADDED HERE */
+  border-top: 1px solid var(--border);
 }
-@media (min-width: 768px) { .menu-section { padding: 80px 0 120px; } }
-@media (min-width: 1024px){ .menu-section { padding: 100px 0 140px; } }
-
+@media (min-width: 768px) { .menu-section { padding: 80px 0 50px; } }
+@media (min-width: 1024px){ .menu-section { padding: 100px 0 60px; } }
 /* ═══════════════════════════════════════════════════
    PRODUCT SECTION — CLEAN MOBILE FIRST RESTRUCTURE
    ═══════════════════════════════════════════════════ */
