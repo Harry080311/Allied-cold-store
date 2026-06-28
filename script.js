@@ -1844,7 +1844,42 @@ function addToCart(productId, qty = 1) {
   renderWholesale('all');                              /* ← NEW LINE ADDED */
   updateCart();
   if (cartCount) cartCount.style.display = 'none';
-
+  /* ════════════════════════════════════════════════
+     FOOTER — LIVE OPEN/CLOSED STATUS
+  ════════════════════════════════════════════════ */
+   function updateOpenStatus() {
+    const statusEl = document.getElementById('fp-status');
+    const labelEl = document.getElementById('fp-status-label');
+    const timeEl = document.getElementById('fp-status-time');
+    
+    if (!statusEl || !labelEl || !timeEl) return;
+    
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const currentTime = hour + (minute / 60);
+    
+    // Open every day 6AM-8PM
+    const isOpen = currentTime >= 6 && currentTime < 20;
+    
+    if (isOpen) {
+      statusEl.classList.add('open');
+      statusEl.classList.remove('closed');
+      labelEl.textContent = 'OPEN NOW';
+      timeEl.textContent = 'Closes at 8:00 PM';
+    } else {
+      statusEl.classList.add('closed');
+      statusEl.classList.remove('open');
+      labelEl.textContent = 'CLOSED';
+      if (currentTime < 6) {
+        timeEl.textContent = 'Opens today at 6:00 AM';
+      } else {
+        timeEl.textContent = 'Opens tomorrow at 6:00 AM';
+      }
+    }
+  }
+  updateOpenStatus();
+  setInterval(updateOpenStatus, 60000); // Update every minute
   console.log('🐔 Allied Cold Store — Ready!');
 
 }); // end DOMContentLoaded
