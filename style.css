@@ -9294,3 +9294,33 @@ body.dark-mode .footer-premium {
     font-size: 0.68rem !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   FOOTER CTA BUTTONS — FORCE SIDE BY SIDE ON MOBILE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .fp-cta-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+  
+  .fp-cta-wa,
+  .fp-cta-call {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 11px 10px !important;
+    font-size: 0.74rem !important;
+    white-space: nowrap !important;
+  }
+  
+  .fp-cta-wa span,
+  .fp-cta-call span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
