@@ -9012,3 +9012,118 @@ body.dark-mode .footer-premium {
     font-size: 0.6rem !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   BRANCHES — MOBILE 2-COLUMN COMPACT GRID
+   For the 4 smaller branch cards (not the HQ)
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  
+  /* Force 2 columns on mobile */
+  .branch-cards {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  
+  /* Compact card padding */
+  .branch-card {
+    padding: 14px 12px !important;
+    gap: 6px !important;
+    border-radius: 14px;
+  }
+  
+  /* Header with number badge and icon */
+  .bc-header {
+    margin-bottom: 0 !important;
+  }
+  
+  /* Smaller icon */
+  .bc-icon {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 0.72rem !important;
+  }
+  
+  /* Smaller number badge */
+  .bc-num-badge {
+    font-size: 0.58rem !important;
+    padding: 2px 7px !important;
+  }
+  
+  /* Branch name */
+  .branch-card h4 {
+    font-size: 0.92rem !important;
+    line-height: 1.2 !important;
+    margin-top: 2px !important;
+  }
+  
+  /* Trimmed description — 2 lines max */
+  .branch-card p {
+    font-size: 0.7rem !important;
+    line-height: 1.5 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Info section more compact */
+  .bc-info {
+    gap: 4px !important;
+    padding-top: 6px !important;
+  }
+  
+  .bc-info span,
+  .bc-info a {
+    font-size: 0.66rem !important;
+    gap: 5px !important;
+  }
+  
+  /* Hide the phone number on mobile to save space — they tap WhatsApp anyway */
+  .bc-info a {
+    display: none !important;
+  }
+  
+  /* Make WhatsApp button more compact */
+  .bc-wa-btn {
+    padding: 8px 6px !important;
+    font-size: 0.68rem !important;
+    gap: 4px !important;
+  }
+  
+  .bc-wa-btn i {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Tap feedback */
+  .branch-card:active {
+    transform: scale(0.97);
+    border-color: var(--blue-mid);
+  }
+}
+
+/* Very small phones — even tighter */
+@media (max-width: 360px) {
+  .branch-cards {
+    gap: 8px !important;
+  }
+  
+  .branch-card {
+    padding: 12px 10px !important;
+  }
+  
+  .branch-card h4 {
+    font-size: 0.85rem !important;
+  }
+  
+  .branch-card p {
+    font-size: 0.66rem !important;
+    -webkit-line-clamp: 2;
+  }
+  
+  .bc-wa-btn {
+    padding: 7px 4px !important;
+    font-size: 0.62rem !important;
+  }
+}
