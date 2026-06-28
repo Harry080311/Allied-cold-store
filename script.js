@@ -1874,7 +1874,7 @@ function addToCart(productId, qty = 1) {
   setTimeout(() => {
     renderProducts('all', '');
     renderWholesale('all');
-  }, 800);
+  }, 1500);
   
   updateCart();
   if (cartCount) cartCount.style.display = 'none';  /* ════════════════════════════════════════════════
