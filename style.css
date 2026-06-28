@@ -9300,27 +9300,63 @@ body.dark-mode .footer-premium {
    ═══════════════════════════════════════════════════ */
 
 @media (max-width: 767px) {
+  /* Center the CTA inner content with proper padding */
+  .fp-cta-inner {
+    padding: 0 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Force the button container to fit inside the banner */
   .fp-cta-buttons {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: 8px !important;
     width: 100% !important;
-    justify-content: stretch !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   
+  /* Buttons share space equally without overflowing */
   .fp-cta-wa,
   .fp-cta-call {
-    flex: 1 1 0 !important;
+    flex: 1 1 50% !important;
     min-width: 0 !important;
-    padding: 11px 10px !important;
-    font-size: 0.74rem !important;
+    max-width: 50% !important;
+    padding: 10px 8px !important;
+    font-size: 0.72rem !important;
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    gap: 5px !important;
+    box-sizing: border-box !important;
+  }
+  
+  .fp-cta-wa i,
+  .fp-cta-call i {
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
   }
   
   .fp-cta-wa span,
   .fp-cta-call span {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Even tighter for very small screens */
+@media (max-width: 360px) {
+  .fp-cta-wa,
+  .fp-cta-call {
+    padding: 9px 6px !important;
+    font-size: 0.66rem !important;
+  }
+  
+  .fp-cta-wa i,
+  .fp-cta-call i {
+    font-size: 0.78rem !important;
   }
 }
