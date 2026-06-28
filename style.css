@@ -8903,3 +8903,112 @@ body.dark-mode .footer-premium {
     -webkit-line-clamp: 2;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   TESTIMONIALS — MOBILE 2-COLUMN COMPACT GRID
+   Same treatment as trust badges for cleaner mobile UX
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  
+  /* Force 2 columns on mobile */
+  .testimonials-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  
+  /* Compact card padding */
+  .test-card {
+    padding: 14px 12px !important;
+    gap: 10px !important;
+    border-radius: 14px;
+  }
+  
+  /* Smaller quote mark in the background */
+  .test-card::before {
+    font-size: 3.5rem !important;
+    top: -8px !important;
+    left: 10px !important;
+  }
+  
+  /* Smaller stars */
+  .tc-stars {
+    font-size: 0.7rem !important;
+    gap: 2px !important;
+  }
+  
+  /* Trimmed quote — max 4 lines */
+  .tc-quote {
+    font-size: 0.74rem !important;
+    line-height: 1.5 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Compact author section */
+  .tc-author {
+    padding-top: 10px !important;
+    gap: 9px !important;
+  }
+  
+  /* Smaller avatar */
+  .tc-avatar {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 0.78rem !important;
+  }
+  
+  /* Smaller author name */
+  .tc-info strong {
+    font-size: 0.74rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Smaller location */
+  .tc-info span {
+    font-size: 0.62rem !important;
+    line-height: 1.3 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Tap feedback */
+  .test-card:active {
+    transform: scale(0.97);
+    border-color: var(--blue-mid);
+  }
+}
+
+/* Very small phones — even tighter */
+@media (max-width: 360px) {
+  .testimonials-grid {
+    gap: 8px !important;
+  }
+  
+  .test-card {
+    padding: 12px 10px !important;
+  }
+  
+  .tc-quote {
+    font-size: 0.7rem !important;
+    -webkit-line-clamp: 3;
+  }
+  
+  .tc-avatar {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 0.72rem !important;
+  }
+  
+  .tc-info strong {
+    font-size: 0.7rem !important;
+  }
+  
+  .tc-info span {
+    font-size: 0.6rem !important;
+  }
+}
