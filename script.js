@@ -1463,17 +1463,17 @@ function addToCart(productId, qty = 1) {
   const acsOdDetails  = document.getElementById('acs-order-details');
   const acsOdInner    = document.getElementById('acs-od-inner');
 
-  function acsShowPopup() {
+   function acsShowPopup() {
     if (!acsPopup || !acsOverlay) return;
-    acsOverlay.style.display     = 'block';
-    acsPopup.style.display       = 'block';
+    acsOverlay.classList.add('show');
+    acsPopup.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
 
   function acsHidePopup() {
     if (!acsPopup || !acsOverlay) return;
-    acsOverlay.style.display     = 'none';
-    acsPopup.style.display       = 'none';
+    acsOverlay.classList.remove('show');
+    acsPopup.classList.remove('show');
     document.body.style.overflow = '';
   }
   function acsShowBanner(customer, lastOrder) {
@@ -1487,7 +1487,7 @@ function addToCart(productId, qty = 1) {
       var orderIdText = lastOrder.orderId ? ' · ' + lastOrder.orderId : '';
       acsOrderSum.textContent = 'Last order: ' + count + ' item' + itemText + ' · GH₵ ' + lastOrder.total.toFixed(2) + ' · ' + lastOrder.date + orderIdText;
     }
-    acsBanner.style.display = 'block';
+        acsBanner.classList.add('show');
     if (lastOrder) acsRenderDetails(lastOrder);
   }
   function acsRenderDetails(lastOrder) {
@@ -1595,21 +1595,67 @@ function addToCart(productId, qty = 1) {
   }
 
   function acsDismissBanner() {
-    if (acsBanner) acsBanner.style.display = 'none';
+        if (acsBanner) acsBanner.classList.remove('show');
     localStorage.setItem(ACS_DISMISSED, 'true');
   }
 
+    // Real-time validation
+  const nameCheck = document.getElementById('acs-name-check');
+  const phoneCheck = document.getElementById('acs-phone-check');
+  
+  acsNameEl?.addEventListener('input', () => {
+    const val = acsNameEl.value.trim();
+    if (val.length >= 2) {
+      nameCheck?.classList.add('show');
+    } else {
+      nameCheck?.classList.remove('show');
+    }
+    if (acsErrEl) acsErrEl.textContent = '';
+  });
+  
+  acsPhoneEl?.addEventListener('input', () => {
+    const val = acsPhoneEl.value.trim().replace(/\s/g, '');
+    if (val.length >= 9) {
+      phoneCheck?.classList.add('show');
+    } else {
+      phoneCheck?.classList.remove('show');
+    }
+    if (acsErrEl) acsErrEl.textContent = '';
+  });
+
+  // Close X button
+  document.getElementById('acs-close-x')?.addEventListener('click', () => {
+    localStorage.setItem(ACS_SKIPPED, 'true');
+    acsHidePopup();
+  });
+
+  // Confetti effect
+  function launchConfetti(container) {
+    const colors = ['#f97316', '#1a56db', '#25d366', '#fbbf24', '#a855f7'];
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'acs-confetti';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.top = '20%';
+      confetti.style.animationDelay = (Math.random() * 0.3) + 's';
+      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 2000);
+    }
+  }
+
   acsSave?.addEventListener('click', () => {
-    const name  = acsNameEl?.value.trim();
+    const name = acsNameEl?.value.trim();
     const phone = acsPhoneEl?.value.trim().replace(/\s/g, '');
 
-    if (!name) {
+    if (!name || name.length < 2) {
       if (acsErrEl) acsErrEl.textContent = 'Please enter your name.';
       acsNameEl?.focus();
       return;
     }
 
-    if (!phone || phone.length < 10) {
+    if (!phone || phone.length < 9) {
       if (acsErrEl) acsErrEl.textContent = 'Please enter a valid phone number.';
       acsPhoneEl?.focus();
       return;
@@ -1617,39 +1663,32 @@ function addToCart(productId, qty = 1) {
 
     localStorage.setItem(ACS_CUSTOMER, JSON.stringify({ name, phone }));
 
-    const popupBody = acsPopup?.querySelector('div:last-child');
+    // Update progress to step 2
+    const progressSteps = document.querySelectorAll('.acs-progress-step');
+    progressSteps.forEach(s => s.classList.add('active'));
+
+    // Replace popup body with success state
+    const popupBody = acsPopup?.querySelector('.acs-popup-body');
     if (popupBody) {
       popupBody.innerHTML = `
-        <div style="
-          display:flex;flex-direction:column;align-items:center;
-          justify-content:center;gap:16px;padding:30px 20px;text-align:center;">
-          <div style="
-            width:70px;height:70px;
-            background:linear-gradient(135deg,#25d366,#128c4e);
-            border-radius:50%;display:flex;align-items:center;
-            justify-content:center;font-size:2rem;
-            box-shadow:0 8px 24px rgba(37,211,102,0.35);">✅</div>
-          <div>
-            <h3 style="font-family:'Fredoka',sans-serif;font-size:1.2rem;
-              font-weight:900;color:#0f172a;margin-bottom:8px;">
-              You're all set ${name}! 🎉
-            </h3>
-            <p style="font-size:0.82rem;color:#64748b;line-height:1.65;">
-              Your details have been saved. We'll remember your orders next time!
-            </p>
+        <div class="acs-success" style="position:relative;">
+          <div class="acs-success-icon">
+            <i class="fas fa-check"></i>
           </div>
-          <button id="acs-start-btn" style="
-            width:100%;padding:13px;
-            background:linear-gradient(135deg,#f97316,#ea6c0a);
-            color:#ffffff;border:none;border-radius:999px;
-            font-family:'Fredoka',sans-serif;font-size:0.92rem;
-            font-weight:700;cursor:pointer;
-            box-shadow:0 4px 20px rgba(249,115,22,0.35);
-            display:flex;align-items:center;justify-content:center;gap:8px;">
-            🛒 Start Shopping
+          <h3>You're all set, <span>${name.split(' ')[0]}!</span> 🎉</h3>
+          <p>Your details are saved. We'll remember your orders so you can reorder in <strong>1 click</strong>!</p>
+          <button id="acs-start-btn" class="acs-btn-primary">
+            <i class="fas fa-shopping-basket"></i>
+            <span>Start Shopping Now</span>
+            <div class="acs-btn-shine"></div>
           </button>
         </div>
       `;
+      
+      // Launch confetti
+      const successContainer = popupBody.querySelector('.acs-success');
+      if (successContainer) launchConfetti(successContainer);
+      
       document.getElementById('acs-start-btn')?.addEventListener('click', () => {
         acsHidePopup();
         const menuSec = document.getElementById('menu');
@@ -1659,7 +1698,6 @@ function addToCart(productId, qty = 1) {
       });
     }
   });
-
   acsSkip?.addEventListener('click', () => {
     localStorage.setItem(ACS_SKIPPED, 'true');
     acsHidePopup();
@@ -1667,10 +1705,9 @@ function addToCart(productId, qty = 1) {
 
   acsReorderBtn?.addEventListener('click', () => {
     if (!acsOdDetails) return;
-    acsOdDetails.style.display =
-      acsOdDetails.style.display === 'none' ? 'block' : 'none';
+    acsOdDetails.classList.toggle('show');
+    acsReorderBtn.classList.toggle('expanded');
   });
-
   acsCloseBtn?.addEventListener('click', acsDismissBanner);
 
   /* ── ACS Init ── */
