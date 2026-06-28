@@ -10345,3 +10345,224 @@ body.dark-mode .acs-bi-green { background: rgba(37,211,102,0.15); }
     bottom: 14px;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   ACS POPUP — COMPACT FIX (v2)
+   Shorter popup, smaller logo, fixed +233 prefix
+   ═══════════════════════════════════════════════════ */
+
+/* ── HEADER — Tighter & Smaller ── */
+.acs-popup-header {
+  padding: 20px 20px 18px !important;
+}
+
+/* Smaller logo */
+.acs-logo-float {
+  width: 64px !important;
+  height: 64px !important;
+  margin: 2px auto 12px !important;
+}
+
+.acs-logo-circle {
+  font-size: 1.8rem !important;
+}
+
+/* Smaller snowflakes proportionally */
+.acs-snowflake {
+  font-size: 0.7rem !important;
+}
+
+/* Smaller title */
+.acs-popup-title {
+  font-size: 1.2rem !important;
+  margin-bottom: 4px !important;
+}
+
+.acs-popup-title span {
+  font-size: 1.3rem !important;
+}
+
+.acs-popup-subtitle {
+  font-size: 0.76rem !important;
+  margin-bottom: 12px !important;
+}
+
+/* Smaller progress bars */
+.acs-progress-step {
+  width: 26px !important;
+  height: 3px !important;
+}
+
+.acs-progress-step.active {
+  width: 34px !important;
+}
+
+/* ── BODY — Tighter ── */
+.acs-popup-body {
+  padding: 18px 20px 20px !important;
+}
+
+.acs-form-intro {
+  font-size: 0.8rem !important;
+  margin-bottom: 14px !important;
+  line-height: 1.5 !important;
+}
+
+/* Tighter input groups */
+.acs-input-group {
+  margin-bottom: 12px !important;
+}
+
+.acs-label {
+  font-size: 0.72rem !important;
+  margin-bottom: 6px !important;
+}
+
+.acs-input {
+  padding: 11px 13px !important;
+  font-size: 0.9rem !important;
+}
+
+/* ── PHONE PREFIX FIX ── */
+.acs-phone-wrap {
+  padding: 0 !important;
+  align-items: stretch !important;
+  overflow: hidden;
+}
+
+.acs-phone-prefix {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 0 12px !important;
+  background: var(--bg-section) !important;
+  border: none !important;
+  border-right: 1px solid var(--border) !important;
+  font-family: var(--ff-head) !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: var(--text-body) !important;
+  height: auto !important;
+  min-height: 44px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.acs-phone-prefix span {
+  font-size: 0.8rem !important;
+  color: var(--text-body) !important;
+}
+
+body.dark-mode .acs-phone-prefix {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-right-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.acs-input-phone {
+  padding: 11px 13px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.5px !important;
+  font-family: var(--ff-head) !important;
+  font-weight: 600 !important;
+}
+
+/* Phone counter */
+.acs-phone-counter {
+  position: absolute;
+  right: 38px;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  font-weight: 600;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.acs-phone-counter.valid {
+  color: var(--green-wa);
+  font-weight: 700;
+}
+
+.acs-phone-counter.warn {
+  color: var(--orange);
+}
+
+/* ── BENEFITS — Tighter ── */
+.acs-benefits {
+  padding: 10px !important;
+  gap: 8px !important;
+  margin-bottom: 14px !important;
+}
+
+.acs-benefit {
+  gap: 10px !important;
+}
+
+.acs-benefit-icon {
+  width: 30px !important;
+  height: 30px !important;
+  font-size: 0.9rem !important;
+}
+
+.acs-benefit-text strong {
+  font-size: 0.76rem !important;
+}
+
+.acs-benefit-text span {
+  font-size: 0.66rem !important;
+}
+
+/* ── BUTTONS — Tighter ── */
+.acs-btn-primary {
+  padding: 12px !important;
+  font-size: 0.9rem !important;
+  margin-bottom: 8px !important;
+}
+
+.acs-btn-skip {
+  padding: 9px !important;
+  font-size: 0.78rem !important;
+}
+
+/* Error styling */
+.acs-error {
+  font-size: 0.74rem !important;
+  margin-bottom: 10px !important;
+  min-height: 16px !important;
+}
+
+/* ── EXTRA SMALL SCREENS ── */
+@media (max-width: 380px) {
+  .acs-popup-header {
+    padding: 18px 16px 16px !important;
+  }
+  
+  .acs-logo-float {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  
+  .acs-logo-circle {
+    font-size: 1.6rem !important;
+  }
+  
+  .acs-popup-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .acs-popup-title span {
+    font-size: 1.2rem !important;
+  }
+  
+  .acs-popup-body {
+    padding: 16px 16px 18px !important;
+  }
+  
+  .acs-phone-prefix {
+    padding: 0 10px !important;
+    font-size: 0.78rem !important;
+  }
+  
+  .acs-input-phone {
+    font-size: 0.88rem !important;
+  }
+}

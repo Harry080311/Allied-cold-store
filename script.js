@@ -1613,16 +1613,69 @@ function addToCart(productId, qty = 1) {
     if (acsErrEl) acsErrEl.textContent = '';
   });
   
-  acsPhoneEl?.addEventListener('input', () => {
-    const val = acsPhoneEl.value.trim().replace(/\s/g, '');
-    if (val.length >= 9) {
+   // Premium phone input — Auto-format + 10 digit lock
+  acsPhoneEl?.addEventListener('input', (e) => {
+    // Remove all non-digits
+    let digits = e.target.value.replace(/\D/g, '');
+    
+    // Limit to exactly 10 digits
+    if (digits.length > 10) {
+      digits = digits.substring(0, 10);
+    }
+    
+    // Auto-format: 054 255 9031
+    let formatted = '';
+    if (digits.length > 0) {
+      formatted = digits.substring(0, 3);
+      if (digits.length > 3) {
+        formatted += ' ' + digits.substring(3, 6);
+      }
+      if (digits.length > 6) {
+        formatted += ' ' + digits.substring(6, 10);
+      }
+    }
+    
+    e.target.value = formatted;
+    
+    // Update counter
+    let counter = document.getElementById('acs-phone-counter');
+    if (!counter) {
+      counter = document.createElement('span');
+      counter.id = 'acs-phone-counter';
+      counter.className = 'acs-phone-counter';
+      e.target.parentElement.appendChild(counter);
+    }
+    
+    counter.textContent = digits.length + '/10';
+    counter.classList.remove('valid', 'warn');
+    if (digits.length === 10) {
+      counter.classList.add('valid');
       phoneCheck?.classList.add('show');
     } else {
       phoneCheck?.classList.remove('show');
+      if (digits.length >= 7) {
+        counter.classList.add('warn');
+      }
     }
+    
     if (acsErrEl) acsErrEl.textContent = '';
   });
 
+  // Block non-numeric keys on phone field
+  acsPhoneEl?.addEventListener('keydown', (e) => {
+    // Allow: backspace, delete, tab, arrows, home, end
+    if (
+      ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key) ||
+      (e.ctrlKey && ['a', 'c', 'v', 'x'].includes(e.key.toLowerCase()))
+    ) {
+      return;
+    }
+    
+    // Block anything that's not a digit
+    if (!/^\d$/.test(e.key)) {
+      e.preventDefault();
+    }
+  });
   // Close X button
   document.getElementById('acs-close-x')?.addEventListener('click', () => {
     localStorage.setItem(ACS_SKIPPED, 'true');
@@ -1655,12 +1708,13 @@ function addToCart(productId, qty = 1) {
       return;
     }
 
-    if (!phone || phone.length < 9) {
-      if (acsErrEl) acsErrEl.textContent = 'Please enter a valid phone number.';
+     // Strict 10 digit validation
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      if (acsErrEl) acsErrEl.textContent = 'Phone number must be exactly 10 digits.';
       acsPhoneEl?.focus();
       return;
     }
-
     localStorage.setItem(ACS_CUSTOMER, JSON.stringify({ name, phone }));
 
     // Update progress to step 2
