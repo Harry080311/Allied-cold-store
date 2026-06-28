@@ -9360,3 +9360,145 @@ body.dark-mode .footer-premium {
     font-size: 0.78rem !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   LOADING SKELETONS
+   Shimmer placeholders shown while products load
+   ═══════════════════════════════════════════════════ */
+
+/* Skeleton card matches real product card shape */
+.skeleton-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Image placeholder */
+.skel-img {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-section);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .skel-img { height: 160px; }
+}
+
+@media (min-width: 1024px) {
+  .skel-img { height: 180px; }
+}
+
+/* Card body */
+.skel-body {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .skel-body { padding: 14px; gap: 10px; }
+}
+
+/* Skeleton text bars */
+.skel-line {
+  background: var(--bg-section);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skel-title {
+  height: 14px;
+  width: 85%;
+}
+
+.skel-title-2 {
+  height: 14px;
+  width: 60%;
+}
+
+.skel-desc {
+  height: 10px;
+  width: 100%;
+}
+
+.skel-desc-2 {
+  height: 10px;
+  width: 75%;
+}
+
+.skel-price {
+  height: 22px;
+  width: 50%;
+  margin-top: 4px;
+}
+
+.skel-btn {
+  height: 36px;
+  width: 100%;
+  border-radius: 999px;
+  margin-top: auto;
+  background: var(--bg-section);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .skel-btn { height: 40px; }
+}
+
+/* The shimmer animation */
+.skel-img::after,
+.skel-line::after,
+.skel-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+body.dark-mode .skel-img::after,
+body.dark-mode .skel-line::after,
+body.dark-mode .skel-btn::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Fade out when products are loaded */
+.skeleton-card.fade-out {
+  animation: skelFadeOut 0.4s ease forwards;
+}
+
+@keyframes skelFadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}

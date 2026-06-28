@@ -627,6 +627,30 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ════════════════════════════════════════════════
      RENDER PRODUCTS
   ════════════════════════════════════════════════ */
+  /* ════════════════════════════════════════════════
+     LOADING SKELETONS
+  ════════════════════════════════════════════════ */
+  function showSkeletons(container, count = 8) {
+    if (!container) return;
+    container.innerHTML = '';
+    
+    for (let i = 0; i < count; i++) {
+      const skel = document.createElement('div');
+      skel.className = 'skeleton-card';
+      skel.innerHTML = `
+        <div class="skel-img"></div>
+        <div class="skel-body">
+          <div class="skel-line skel-title"></div>
+          <div class="skel-line skel-title-2"></div>
+          <div class="skel-line skel-desc"></div>
+          <div class="skel-line skel-desc-2"></div>
+          <div class="skel-line skel-price"></div>
+          <div class="skel-btn"></div>
+        </div>
+      `;
+      container.appendChild(skel);
+    }
+  }
   function renderProducts(filter = 'all', search = '') {
     if (!productGrid) return;
 
@@ -1838,14 +1862,22 @@ function addToCart(productId, qty = 1) {
       renderWholesale(tab.dataset.wcat);
     });
   });
-/* ════════════════════════════════════════════════
-     INIT — Render products & cart on load
-  ════════════════════════════════════════════════ */
-  renderProducts('all', '');
-  renderWholesale('all');                              /* ← NEW LINE ADDED */
-  updateCart();
-  if (cartCount) cartCount.style.display = 'none';
   /* ════════════════════════════════════════════════
+     INIT — Show skeletons first, then real products
+  ════════════════════════════════════════════════ */
+  
+  // Show skeletons immediately
+  showSkeletons(productGrid, 8);
+  showSkeletons(wholesaleGrid, 8);
+  
+  // Load real products after a tiny delay (so users see the skeleton)
+  setTimeout(() => {
+    renderProducts('all', '');
+    renderWholesale('all');
+  }, 800);
+  
+  updateCart();
+  if (cartCount) cartCount.style.display = 'none';  /* ════════════════════════════════════════════════
      FOOTER — LIVE OPEN/CLOSED STATUS
   ════════════════════════════════════════════════ */
    function updateOpenStatus() {
