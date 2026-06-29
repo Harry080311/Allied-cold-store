@@ -2003,14 +2003,39 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- Sticky WhatsApp Button -->
-  <a href="https://wa.me/233247221043?text=Hi!%20I%27d%20like%20to%20place%20an%20order%20from%20Allied%20Cold%20Store." 
-     class="sticky-whatsapp" 
-     target="_blank"
-     aria-label="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-    <span class="wa-pulse"></span>
-  </a>
+   <!-- ╔══════════════════════════════════════════╗
+       ║      SMART WHATSAPP BUTTON + TOOLTIP     ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="wa-container" id="wa-container">
+    
+    <!-- Smart Tooltip Bubble -->
+    <div class="wa-tooltip" id="wa-tooltip">
+      <button class="wa-tooltip-close" id="wa-tooltip-close" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="wa-tooltip-avatar">
+        <span>👋</span>
+      </div>
+      <div class="wa-tooltip-content">
+        <p class="wa-tooltip-name">Allied Cold Store</p>
+        <p class="wa-tooltip-message" id="wa-tooltip-message">
+          Hi! Need help ordering? 😊
+        </p>
+      </div>
+      <div class="wa-tooltip-tail"></div>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/233247221043?text=Hi!%20I%27d%20like%20to%20place%20an%20order%20from%20Allied%20Cold%20Store." 
+       class="sticky-whatsapp" 
+       target="_blank"
+       aria-label="Chat on WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+      <span class="wa-pulse"></span>
+      <span class="wa-notif-dot" id="wa-notif-dot"></span>
+    </a>
+
+  </div>
 <!-- ╔══════════════════════════════════════════╗
      ║    ORDER CONFIRMATION MODAL              ║
      ╚══════════════════════════════════════════╝ -->

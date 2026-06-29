@@ -2004,6 +2004,105 @@ function addToCart(productId, qty = 1) {
   }
   updateOpenStatus();
   setInterval(updateOpenStatus, 60000); // Update every minute
+  /* ════════════════════════════════════════════════
+     SMART WHATSAPP TOOLTIP SYSTEM
+  ════════════════════════════════════════════════ */
+  const waTooltip = document.getElementById('wa-tooltip');
+  const waTooltipMsg = document.getElementById('wa-tooltip-message');
+  const waTooltipClose = document.getElementById('wa-tooltip-close');
+  const waNotifDot = document.getElementById('wa-notif-dot');
+  const WA_TOOLTIP_DISMISSED = 'acs-wa-tooltip-dismissed';
+  
+  // Rotating friendly messages
+  const waMessages = [
+    "Hi! Need help ordering? 😊",
+    "Got questions? We're here to help! 💬",
+    "Wholesale buyer? Let's chat! 🏢",
+    "Need delivery info? Just ask! 🚚",
+    "Fresh stock today! Order now 🐔",
+    "Can't decide? We'll recommend! ⭐",
+    "Bulk orders? We've got special prices! 💰",
+    "Quick question? Reply in seconds 📱"
+  ];
+  
+  let waMsgIndex = 0;
+  let waTooltipTimer = null;
+  let waHideTimer = null;
+  let waIsDismissed = false;
+  
+  function showWaTooltip() {
+    if (!waTooltip || waIsDismissed) return;
+    
+    // Don't show if user is typing in a form
+    const activeEl = document.activeElement;
+    if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+      return;
+    }
+    
+    // Don't show if cart sidebar is open
+    if (cartSidebar?.classList.contains('open')) return;
+    
+    // Don't show if any modal is open
+    if (confirmModal?.classList.contains('show')) return;
+    if (acsPopup?.classList.contains('show')) return;
+    
+    // Rotate to next message
+    if (waTooltipMsg) {
+      waTooltipMsg.textContent = waMessages[waMsgIndex];
+      waMsgIndex = (waMsgIndex + 1) % waMessages.length;
+    }
+    
+    // Show tooltip + notification dot
+    waTooltip.classList.add('show');
+    waNotifDot?.classList.add('show');
+    
+    // Auto-hide after 5 seconds
+    waHideTimer = setTimeout(() => {
+      hideWaTooltip();
+    }, 5000);
+  }
+  
+  function hideWaTooltip() {
+    if (!waTooltip) return;
+    waTooltip.classList.remove('show');
+    waNotifDot?.classList.remove('show');
+    if (waHideTimer) {
+      clearTimeout(waHideTimer);
+      waHideTimer = null;
+    }
+  }
+  
+  function dismissWaTooltip() {
+    waIsDismissed = true;
+    hideWaTooltip();
+    sessionStorage.setItem(WA_TOOLTIP_DISMISSED, 'true');
+    if (waTooltipTimer) {
+      clearInterval(waTooltipTimer);
+      waTooltipTimer = null;
+    }
+  }
+  
+  // Close button handler
+  waTooltipClose?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dismissWaTooltip();
+  });
+  
+  // Check if user dismissed earlier in session
+  if (sessionStorage.getItem(WA_TOOLTIP_DISMISSED) === 'true') {
+    waIsDismissed = true;
+  } else {
+    // First show after 15 seconds
+    setTimeout(() => {
+      showWaTooltip();
+      
+      // Then every 45 seconds
+      waTooltipTimer = setInterval(() => {
+        showWaTooltip();
+      }, 45000);
+    }, 15000);
+  }
   console.log('🐔 Allied Cold Store — Ready!');
 
 }); // end DOMContentLoaded
