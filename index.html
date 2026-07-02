@@ -326,8 +326,8 @@
         </div>
       </div>
 <!-- Smart Search Bar -->
-<div class="search-wrap">
-  <div class="search-box">
+<div class="search-wrap" id="search-wrap">
+  <div class="search-box" id="search-box">
     <div class="search-icon">
       <i class="fas fa-search"></i>
     </div>
@@ -341,15 +341,22 @@
       autocapitalize="off"
       spellcheck="false"
     />
-  <button class="search-clear" id="search-clear" style="display:none;" aria-label="Clear search">
-  <i class="fas fa-times"></i>
-</button>
+    <span class="search-count-badge" id="search-count-badge"></span>
+    <button class="search-clear" id="search-clear" style="display:none;" aria-label="Clear search">
+      <i class="fas fa-times"></i>
+    </button>
+    <button class="search-exit-btn" id="search-exit-btn" aria-label="Exit search">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
   <!-- Search results info -->
   <div class="search-info" id="search-info" style="display:none;">
     <span id="search-info-text"></span>
   </div>
 </div>
+
+<!-- Sticky search backdrop -->
+<div class="search-backdrop" id="search-backdrop"></div>
       <!-- Category Tabs -->
       <div class="cat-tabs" id="cat-tabs">
         <button class="cat-tab active" data-cat="all">

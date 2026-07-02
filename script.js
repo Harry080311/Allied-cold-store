@@ -620,10 +620,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+   /* ════════════════════════════════════════════════
+     STICKY MOBILE SEARCH SYSTEM
+  ════════════════════════════════════════════════ */
+  const searchWrapEl = document.getElementById('search-wrap');
+  const searchBoxEl = document.getElementById('search-box');
+  const searchBackdrop = document.getElementById('search-backdrop');
+  const searchExitBtn = document.getElementById('search-exit-btn');
+  const searchCountBadge = document.getElementById('search-count-badge');
+  
+  let searchPlaceholder = null;
+  let isSearchSticky = false;
+  
+  function isMobileScreen() {
+    return window.innerWidth < 768;
+  }
+  
+  function activateStickySearch() {
+    if (!isMobileScreen() || isSearchSticky || !searchWrapEl) return;
+    
+    // Create placeholder to prevent content jump
+    if (!searchPlaceholder) {
+      searchPlaceholder = document.createElement('div');
+      searchPlaceholder.className = 'search-placeholder';
+      searchWrapEl.parentNode.insertBefore(searchPlaceholder, searchWrapEl);
+    }
+    searchPlaceholder.classList.add('active');
+    
+    // Activate sticky mode
+    searchWrapEl.classList.add('sticky-active');
+    searchBackdrop?.classList.add('active');
+    isSearchSticky = true;
+    
+    // Scroll to top so sticky search bar shows below navbar
+    setTimeout(function() {
+      window.scrollTo({
+        top: searchPlaceholder.offsetTop - (header?.offsetHeight || 64) - 10,
+        behavior: 'smooth'
+      });
+    }, 100);
+  }
+  
+  function deactivateStickySearch() {
+    if (!isSearchSticky || !searchWrapEl) return;
+    
+    searchWrapEl.classList.remove('sticky-active');
+    searchBackdrop?.classList.remove('active');
+    
+    if (searchPlaceholder) {
+      searchPlaceholder.classList.remove('active');
+    }
+    
+    isSearchSticky = false;
+    
+    // Clear search if user exits
+    if (searchInput) {
+      searchInput.value = '';
+      currentSearch = '';
+      renderProducts(currentFilter, '');
+      searchInput.blur();
+    }
+    
+    if (searchCountBadge) {
+      searchCountBadge.classList.remove('show');
+    }
+  }
+  
+  function updateSearchCountBadge(count) {
+    if (!searchCountBadge) return;
+    
+    if (currentSearch && currentSearch.trim() !== '') {
+      searchCountBadge.textContent = count;
+      searchCountBadge.classList.add('show');
+    } else {
+      searchCountBadge.classList.remove('show');
+    }
+  }
+  
   if (searchInput) {
+    // Focus event — activate sticky mode on mobile
+    searchInput.addEventListener('focus', function () {
+      if (isMobileScreen()) {
+        activateStickySearch();
+      }
+    });
+    
     searchInput.addEventListener('input', function () {
       currentSearch = this.value;
       renderProducts(currentFilter, currentSearch);
+      
+      // Update count badge
+      const results = getSearchResults(currentSearch, currentFilter);
+      updateSearchCountBadge(results.length);
     });
 
     searchClear?.addEventListener('click', function () {
@@ -631,6 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentSearch = '';
       searchInput.focus();
       renderProducts(currentFilter, '');
+      updateSearchCountBadge(0);
     });
 
     searchInput.addEventListener('keydown', function (e) {
@@ -639,10 +728,27 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSearch = '';
         renderProducts(currentFilter, '');
         this.blur();
+        deactivateStickySearch();
       }
     });
   }
-
+  
+  // Exit button click
+  searchExitBtn?.addEventListener('click', function() {
+    deactivateStickySearch();
+  });
+  
+  // Backdrop click — exit sticky mode
+  searchBackdrop?.addEventListener('click', function() {
+    deactivateStickySearch();
+  });
+  
+  // Auto-deactivate if screen resizes to desktop
+  window.addEventListener('resize', function() {
+    if (!isMobileScreen() && isSearchSticky) {
+      deactivateStickySearch();
+    }
+  });
   /* ════════════════════════════════════════════════
      RENDER PRODUCTS
   ════════════════════════════════════════════════ */
