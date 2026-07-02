@@ -451,12 +451,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-   /* ════════════════════════════════════════════════
-     NAV SEARCH — SCROLL TO PRODUCTS (NEW VERSION)
+  /* ════════════════════════════════════════════════
+     NAV SEARCH — SMART HYBRID SCROLL (v2)
+     Centers search bar on screen + smart auto-focus
   ════════════════════════════════════════════════ */
   var navSearchBtn = document.getElementById('nav-search-btn');
   var productSearchInput = document.getElementById('product-search');
   var productSearchBox = document.querySelector('.search-box');
+  var searchWrap = document.querySelector('.search-wrap');
+
+  // Detect if user is on mobile device
+  function isMobileDevice() {
+    return window.innerWidth < 768 || 
+           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
 
   if (navSearchBtn) {
     navSearchBtn.addEventListener('click', function(e) {
@@ -465,22 +473,30 @@ document.addEventListener('DOMContentLoaded', () => {
       // Close mobile nav if open
       closeNav();
       
-      // Get the menu section
-      var menuSection = document.getElementById('menu');
-      if (!menuSection) return;
+      // Target the search wrap (not the whole menu section)
+      var targetEl = searchWrap || productSearchBox;
+      if (!targetEl) return;
       
-      // Calculate scroll position
-      var headerHeight = header?.offsetHeight || 64;
-      var scrollOffset = headerHeight + 20;
-      var targetY = menuSection.offsetTop - scrollOffset;
+      // Calculate the CENTER position on screen
+      var elementRect = targetEl.getBoundingClientRect();
+      var absoluteElementTop = elementRect.top + window.pageYOffset;
+      var elementHeight = elementRect.height;
+      var windowHeight = window.innerHeight;
       
-      // Smooth scroll to product search (500ms via CSS scroll-behavior)
+      // Center the element on the visible screen
+      // Small offset upward (about 40% from top) — looks better than exact center
+      var targetY = absoluteElementTop - (windowHeight * 0.4) + (elementHeight / 2);
+      
+      // Make sure we don't scroll above the top
+      if (targetY < 0) targetY = 0;
+      
+      // Smooth scroll to the calculated position
       window.scrollTo({
         top: targetY,
         behavior: 'smooth'
       });
       
-      // After scroll completes, focus the search input and add pulse animation
+      // After scroll completes
       setTimeout(function() {
         if (productSearchInput) {
           // Clear any previous search
@@ -492,20 +508,23 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(currentFilter || 'all', '');
           }
           
-          // Focus the input (this opens mobile keyboard too)
-          productSearchInput.focus();
+          // SMART FOCUS: Only auto-focus on desktop
+          // On mobile, we don't force the keyboard open (better UX)
+          if (!isMobileDevice()) {
+            productSearchInput.focus();
+          }
         }
         
-        // Add pulse animation to the search box
+        // Add premium pulse animation to draw the eye
         if (productSearchBox) {
           productSearchBox.classList.add('pulse-highlight');
           
           // Remove animation class after it completes
           setTimeout(function() {
             productSearchBox.classList.remove('pulse-highlight');
-          }, 1500);
+          }, 2000);
         }
-      }, 600); // Wait for scroll to mostly complete
+      }, 700);
     });
   }
 

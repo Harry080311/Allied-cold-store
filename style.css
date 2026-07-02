@@ -7818,41 +7818,85 @@ body.dark-mode .nav-search-btn:hover {
 }
 
 /* ═══════════════════════════════════════════════════
-   PRODUCT SEARCH PULSE ANIMATION
+   PRODUCT SEARCH PULSE ANIMATION (v2 — ORANGE POP)
    ═══════════════════════════════════════════════════ */
 
-/* Pulse animation when scrolled to from nav */
+/* Premium pulse animation when scrolled to from nav */
 .search-box.pulse-highlight {
-  animation: searchPulse 1.5s ease;
-  border-color: var(--blue) !important;
-  box-shadow: 0 0 0 6px rgba(26, 86, 219, 0.15),
-              0 8px 24px rgba(26, 86, 219, 0.2) !important;
+  animation: searchPulseOrange 2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.15),
+              0 12px 32px rgba(249, 115, 22, 0.25) !important;
+  position: relative;
+  z-index: 10;
 }
 
-@keyframes searchPulse {
+@keyframes searchPulseOrange {
   0% {
-    box-shadow: 0 0 0 0 rgba(26, 86, 219, 0.5),
-                0 0 0 0 rgba(26, 86, 219, 0.3);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.6),
+                0 0 0 0 rgba(249, 115, 22, 0.4);
     transform: scale(1);
+    border-color: var(--orange);
   }
   
-  25% {
-    box-shadow: 0 0 0 12px rgba(26, 86, 219, 0.2),
-                0 0 0 20px rgba(26, 86, 219, 0.05);
+  15% {
+    box-shadow: 0 0 0 16px rgba(249, 115, 22, 0.25),
+                0 0 0 28px rgba(249, 115, 22, 0.1),
+                0 12px 32px rgba(249, 115, 22, 0.3);
+    transform: scale(1.025);
+    border-color: var(--orange);
+  }
+  
+  35% {
+    box-shadow: 0 0 0 10px rgba(249, 115, 22, 0.2),
+                0 0 0 20px rgba(249, 115, 22, 0.08),
+                0 8px 24px rgba(249, 115, 22, 0.25);
+    transform: scale(1.015);
+    border-color: var(--orange);
+  }
+  
+  55% {
+    box-shadow: 0 0 0 14px rgba(249, 115, 22, 0.15),
+                0 0 0 24px rgba(249, 115, 22, 0.05),
+                0 10px 28px rgba(249, 115, 22, 0.2);
     transform: scale(1.02);
+    border-color: var(--orange);
   }
   
-  50% {
-    box-shadow: 0 0 0 8px rgba(26, 86, 219, 0.15),
-                0 0 0 16px rgba(26, 86, 219, 0.05);
+  75% {
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.12),
+                0 8px 24px rgba(249, 115, 22, 0.15);
     transform: scale(1.01);
+    border-color: var(--orange);
   }
   
   100% {
     box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.1),
                 0 8px 24px rgba(26, 86, 219, 0.15);
     transform: scale(1);
+    border-color: var(--blue);
   }
+}
+
+/* Dark mode variant */
+body.dark-mode .search-box.pulse-highlight {
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.2),
+              0 12px 32px rgba(249, 115, 22, 0.35) !important;
+}
+
+/* Add a subtle icon animation too */
+.search-box.pulse-highlight .search-icon {
+  animation: searchIconWiggle 2s ease;
+  color: var(--orange) !important;
+}
+
+@keyframes searchIconWiggle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.3) rotate(-10deg); }
+  40% { transform: scale(1.2) rotate(10deg); }
+  60% { transform: scale(1.25) rotate(-5deg); }
+  80% { transform: scale(1.1) rotate(0deg); }
 }
 
 body.dark-mode .search-box.pulse-highlight {
