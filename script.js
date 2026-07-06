@@ -117,11 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 11, cat: 'meats',
-      name: 'Pork Cuts (1kg)',
-      desc: 'Premium frozen pork, great for grilling, stewing, and frying.',
+      name: 'Sausages (1kg)',
+      desc: 'Delicious frozen sausages, great for grilling, frying and breakfast. A family favourite.',
       price: 58.00, unit: 'per 1kg pack', icon: 'fas fa-bacon',
-      image: './images/Products/pork-cuts.webp',
-      badge: null, badgeClass: '', inStock: false
+      image: './images/Products/Sausages (1kg).webp',
+      badge: null, badgeClass: '', inStock: true
     },
     {
       id: 12, cat: 'meats',
